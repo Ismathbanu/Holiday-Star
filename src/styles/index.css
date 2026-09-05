@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/*
+  ╔══════════════════════════════════════════════════════╗
+  ║  HOLIDAY STAR — Design System                       ║
+  ║  All brand colors, typography & spacing tokens       ║
+  ╚══════════════════════════════════════════════════════╝
+*/
+
+@theme {
+  /* ── Brand Colors ── */
+  --color-hs-deep-blue: #0B3D91;
+  --color-hs-navy: #0B3D91;
+  --color-hs-royal-blue: #0D47A1;
+  --color-hs-bright-blue: #1976D2;
+  --color-hs-blue-600: #2563EB;
+  --color-hs-sky-blue: #42A5F5;
+  --color-hs-blue-50: #EFF6FF;
+  --color-hs-light-blue: #E3F2FD;
+  --color-hs-pale-blue: #F5F9FF;
+
+  --color-hs-tropical-green: #2E7D32;
+  --color-hs-green: #10B981;
+  --color-hs-green-light: #4CAF50;
+  --color-hs-green-accent: #E8F5E9;
+
+  --color-hs-gold: #F59E0B;
+
+  --color-hs-white: #FFFFFF;
+  --color-hs-cream: #FAFBFD;
+  --color-hs-warm-gray: #F7F8FA;
+  --color-hs-gray-50: #F8FAFC;
+  --color-hs-border: #E8ECF1;
+  --color-hs-border-light: #F0F2F5;
+
+  --color-hs-text-primary: #0F172A;
+  --color-hs-text-secondary: #475569;
+  --color-hs-text-muted: #64748B;
+  --color-hs-text-inverse: #FFFFFF;
+
+  --color-hs-overlay: rgba(11, 61, 145, 0.7);
+  --color-hs-overlay-dark: rgba(10, 20, 40, 0.65);
+  --color-hs-overlay-light: rgba(255, 255, 255, 0.9);
+
+  /* ── Shadows ── */
+  --shadow-hs-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-hs-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-hs-lg: 0 10px 30px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-hs-xl: 0 20px 50px rgba(0, 0, 0, 0.12);
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  --shadow-card-hover: 0 12px 32px -4px rgba(11, 61, 145, 0.12);
+
+  /* ── Typography ── */
+  --font-heading: 'Outfit', -apple-system, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-script: 'Caveat', cursive;
+
+  /* ── Container widths ── */
+  --container-narrow: 760px;
+  --container-base: 1140px;
+  --container-wide: 1400px;
+  --container-ultra: 1536px;
+}
+
+/* ── Base Styles ── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-hs-text-primary);
+  background-color: var(--color-hs-white);
+  line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: var(--color-hs-text-secondary);
+}
+
+/* ── Container utility ── */
+.container-hs {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-hs {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-hs {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+}
+
+.container-hs-narrow {
+  max-width: var(--container-narrow);
+}
+
+.container-hs-wide {
+  max-width: var(--container-ultra);
+}
+
+.font-script {
+  font-family: 'Caveat', cursive;
+}
+
+@utility w-full {
+  width: 100%;
+}
