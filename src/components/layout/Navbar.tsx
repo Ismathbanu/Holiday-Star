@@ -30,6 +30,10 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
+  const isHome = location.pathname === '/';
+  const isCampaign = location.pathname.includes('malaysia');
+  const isDarkNav = !scrolled && !isHome && !isCampaign;
+
   const isActive = (href: string) =>
     href === '/' ? location.pathname === '/' : location.pathname.startsWith(href);
 
@@ -37,35 +41,39 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-card py-3'
-            : 'bg-hs-navy/90 backdrop-blur-md py-4 border-b border-white/10'
+          isDarkNav
+            ? 'bg-hs-navy/90 backdrop-blur-md py-4 border-b border-white/10'
+            : scrolled
+              ? 'bg-white/95 backdrop-blur-md shadow-card py-2.5 border-b border-gray-100'
+              : 'bg-white/95 backdrop-blur-md shadow-xs py-3 border-b border-gray-100/70'
         }`}
         role="navigation"
         aria-label="Main navigation"
       >
         <div className="container-hs flex items-center justify-between">
-          {/* Logo */}
-          <Link
-            to="/"
-            className="flex items-center group py-1 shrink-0"
-            aria-label="Holiday Star — Home"
-          >
-            <img
-              src="/images/hslogo.png"
-              alt="Holiday Star Tours & Travels"
-              className={`h-16 lg:h-20 w-auto object-contain transition-all duration-300 ${scrolled ? '' : 'brightness-0 invert'}`}
-            />
-          </Link>
+          {/* Logo with optional Tourism Malaysia co-branding */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <Link
+              to="/"
+              className="flex items-center group py-0.5 shrink-0"
+              aria-label="Holiday Star — Home"
+            >
+              <img
+                src="/images/hslogo.png"
+                alt="Holiday Star Tours & Travels"
+                className={`h-12 sm:h-14 lg:h-16 w-auto object-contain transition-all duration-300 ${isDarkNav ? 'brightness-0 invert' : ''}`}
+              />
+            </Link>
+          </div>
 
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-1 xl:gap-2">
             <Link
               to="/"
-              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
                 isActive('/')
-                  ? scrolled ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
-                  : scrolled ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
+                  ? !isDarkNav ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
+                  : !isDarkNav ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
               }`}
             >
               Home
@@ -79,10 +87,10 @@ export default function Navbar() {
             >
               <button
                 onClick={() => setDestinationsOpen(!destinationsOpen)}
-                className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                className={`flex items-center gap-1 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
                   isActive('/destinations')
-                    ? scrolled ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
-                    : scrolled ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
+                    ? !isDarkNav ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
+                    : !isDarkNav ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
                 }`}
                 aria-expanded={destinationsOpen}
               >
@@ -132,32 +140,32 @@ export default function Navbar() {
 
             <Link
               to="/packages"
-              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
                 isActive('/packages')
-                  ? scrolled ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
-                  : scrolled ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
+                  ? !isDarkNav ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
+                  : !isDarkNav ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
               }`}
             >
               Holiday Packages
             </Link>
 
             <Link
-              to="/travel-guide"
-              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                isActive('/travel-guide')
-                  ? scrolled ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
-                  : scrolled ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
+              to="/sports-tourism"
+              className={`px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
+                isActive('/sports-tourism')
+                  ? !isDarkNav ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
+                  : !isDarkNav ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
               }`}
             >
-              Travel Guide
+              Sports Tourism
             </Link>
 
             <Link
               to="/about"
-              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
                 isActive('/about')
-                  ? scrolled ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
-                  : scrolled ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
+                  ? !isDarkNav ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
+                  : !isDarkNav ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
               }`}
             >
               About Us
@@ -165,10 +173,10 @@ export default function Navbar() {
 
             <Link
               to="/contact"
-              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
                 isActive('/contact')
-                  ? scrolled ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
-                  : scrolled ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
+                  ? !isDarkNav ? 'text-hs-blue-600 bg-hs-blue-50' : 'text-white bg-white/10'
+                  : !isDarkNav ? 'text-hs-text-primary hover:text-hs-blue-600' : 'text-white/80 hover:text-white'
               }`}
             >
               Contact
@@ -198,7 +206,7 @@ export default function Navbar() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={`lg:hidden p-2 rounded-xl transition-colors ${
-              scrolled ? 'text-hs-navy' : 'text-white'
+              !isDarkNav ? 'text-hs-navy' : 'text-white'
             }`}
             aria-label="Toggle Menu"
           >
@@ -276,10 +284,10 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    to="/travel-guide"
+                    to="/sports-tourism"
                     className="block py-2 text-base font-semibold text-hs-navy"
                   >
-                    Travel Guide
+                    Sports Tourism
                   </Link>
 
                   <Link

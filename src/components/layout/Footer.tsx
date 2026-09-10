@@ -82,8 +82,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/travel-guide" className="text-sm text-white/75 hover:text-white transition-colors">
-                  Travel Guide
+                <Link to="/sports-tourism" className="text-sm text-white/75 hover:text-white transition-colors">
+                  Sports Tourism
                 </Link>
               </li>
               <li>

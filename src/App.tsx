@@ -10,7 +10,7 @@ import Home from './pages/Home/Home';
 const DestinationsIndex = lazy(() => import('./pages/Destinations/DestinationsIndex'));
 const DestinationPage = lazy(() => import('./pages/Destinations/DestinationPage'));
 const PackagesPage = lazy(() => import('./pages/Packages/Packages'));
-const TravelGuidePage = lazy(() => import('./pages/TravelGuide/TravelGuide'));
+const SportsTourismPage = lazy(() => import('./pages/SportsTourism/SportsTourism'));
 const AboutPage = lazy(() => import('./pages/About/About'));
 const ContactPage = lazy(() => import('./pages/Contact/Contact'));
 const PlanHolidayPage = lazy(() => import('./pages/PlanHoliday/PlanHoliday'));
@@ -38,7 +38,8 @@ export default function App() {
               <Route path="destinations" element={<DestinationsIndex />} />
               <Route path="destinations/:slug" element={<DestinationPage />} />
               <Route path="packages" element={<PackagesPage />} />
-              <Route path="travel-guide" element={<TravelGuidePage />} />
+              <Route path="sports-tourism" element={<SportsTourismPage />} />
+              <Route path="travel-guide" element={<Navigate to="/sports-tourism" replace />} />
               <Route path="about" element={<AboutPage />} />
               <Route path="contact" element={<ContactPage />} />
               <Route path="plan-holiday" element={<PlanHolidayPage />} />

@@ -4,62 +4,63 @@ import AnimatedSection from '../../../components/common/AnimatedSection';
 
 export default function MalaysiaFeature() {
   return (
-    <section className="py-20 bg-white overflow-hidden" aria-label="Malaysia Feature">
-      <div className="container-hs">
-        <AnimatedSection>
-          <div className="grid grid-cols-1 lg:grid-cols-2 rounded-3xl overflow-hidden shadow-2xl border border-gray-100">
-            {/* Left Image Side */}
-            <div className="relative min-h-[380px] lg:min-h-[480px]">
-              <img
-                src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1200&q=80"
-                alt="Petronas Twin Towers Kuala Lumpur Malaysia"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/30" />
+    <section
+      className="relative w-full overflow-hidden bg-white"
+      aria-label="Featured Destination - Malaysia"
+    >
+      <div className="relative w-full min-h-[460px] sm:min-h-[500px] md:min-h-[540px] lg:min-h-[580px] xl:min-h-[620px] flex items-center">
+        {/* Full-width Panoramic Artwork Image */}
+        <img
+          src="/images/home-feature.jpg"
+          alt="Malaysia - Kuala Lumpur, Genting Highlands, Langkawi"
+          className="absolute inset-0 w-full h-full object-cover object-[center_right] sm:object-center select-none pointer-events-none"
+        />
 
-              {/* Cursive overlay */}
-              <div className="absolute top-8 left-8 font-script text-3xl text-white rotate-[-5deg] drop-shadow-lg">
-                A little Larger than<br />a whole new you
-              </div>
-            </div>
+        {/* Subtle, Light Sky Gradient on Left for Crisp Text Legibility while Preserving Vibrant Blue Sky */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(90deg, rgba(2, 105, 168, 0.42) 0%, rgba(2, 132, 199, 0.22) 32%, rgba(2, 132, 199, 0.08) 55%, transparent 72%)',
+          }}
+        />
 
-            {/* Right Card Side */}
-            <div className="bg-hs-blue-50/80 p-8 sm:p-12 lg:p-14 flex flex-col justify-between relative">
-              {/* Circular Partner Badge */}
-              <div className="absolute top-6 right-6 w-20 h-20 rounded-full border-2 border-dashed border-hs-blue-600/40 p-1 flex items-center justify-center text-center rotate-12 bg-white/60 backdrop-blur-xs shadow-sm">
-                <span className="text-[0.65rem] font-bold uppercase tracking-tight text-hs-blue-600 leading-tight">
-                  TRULY ASIA<br />MALAYSIA<br />PARTNER 2026
-                </span>
-              </div>
+        {/* Content Container positioned on Left Side (matching reference image) */}
+        <div className="container-hs relative z-10 py-14 sm:py-18 md:py-22 lg:py-24">
+          <AnimatedSection>
+            <div className="max-w-md sm:max-w-lg lg:max-w-xl">
+              {/* Eyebrow */}
+              <span className="text-xs sm:text-[13px] font-bold uppercase tracking-[0.25em] text-[#00E5FF] block mb-3 sm:mb-4 drop-shadow-sm">
+                FEATURED DESTINATION
+              </span>
 
-              <div>
-                <span className="text-xs font-semibold text-hs-blue-600 uppercase tracking-widest block mb-3">
-                  FEATURED DESTINATION
-                </span>
-                <h2 className="font-heading font-bold text-3xl sm:text-4xl text-hs-navy mb-4 leading-tight">
-                  Malaysia is closer<br />than you think.
-                </h2>
-                <p className="font-semibold text-hs-navy text-base sm:text-lg mb-4">
-                  Visa-free entry. Around four hours from Chennai. Incredible experiences.
-                </p>
-                <p className="text-hs-text-secondary text-sm sm:text-base leading-relaxed mb-8 max-w-md">
-                  From Kuala Lumpur's skyline to Genting's cool mountain air, Melaka and Penang's heritage to Langkawi's beaches, Malaysia lets you experience very different sides of one unforgettable destination.
-                </p>
-              </div>
+              {/* Main Heading */}
+              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-[2.65rem] lg:text-[3.1rem] text-white tracking-tight leading-[1.14] drop-shadow-md mb-4 sm:mb-5">
+                Malaysia is closer<br />than you think.
+              </h2>
 
+              {/* Descriptive Body Text */}
+              <p className="text-white text-xs sm:text-sm md:text-[0.95rem] leading-relaxed font-normal max-w-lg drop-shadow-sm mb-7 sm:mb-9">
+                Visa-free entry, around a four-hour flight from Chennai, and a destination filled with experiences. From Kuala Lumpur's skyline to Genting's cool mountain air, Melaka and Penang's heritage to Langkawi's beaches, Malaysia lets you build very different holidays from one destination.
+              </p>
+
+              {/* Single White Pill CTA Button matching reference image */}
               <div>
                 <Link
                   to="/destinations/malaysia"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-hs-blue-600 hover:bg-hs-navy text-white font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-sm sm:text-base"
+                  className="inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white text-[#00A896] hover:text-[#087f71] font-semibold text-xs sm:text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300"
                 >
                   Explore Malaysia Holidays
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>
-          </div>
-        </AnimatedSection>
+          </AnimatedSection>
+        </div>
       </div>
     </section>
   );
 }
+
+
+

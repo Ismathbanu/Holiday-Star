@@ -52,7 +52,7 @@ export default function TravelGuidePreview() {
             </h2>
           </div>
           <Link
-            to="/travel-guide"
+            to="/sports-tourism"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-hs-blue-600 hover:text-hs-navy transition-colors shrink-0"
           >
             See all guides
@@ -65,7 +65,7 @@ export default function TravelGuidePreview() {
           {travelGuidesData.map((guide, i) => (
             <AnimatedSection key={guide.id} delay={i * 0.08}>
               <Link
-                to="/travel-guide"
+                to="/sports-tourism"
                 className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 border border-gray-100 flex flex-col h-full"
               >
                 <div className="h-48 overflow-hidden relative">

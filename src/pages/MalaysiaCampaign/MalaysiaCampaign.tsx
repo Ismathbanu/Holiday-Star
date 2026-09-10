@@ -1,66 +1,232 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
   ArrowRight,
   Plane,
-  Clock,
-  Heart,
+  Camera,
   Users,
-  Shield,
-  Headphones,
-  CheckCircle2,
-  Tv,
+  Compass,
+  Mountain,
+  Palmtree,
   Utensils,
-  Newspaper,
-  Lock,
-  ChevronLeft,
-  ChevronRight,
-  Calendar
+  Footprints,
+  Check,
+  X,
+  Phone,
+  Sparkles,
+  Heart,
+  Building2,
+  Landmark,
+  Soup,
+  Waves,
 } from 'lucide-react';
 import AnimatedSection from '../../components/common/AnimatedSection';
 import { siteConfig } from '../../data/siteConfig';
 import { captureUTM, getPersistedUTM } from '../../utils/utm';
-import { testimonials } from '../../data/testimonials';
 
+// ── Tourism Malaysia Logo Component ──
+function TourismMalaysiaLogo({ className = 'h-9 w-auto' }: { className?: string }) {
+  return (
+    <img
+      src="/images/tourism_malaysia_clean.svg"
+      alt="Tourism Malaysia"
+      className={`${className} object-contain`}
+    />
+  );
+}
+
+// ── Form Validation Schema ──
 const formSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  phone: z.string().regex(/^[0-9+\s-]{10,15}$/, 'Enter a valid phone number'),
-  city: z.string().min(2, 'Enter your city'),
+  name: z.string().min(2, 'Please enter your full name'),
+  phone: z.string().regex(/^[0-9+\s-]{10,15}$/, 'Enter a valid WhatsApp phone number'),
   travelMonth: z.string().min(1, 'Select tentative travel month'),
-  groupSize: z.string().min(1, 'Select group size'),
+  groupSize: z.string().min(1, 'Select number of travellers'),
+  travelCompanion: z.string().min(1, 'Select who you are travelling with'),
+  preferredPackage: z.string().min(1, 'Select preferred package'),
+  passportHelp: z.string().optional(),
+  message: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
-const malaysiaSights = [
+// ── 5 Highlights / Destinations Data ──
+const malaysiaDestinations = [
   {
-    name: 'Kuala Lumpur',
-    desc: 'Iconic landmarks, shopping and food',
-    image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80',
+    id: 'kuala-lumpur',
+    name: 'KUALA LUMPUR',
+    tagline: 'The City That Never Stops',
+    image: '/images/malaysia_card.jpg',
   },
   {
-    name: 'Genting Highlands',
-    desc: 'Cooler mountains, entertainment and views',
-    image: 'https://images.unsplash.com/photo-1592364395653-83e648b20cc2?w=600&q=80',
+    id: 'genting-highlands',
+    name: 'GENTING HIGHLANDS',
+    tagline: 'Escape to the Mountains',
+    image: '/images/genting_highlands.jpg',
   },
   {
-    name: 'Melaka',
-    desc: 'History, heritage and culture',
-    image: 'https://images.unsplash.com/photo-1598025362874-49e4e498e5da?w=600&q=80',
+    id: 'langkawi',
+    name: 'LANGKAWI',
+    tagline: 'Your Tropical Island Escape',
+    image: '/images/langkawi_island.jpg',
   },
   {
-    name: 'Penang',
-    desc: 'Colourful streets and incredible food',
-    image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80',
+    id: 'malacca',
+    name: 'MALACCA',
+    tagline: "Step into Malaysia's Heritage",
+    image: '/images/melaka_heritage.jpg',
   },
   {
-    name: 'Langkawi',
-    desc: 'Beaches, islands and relaxation',
-    image: 'https://images.unsplash.com/photo-1609946860441-a51ffcf22198?w=600&q=80',
+    id: 'penang',
+    name: 'PENANG',
+    tagline: 'Culture, Colour & Character',
+    image: '/images/penang_street.png',
+  },
+];
+
+// ── 6 Multi-Destination Packages Data ──
+interface CampaignPackage {
+  id: string;
+  code: string;
+  title: string;
+  duration: string;
+  tagline: string;
+  image: string;
+  highlights: string[];
+}
+
+const campaignPackages: CampaignPackage[] = [
+  {
+    id: 'pkg-1',
+    code: '01',
+    title: 'KUALA LUMPUR + GENTING',
+    duration: '3 Nights / 4 Days',
+    tagline: 'City sights + mountain escape',
+    image: '/images/malaysia_card.jpg',
+    highlights: [
+      'Petronas Twin Towers & Skybridge visit',
+      'Genting Highlands Awana SkyWay Cable Car',
+      'Batu Caves Murugan Temple stopover',
+      'Kuala Lumpur City & Shopping Tour',
+      'Comfortable private airport & hotel transfers',
+    ],
+  },
+  {
+    id: 'pkg-2',
+    code: '02',
+    title: 'KUALA LUMPUR + MALACCA',
+    duration: '3 Nights / 4 Days',
+    tagline: 'Modern city + heritage experiences',
+    image: '/images/melaka_heritage.jpg',
+    highlights: [
+      'UNESCO World Heritage historical Malacca tour',
+      'Dutch Red Square & Christ Church',
+      'Jonker Street antique & culinary walk',
+      'Kuala Lumpur modern skyline exploration',
+      'Full-day private guided heritage journey',
+    ],
+  },
+  {
+    id: 'pkg-3',
+    code: '03',
+    title: 'KUALA LUMPUR + LANGKAWI',
+    duration: '4 Nights / 5 Days',
+    tagline: 'City life + tropical island escape',
+    image: '/images/langkawi_island.jpg',
+    highlights: [
+      'Kuala Lumpur City discovery & shopping',
+      'Petronas Twin Towers photo stop',
+      'Langkawi SkyCab & SkyBridge experience',
+      'Tropical Island Hopping & Eagle Square',
+      'White sand beach leisure & sunset views',
+    ],
+  },
+  {
+    id: 'pkg-4',
+    code: '04',
+    title: 'KUALA LUMPUR + PENANG',
+    duration: '4 Nights / 5 Days',
+    tagline: 'City + heritage + local experiences',
+    image: '/images/penang_street.png',
+    highlights: [
+      'George Town UNESCO heritage street art trail',
+      'Penang Hill Funicular train ascent',
+      'Kek Lok Si Temple & heritage clan jetties',
+      'World-famous Malaysian street food tasting',
+      'Kuala Lumpur central city sightseeing',
+    ],
+  },
+  {
+    id: 'pkg-5',
+    code: '05',
+    title: 'KUALA LUMPUR + GENTING + LANGKAWI',
+    duration: '5 Nights / 6 Days',
+    tagline: 'Highlands + city + island',
+    image: '/images/home-feature.jpg',
+    highlights: [
+      'The ultimate 3-in-1 Malaysian journey',
+      'Petronas Towers & vibrant Bukit Bintang',
+      'Cool mountain climate at Genting Highlands',
+      'Cable car ride with mountain mist views',
+      'Tropical beach days & boat cruises in Langkawi',
+    ],
+  },
+  {
+    id: 'pkg-6',
+    code: '06',
+    title: 'KUALA LUMPUR + MALACCA + PENANG',
+    duration: '6 Nights / 7 Days',
+    tagline: 'A journey through city, culture and heritage',
+    image: '/images/golden_bridge.png',
+    highlights: [
+      'Comprehensive cultural & historical expedition',
+      'Modern capital highlights in Kuala Lumpur',
+      'Colonial Portuguese & Dutch heritage in Malacca',
+      'Peranakan culture & murals in George Town',
+      'Daily breakfast & dedicated tour coordinators',
+    ],
+  },
+];
+
+// ── 5 Experience Pillars Data ──
+const experiencePillars = [
+  {
+    icon: Building2,
+    title: 'EXPLORE',
+    desc: 'Iconic cities and attractions.',
+    iconColor: '#0284C7',
+    titleColor: '#0284C7',
+  },
+  {
+    icon: Mountain,
+    title: 'ESCAPE',
+    desc: 'From cool highlands to tropical islands.',
+    iconColor: '#00A896',
+    titleColor: '#00A896',
+  },
+  {
+    icon: Landmark,
+    title: 'DISCOVER',
+    desc: 'Culture, heritage and traditions.',
+    iconColor: '#A855F7',
+    titleColor: '#00A896',
+  },
+  {
+    icon: Soup,
+    title: 'TASTE',
+    desc: 'Incredible local food experiences.',
+    iconColor: '#8B5CF6',
+    titleColor: '#00A896',
+  },
+  {
+    icon: Waves,
+    title: 'ADVENTURE',
+    desc: 'Exciting attractions and experiences.',
+    iconColor: '#0284C7',
+    titleColor: '#0284C7',
   },
 ];
 
@@ -69,6 +235,10 @@ export default function MalaysiaCampaign() {
     captureUTM();
   }, []);
 
+  // Modal State for Package Details
+  const [activePackage, setActivePackage] = useState<CampaignPackage | null>(null);
+
+  // Form State
   const {
     register,
     handleSubmit,
@@ -79,209 +249,273 @@ export default function MalaysiaCampaign() {
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      groupSize: 'Couple',
+      travelCompanion: 'Couple',
+      groupSize: '2 Travellers',
+      preferredPackage: 'Kuala Lumpur + Langkawi (4N/5D)',
     },
   });
 
-  const selectedGroupSize = watch('groupSize');
-  const [testimonialIndex, setTestimonialIndex] = useState(0);
-
-  const handlePrevTestimonial = () => {
-    setTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
-  const handleNextTestimonial = () => {
-    setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
-  };
+  const selectedCompanion = watch('travelCompanion');
 
   const onSubmit = (data: FormData) => {
     const utm = getPersistedUTM();
 
     const message = `Hello Holiday Star Tours!
-I'm interested in the Tourism Malaysia Outbound Campaign.
-Name: ${data.name}
-Phone: ${data.phone}
-City: ${data.city}
-Travel Month: ${data.travelMonth}
-Group Size: ${data.groupSize}
-${utm.utm_source ? `UTM Source: ${utm.utm_source}` : ''}`;
+I would like to inquire about the Malaysia Campaign Packages:
+
+*Name:* ${data.name}
+*WhatsApp:* ${data.phone}
+*Tentative Travel Month:* ${data.travelMonth}
+*Number of Travellers:* ${data.groupSize}
+*Travelling With:* ${data.travelCompanion}
+*Preferred Package:* ${data.preferredPackage}
+${data.passportHelp ? `*Passport/Visa Assistance Needed:* ${data.passportHelp}` : ''}
+${data.message ? `*Notes:* ${data.message}` : ''}
+
+*Source:* ${utm?.source || 'Direct Website'}
+*Campaign:* Malaysia Special Campaign`;
 
     const encoded = encodeURIComponent(message);
     window.open(`https://wa.me/${siteConfig.contact.whatsapp}?text=${encoded}`, '_blank');
     reset();
   };
 
+  const scrollToForm = () => {
+    const el = document.getElementById('enquiry-form');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <>
+    <div className="min-h-screen bg-white text-[#0A2540]">
       <Helmet>
-        <title>Malaysia is Closer Than You Think | Holiday Star × Tourism Malaysia</title>
+        <title>Experience Malaysia | Exclusive International Holiday Packages from Chennai</title>
         <meta
           name="description"
-          content="Official Visit Malaysia campaign by Holiday Star Tours & Travels. 10% OFF selected Malaysia tour packages from Chennai. Visa-free entry, direct flights."
+          content="Discover Malaysia with Holiday Star Tours & Travels. Visa-free travel for Indian passport holders, 4-hour flights from Chennai, and curated itineraries across Kuala Lumpur, Genting, Langkawi & Penang."
         />
-        <link rel="canonical" href="https://holidaystartours.com/campaigns/malaysia" />
       </Helmet>
 
-      {/* SECTION 1: HERO */}
-      <section className="relative min-h-[88vh] flex items-center pt-28 pb-16 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1920&q=80"
-            alt="Petronas Twin Towers Kuala Lumpur"
-            className="w-full h-full object-cover"
-          />
-          {/* Dark Full-Width Gradient Overlay */}
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-slate-950/95 via-slate-900/80 to-slate-950/40" />
-        </div>
+      {/* ── SECTION 1: Grand Cinematic Hero ── */}
+      <section className="relative w-full min-h-[500px] sm:min-h-[540px] md:min-h-[580px] lg:min-h-[620px] xl:min-h-[650px] flex items-center overflow-hidden pt-20 sm:pt-24 lg:pt-28 pb-12 sm:pb-16 lg:pb-20">
+        {/* Full-width Panoramic Background Image */}
+        <img
+          src="/images/malacam-herobg.jpg"
+          alt="Malaysia - Kuala Lumpur skyline, Genting highlands, Langkawi waters"
+          className="absolute inset-0 w-full h-full object-cover object-[center_top] select-none pointer-events-none"
+        />
 
-        {/* Cursive Annotations */}
-        <div className="absolute top-28 right-8 md:right-24 z-20 font-script text-3xl md:text-4xl text-white rotate-[4deg] drop-shadow-md hidden sm:block">
-          Same People.<br />New Horizons ✨
-        </div>
-        <div className="absolute bottom-12 right-8 z-20 font-script text-3xl md:text-4xl text-amber-300 rotate-[-3deg] drop-shadow-md hidden sm:block">
-          Truly Asia.<br />Truly Closer.
-        </div>
+        {/* Left Side Rich Contrast Gradient Overlay to make all text crystal-clear and readable */}
+        <div
+          className="absolute inset-0 pointer-events-none hidden md:block"
+          style={{
+            background:
+              'linear-gradient(90deg, rgba(2, 16, 36, 0.94) 0%, rgba(3, 22, 48, 0.92) 20%, rgba(3, 25, 54, 0.88) 38%, rgba(4, 28, 60, 0.55) 54%, rgba(4, 28, 60, 0.15) 66%, transparent 76%)',
+          }}
+        />
 
-        <div className="relative z-10 container-hs w-full">
-          <div className="max-w-xl md:max-w-2xl text-white">
-            {/* Dual Brand Logos Header */}
-            <div className="flex items-center gap-3 mb-6 bg-white/10 backdrop-blur-md p-2.5 rounded-2xl border border-white/20 inline-flex shadow-xs">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-red-500 inline-block" />
-                <span className="font-bold text-xs text-white tracking-tight">Tourism Malaysia • Truly Asia</span>
+        {/* Mobile / Tablet Full-coverage Gradient Overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none md:hidden"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(2, 16, 36, 0.88) 0%, rgba(3, 24, 52, 0.92) 50%, rgba(2, 16, 36, 0.95) 100%)',
+          }}
+        />
+
+        {/* Hero Content Container */}
+        <div className="container-hs relative z-10 md:pl-8 lg:pl-16 xl:pl-20">
+          <AnimatedSection>
+            <div className="max-w-xl lg:max-w-2xl text-white">
+              {/* Co-Branding Logos: Holiday Star & Tourism Malaysia */}
+              <div className="inline-flex items-center gap-4 sm:gap-6 px-5 sm:px-7 py-3 sm:py-3.5 rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-md shadow-xl border border-white/80 mb-6 sm:mb-8">
+                <img
+                  src="/images/hslogo.png"
+                  alt="Holiday Star Tours & Travels"
+                  className="h-9 sm:h-11 lg:h-12 w-auto object-contain"
+                />
+                <span className="w-px h-7 sm:h-9 bg-gray-200" />
+                <img
+                  src="/images/tourism_malaysia_clean.svg"
+                  alt="Tourism Malaysia"
+                  className="h-8 sm:h-9 lg:h-10 w-auto object-contain"
+                />
               </div>
-              <span className="text-gray-300 font-light">×</span>
-              <div className="flex items-center gap-1.5">
-                <span className="font-heading font-bold text-xs text-sky-300">Holiday Star</span>
-              </div>
-            </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="font-heading font-bold text-4xl sm:text-5xl md:text-6xl text-white leading-[1.12] mb-6"
-            >
-              Malaysia is closer<br />
-              <span className="text-sky-400 font-script text-4xl sm:text-5xl md:text-6xl font-normal">than you think.</span>
-            </motion.h1>
+              {/* Bold Main Title */}
+              <h1 className="font-heading font-black text-4xl sm:text-6xl md:text-7xl lg:text-[4.8rem] tracking-tight leading-none text-white drop-shadow-lg mb-3 sm:mb-4">
+                MALAYSIA
+              </h1>
 
-            {/* 3 Quick Badges */}
-            <div className="flex flex-wrap items-center gap-3 mb-8">
-              <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-xs">
-                <Plane className="w-4 h-4 text-sky-400" />
-                <span>Visa-free entry</span>
-              </div>
-              <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-xs">
-                <Clock className="w-4 h-4 text-sky-400" />
-                <span>4-hour flight from Chennai</span>
-              </div>
-              <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-xs">
-                <Heart className="w-4 h-4 text-sky-400" />
-                <span>Curated by Holiday Star, backed by Tourism Malaysia.</span>
-              </div>
-            </div>
+              {/* Subtitle */}
+              <p className="font-heading font-bold text-base sm:text-xl md:text-2xl text-white drop-shadow-md mb-3">
+                Your Next Holiday Is Closer Than You Think.
+              </p>
 
-            <div className="flex flex-wrap items-center gap-4">
-              <a
-                href="#enquiry-form"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#0066CC] hover:bg-[#0052A3] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-sm sm:text-base cursor-pointer"
-              >
-                Get My Free Malaysia Itinerary
-                <ArrowRight className="w-4 h-4" />
-              </a>
+              {/* Description */}
+              <p className="text-white/90 text-xs sm:text-sm md:text-base leading-relaxed font-normal max-w-lg drop-shadow-sm mb-7 sm:mb-8">
+                Discover vibrant cities, misty highlands, tropical islands, rich heritage and
+                unforgettable experiences across Malaysia. Curated Malaysia holidays by Holiday
+                Star Tours & Travels.
+              </p>
 
-              <a
-                href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent('Hi Holiday Star! I want to know more about the Malaysia Campaign 10% OFF offer.')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 px-7 py-4 bg-white/90 text-slate-900 hover:bg-white font-semibold rounded-full border border-white/50 transition-all duration-300 shadow-md text-sm sm:text-base cursor-pointer"
-              >
-                <svg className="w-5 h-5 fill-current text-emerald-600" viewBox="0 0 24 24">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                </svg>
-                WhatsApp Us
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3.5 sm:gap-4">
+                <button
+                  onClick={scrollToForm}
+                  className="inline-flex items-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-white text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 bg-[#00BFA5] hover:bg-[#00a892]"
+                >
+                  Explore Holiday Packages
+                  <ArrowRight className="w-4 h-4" />
+                </button>
 
-      {/* SECTION 2: EXCLUSIVE CAMPAIGN OFFER BANNER */}
-      <section className="py-8 bg-amber-50/80 border-y border-amber-200/60 relative overflow-hidden">
-        <div className="container-hs">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
-            <div className="flex items-center gap-5">
-              {/* Red Hibiscus Graphic Icon */}
-              <div className="w-14 h-14 rounded-2xl bg-red-600 text-white flex items-center justify-center font-bold text-2xl shrink-0 shadow-md">
-                🌺
-              </div>
-              <div>
-                <span className="text-[0.7rem] font-bold text-red-600 uppercase tracking-widest block mb-0.5">
-                  EXCLUSIVE CAMPAIGN OFFER
-                </span>
-                <h3 className="font-heading font-extrabold text-2xl sm:text-3xl text-hs-navy">
-                  10% OFF <span className="font-normal text-base sm:text-xl text-hs-navy">selected Malaysia holiday packages</span>
-                </h3>
-                <p className="text-xs text-hs-text-secondary mt-0.5">
-                  Valid for enquiries made through this page. October – November 2026.
-                </p>
+                <a
+                  href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
+                    siteConfig.contact.whatsappMessage
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full bg-black/45 hover:bg-black/65 backdrop-blur-md border border-white/40 text-white font-semibold text-xs sm:text-sm shadow-md transition-all duration-300 hover:scale-103"
+                >
+                  <svg className="w-4 h-4 fill-[#25D366]" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                  </svg>
+                  <span>WhatsApp Us</span>
+                </a>
               </div>
             </div>
-
-            {/* Circular Stamp Graphic */}
-            <div className="w-20 h-20 rounded-full border-2 border-dashed border-hs-navy/30 p-1 flex items-center justify-center text-center rotate-12 bg-white/40 shrink-0 hidden md:flex">
-              <span className="text-[0.55rem] font-bold uppercase tracking-widest text-hs-navy leading-tight">
-                TRAVEL<br />EXPLORE<br />DISCOVER<br />REPEAT
-              </span>
-            </div>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 
-      {/* SECTION 3: EXPERIENCE THE MANY SIDES OF MALAYSIA */}
-      <section className="py-20 bg-hs-cream border-b border-gray-100" aria-label="Sights">
-        <div className="container-hs">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      {/* ── SECTION 2: Floating Visa-Free Entry Banner ── */}
+      <section className="relative z-20 -mt-10 sm:-mt-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="bg-white rounded-[26px] p-3 sm:p-4 shadow-[0_16px_40px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col lg:flex-row items-center justify-between gap-5">
+          {/* Gradient Banner on Left */}
+          <div
+            className="w-full lg:w-auto flex-1 rounded-2xl p-4 sm:p-5 flex items-center gap-4 text-white"
+            style={{
+              background: 'linear-gradient(90deg, #00C4B4 0%, #2563EB 55%, #8B5CF6 100%)',
+            }}
+          >
+            {/* Circular Malaysia Flag Badge */}
+            <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-md flex items-center justify-center bg-white">
+              <svg viewBox="0 0 64 64" className="w-full h-full">
+                {/* 14 Stripes */}
+                {[...Array(14)].map((_, i) => (
+                  <rect
+                    key={i}
+                    y={(i * 64) / 14}
+                    width="64"
+                    height={64 / 14}
+                    fill={i % 2 === 0 ? '#CC0000' : '#FFFFFF'}
+                  />
+                ))}
+                {/* Canton */}
+                <rect width="32" height="32" fill="#000066" />
+                {/* Crescent & 14-point star */}
+                <circle cx="16" cy="16" r="10" fill="#FFCC00" />
+                <circle cx="19" cy="16" r="8" fill="#000066" />
+                <polygon
+                  points="22,12 23,15 26,13 25,16 28,16 25,18 27,20 24,19 23,22 21,19 19,21 20,18 17,17 20,16"
+                  fill="#FFCC00"
+                />
+              </svg>
+            </div>
             <div>
-              <h2 className="font-heading font-bold text-3xl sm:text-4xl text-hs-navy mb-2">
-                Experience the many sides of Malaysia
-              </h2>
-              <p className="text-hs-text-secondary text-sm sm:text-base max-w-2xl font-light">
-                From vibrant cities to cool highlands, heritage towns and tropical islands — Malaysia gives you a new experience at every turn.
+              <h3 className="font-heading font-black text-sm sm:text-base tracking-wide uppercase">
+                VISA-FREE ENTRY FOR INDIAN TRAVELLERS
+              </h3>
+              <p className="text-white/90 text-xs sm:text-[13px] font-normal">
+                One more reason to make Malaysia your next international holiday.
               </p>
             </div>
-            <div className="font-script text-3xl text-hs-blue-600 rotate-[-3deg] shrink-0 hidden md:block">
-              One Country. Many Experiences.
-            </div>
           </div>
 
-          {/* 5 Vertical Sights Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {malaysiaSights.map((sight, i) => (
-              <AnimatedSection key={i} delay={i * 0.06}>
-                <div className="group relative block h-[380px] rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 border border-gray-100">
+          {/* 3 Travel Feature Points */}
+          <div className="flex flex-wrap items-center justify-center lg:justify-end gap-5 sm:gap-6 px-2 text-xs sm:text-[13px] font-semibold text-[#0A2540]">
+            <div className="flex items-center gap-2 text-center sm:text-left">
+              <div className="w-8 h-8 rounded-full bg-sky-50 flex items-center justify-center text-[#0284C7]">
+                <Plane className="w-4 h-4" />
+              </div>
+              <span>Easy International Gateway</span>
+            </div>
+            <div className="flex items-center gap-2 text-center sm:text-left">
+              <div className="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center text-[#00A896]">
+                <Camera className="w-4 h-4" />
+              </div>
+              <span>Diverse Experiences</span>
+            </div>
+            <div className="flex items-center gap-2 text-center sm:text-left">
+              <div className="w-8 h-8 rounded-full bg-purple-50 flex items-center justify-center text-[#8B5CF6]">
+                <Users className="w-4 h-4" />
+              </div>
+              <span>Perfect for Every Traveller</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 3: Discover Malaysia (5 Destination Cards) ── */}
+      <section className="relative py-14 sm:py-18 md:py-20 overflow-hidden bg-white">
+        {/* Scenic Tropical Backdrop with corner leaves and hibiscus flower */}
+        <div className="absolute inset-0 pointer-events-none select-none">
+          <img
+            src="/images/malaysia-discover.jpg"
+            alt="Discover Malaysia backdrop"
+            className="w-full h-full object-fill"
+          />
+          {/* Soft White Overlay matching reference */}
+          <div className="absolute inset-0 bg-white/40" />
+        </div>
+
+        {/* Content Container */}
+        <div className="container-hs relative z-10">
+          {/* Left-Aligned Heading matching reference image */}
+          <div className="max-w-2xl mb-8 sm:mb-10 text-left">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-[#00A896] block mb-2 sm:mb-2.5">
+              DISCOVER MALAYSIA
+            </span>
+            <h2 className="font-heading font-extrabold text-2xl sm:text-3xl md:text-[2.35rem] text-[#0A2540] tracking-tight leading-[1.2]">
+              Vibrant cities.{' '}
+              <span className="bg-gradient-to-r from-[#0284C7] to-[#4F46E5] bg-clip-text text-transparent">
+                Serene highlands.
+              </span>
+              <br />
+              Tropical islands.{' '}
+              <span className="bg-gradient-to-r from-[#7C3AED] to-[#9333EA] bg-clip-text text-transparent">
+                Rich heritage.
+              </span>
+            </h2>
+          </div>
+
+          {/* 5 Destination Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
+            {malaysiaDestinations.map((dest, i) => (
+              <AnimatedSection key={dest.id} delay={i * 0.08}>
+                <div
+                  onClick={scrollToForm}
+                  className="group relative h-[300px] sm:h-[310px] md:h-[320px] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 cursor-pointer"
+                >
                   <img
-                    src={sight.image}
-                    alt={sight.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    src={dest.image}
+                    alt={dest.name}
+                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
-
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white flex flex-col justify-between h-full">
-                    <div />
-                    <div>
-                      <h3 className="font-heading font-bold text-xl text-white mb-1">
-                        {sight.name}
+                  {/* Card Bottom Text Section with dark gradient & side-by-side arrow */}
+                  <div className="absolute inset-x-0 bottom-0 pt-16 pb-4 px-3.5 bg-gradient-to-t from-[#02182B] via-[#02182B]/85 to-transparent flex items-end justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-heading font-extrabold text-[13px] sm:text-[14px] text-white tracking-wide uppercase leading-tight mb-1 truncate">
+                        {dest.name}
                       </h3>
-                      <p className="text-white/80 text-xs font-light leading-snug line-clamp-2 mb-3">
-                        {sight.desc}
+                      <p className="text-white/80 text-[11px] sm:text-xs font-normal leading-tight truncate">
+                        {dest.tagline}
                       </p>
-                      <div className="flex justify-end pt-1">
-                        <div className="w-7 h-7 rounded-full bg-white/20 backdrop-blur-md group-hover:bg-hs-blue-600 flex items-center justify-center text-white transition-colors duration-300 shadow-sm">
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </div>
-                      </div>
+                    </div>
+                    <div className="flex-shrink-0 mb-0.5">
+                      <span className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full bg-white text-[#0A2540] group-hover:bg-[#00A896] group-hover:text-white flex items-center justify-center transition-all duration-300 shadow-md group-hover:scale-110">
+                        <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -291,323 +525,224 @@ ${utm.utm_source ? `UTM Source: ${utm.utm_source}` : ''}`;
         </div>
       </section>
 
-      {/* SECTION 4: AS SEEN AT / MEDIA STRIP */}
-      <section className="py-12 bg-white border-b border-gray-100">
-        <div className="container-hs">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-4">
-              <h3 className="font-heading font-bold text-2xl text-hs-navy mb-1">
-                As seen at
-              </h3>
-              <p className="text-xs text-hs-text-muted">
-                Our Malaysia campaign is reaching travellers across Chennai and beyond.
+      {/* ── SECTION 4: Malaysia Holiday Collection (Packages Grid) ── */}
+      <section
+        className="relative py-14 sm:py-18 md:py-20 overflow-hidden bg-white"
+        id="packages-collection"
+      >
+        {/* Scenic Tropical Backdrop with Petronas & Lagoon Illustration */}
+        <div className="absolute inset-0 pointer-events-none select-none">
+          <img
+            src="/images/malaysia-collection.jpg"
+            alt="Malaysia Holiday Collection backdrop"
+            className="w-full h-full object-fill"
+          />
+        </div>
+
+        <div className="container-hs relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-start">
+            {/* Left Column: Heading */}
+            <div className="lg:col-span-4 lg:pt-2">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-[#0284C7] block mb-1">
+                MALAYSIA HOLIDAY
+              </span>
+              <h2 className="font-heading font-black text-3xl sm:text-4xl text-[#0A2540] tracking-tight leading-tight mb-2">
+                COLLECTION
+              </h2>
+              <p className="font-heading font-bold text-sm sm:text-base text-[#6366F1] mb-3">
+                Curated Multi-Destination Experiences
+              </p>
+              <p className="text-[#475569] text-xs sm:text-sm leading-relaxed max-w-sm">
+                Choose a holiday that brings together Malaysia&apos;s cities, highlands, heritage and
+                islands.
               </p>
             </div>
 
-            <div className="lg:col-span-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="p-3 rounded-xl bg-hs-cream border border-gray-100 text-center">
-                <Tv className="w-5 h-5 text-hs-blue-600 mx-auto mb-1" />
-                <span className="font-bold text-xs text-hs-navy block">PVR Escape</span>
-                <span className="text-[0.65rem] text-hs-text-muted block">Express Avenue</span>
-              </div>
-              <div className="p-3 rounded-xl bg-hs-cream border border-gray-100 text-center">
-                <Utensils className="w-5 h-5 text-hs-blue-600 mx-auto mb-1" />
-                <span className="font-bold text-xs text-hs-navy block">Smoke Hub</span>
-                <span className="text-[0.65rem] text-hs-text-muted block">Chennai & Madurai</span>
-              </div>
-              <div className="p-3 rounded-xl bg-hs-cream border border-gray-100 text-center">
-                <Newspaper className="w-5 h-5 text-hs-blue-600 mx-auto mb-1" />
-                <span className="font-bold text-xs text-hs-navy block">Newspaper</span>
-                <span className="text-[0.65rem] text-hs-text-muted block">Local Edition</span>
-              </div>
-              <div className="p-3 rounded-xl bg-hs-cream border border-gray-100 text-center">
-                <svg className="w-5 h-5 fill-hs-blue-600 mx-auto mb-1" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-                <span className="font-bold text-xs text-hs-navy block">Instagram</span>
-                <span className="text-[0.65rem] text-hs-text-muted block">Featured Reels</span>
-              </div>
-            </div>
-
-            <div className="lg:col-span-2 font-script text-2xl text-hs-green rotate-[4deg] text-center lg:text-right">
-              Spreading the Travel Love 💚
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 5: CAMPAIGN FORM & REVIEWS SPLIT */}
-      <section id="enquiry-form" className="py-20 bg-hs-cream border-b border-gray-100">
-        <div className="container-hs">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
-            {/* Left Image & Review Card */}
-            <div className="lg:col-span-5 relative rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col justify-between p-6 sm:p-8 min-h-[480px]">
-              <img
-                src="/images/hero_bg.png"
-                alt="Karst bay landscape"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/30" />
-
-              <div className="relative z-10 font-script text-3xl sm:text-4xl text-white rotate-[-3deg] drop-shadow-md leading-tight">
-                Better Holidays.<br />Happier People.
-              </div>
-
-              {/* Review Card Overlay with Navigation Arrows */}
-              <div className="relative z-10 mt-auto flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handlePrevTestimonial}
-                  aria-label="Previous review"
-                  className="w-8 h-8 rounded-full bg-white/90 hover:bg-white text-hs-navy shadow-md flex items-center justify-center flex-shrink-0 transition-transform active:scale-95 cursor-pointer"
+            {/* Right Column: 6 Packages Grid (3x2) */}
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 lg:gap-4.5">
+              {campaignPackages.map((pkg) => (
+                <div
+                  key={pkg.id}
+                  className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-gray-100 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group"
                 >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
+                  <div>
+                    {/* Package Image */}
+                    <div className="relative h-36 sm:h-40 overflow-hidden">
+                      <img
+                        src={pkg.image}
+                        alt={pkg.title}
+                        className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    </div>
 
-                <div className="flex-1 bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-xl border border-white/20">
-                  <div className="flex items-center gap-3 mb-2.5">
-                    <img
-                      src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&q=80"
-                      alt={testimonials[testimonialIndex]?.name || 'Traveller'}
-                      className="w-11 h-11 rounded-full object-cover border-2 border-[#0066CC]"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <h4 className="font-heading font-bold text-hs-navy text-sm truncate">
-                        {testimonials[testimonialIndex]?.name || 'Boovisha Rajan'}
-                      </h4>
-                      <p className="text-[0.65rem] text-hs-text-muted">
-                        Malaysia Traveller
+                    {/* Package Content */}
+                    <div className="p-3.5 sm:p-4">
+                      <h3 className="font-heading font-black text-xs sm:text-[13px] text-[#0A2540] tracking-wide leading-snug mb-1">
+                        {pkg.code} | {pkg.title}
+                      </h3>
+                      <p className="text-xs font-bold text-[#00A896] mb-1">{pkg.duration}</p>
+                      <p className="text-[#64748B] text-[11px] sm:text-xs leading-normal line-clamp-2">
+                        {pkg.tagline}
                       </p>
                     </div>
-                    <div className="text-amber-400 font-bold text-xs flex items-center gap-0.5 flex-shrink-0">
-                      ★★★★★
-                    </div>
                   </div>
-                  <p className="text-xs text-hs-text-secondary leading-relaxed italic line-clamp-3">
-                    "{testimonials[testimonialIndex]?.quote || 'If you are planning an international trip you can blindly choose Holiday Star. They organised everything — airport pickup, stay, city tours — and I had plenty of time to enjoy each place.'}"
-                  </p>
-                </div>
 
-                <button
-                  type="button"
-                  onClick={handleNextTestimonial}
-                  aria-label="Next review"
-                  className="w-8 h-8 rounded-full bg-white/90 hover:bg-white text-hs-navy shadow-md flex items-center justify-center flex-shrink-0 transition-transform active:scale-95 cursor-pointer"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Right Campaign Form Card - Matching Reference Image */}
-            <div className="lg:col-span-7 bg-[#F0F6FC] p-8 sm:p-10 rounded-3xl shadow-lg border border-blue-100 flex flex-col justify-between relative overflow-hidden">
-              {/* Palm Leaf Graphic Top Right */}
-              <div className="absolute -top-4 -right-4 w-36 h-36 text-emerald-600/30 pointer-events-none hidden sm:block">
-                <svg viewBox="0 0 100 100" className="w-full h-full fill-current">
-                  <path d="M100 0 C80 20 60 40 40 50 C20 60 10 80 0 100 C20 80 40 60 50 40 C60 20 80 10 100 0 Z" opacity="0.4" />
-                  <path d="M100 0 C70 30 50 60 30 80 C15 90 0 100 0 100 C20 85 40 70 60 50 C80 30 95 15 100 0 Z" />
-                </svg>
-              </div>
-
-              <div>
-                <h3 className="font-heading font-bold text-2xl sm:text-3xl text-hs-navy mb-2 leading-tight">
-                  Tell us about your<br />Malaysia holiday.
-                </h3>
-                <p className="text-xs text-hs-text-secondary mb-6 font-light">
-                  Fill in your details and we'll get back to you with a customised itinerary. No spam. No obligation.
-                </p>
-
-                {isSubmitSuccessful ? (
-                  <div className="p-6 rounded-2xl bg-hs-green-accent text-center border border-hs-green/30">
-                    <CheckCircle2 className="w-12 h-12 text-hs-green mx-auto mb-2" />
-                    <h4 className="font-bold text-lg text-hs-navy mb-1">Enquiry Sent Successfully!</h4>
-                    <p className="text-xs text-hs-text-secondary">
-                      Opening WhatsApp to connect you directly with our travel expert...
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-semibold text-hs-navy mb-1.5">
-                          Name *
-                        </label>
-                        <input
-                          {...register('name')}
-                          type="text"
-                          placeholder="Your Name"
-                          className="w-[100%] px-4 py-3 rounded-xl border border-blue-200/80 text-sm focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 bg-white shadow-2xs text-hs-navy placeholder:text-gray-400"
-                        />
-                        {errors.name && <span className="text-[0.65rem] text-red-500 mt-1 block">{errors.name.message}</span>}
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-semibold text-hs-navy mb-1.5">
-                          WhatsApp Number *
-                        </label>
-                        <input
-                          {...register('phone')}
-                          type="tel"
-                          placeholder="+91 Phone Number"
-                          className="w-[100%] px-4 py-3 rounded-xl border border-blue-200/80 text-sm focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 bg-white shadow-2xs text-hs-navy placeholder:text-gray-400"
-                        />
-                        {errors.phone && <span className="text-[0.65rem] text-red-500 mt-1 block">{errors.phone.message}</span>}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-semibold text-hs-navy mb-1.5">
-                          City *
-                        </label>
-                        <input
-                          {...register('city')}
-                          type="text"
-                          placeholder="e.g. Chennai"
-                          className="w-[100%] px-4 py-3 rounded-xl border border-blue-200/80 text-sm focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 bg-white shadow-2xs text-hs-navy placeholder:text-gray-400"
-                        />
-                        {errors.city && <span className="text-[0.65rem] text-red-500 mt-1 block">{errors.city.message}</span>}
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-semibold text-hs-navy mb-1.5">
-                          Preferred Travel Month
-                        </label>
-                        <div className="relative">
-                          <input
-                            {...register('travelMonth')}
-                            type="text"
-                            placeholder="Select Month"
-                            className="w-[100%] px-4 py-3 pr-10 rounded-xl border border-blue-200/80 text-sm focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 bg-white shadow-2xs text-hs-navy placeholder:text-gray-400"
-                          />
-                          <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                            <Calendar className="w-4 h-4 text-gray-400" />
-                          </div>
-                        </div>
-                        {errors.travelMonth && <span className="text-[0.65rem] text-red-500 mt-1 block">{errors.travelMonth.message}</span>}
-                      </div>
-                    </div>
-
-                    {/* Group Size Radio Buttons */}
-                    <div>
-                      <label className="block text-xs font-semibold text-hs-navy mb-2.5">
-                        Group Size *
-                      </label>
-                      <div className="flex flex-wrap items-center gap-6 pt-0.5">
-                        {['Solo', 'Couple', 'Family', 'Group'].map((size) => {
-                          const isSelected = selectedGroupSize === size;
-                          return (
-                            <label
-                              key={size}
-                              className="inline-flex items-center gap-2 cursor-pointer group select-none"
-                            >
-                              <input
-                                type="radio"
-                                value={size}
-                                checked={isSelected}
-                                onChange={() => setValue('groupSize', size)}
-                                className="sr-only"
-                              />
-                              <div
-                                className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-200 ${
-                                  isSelected
-                                    ? 'border-[#0066CC] bg-white ring-2 ring-[#0066CC]/20'
-                                    : 'border-gray-300 bg-white group-hover:border-[#0066CC]'
-                                }`}
-                              >
-                                {isSelected && (
-                                  <span className="w-2 h-2 rounded-full bg-[#0066CC]" />
-                                )}
-                              </div>
-                              <span
-                                className={`text-xs font-medium transition-colors ${
-                                  isSelected
-                                    ? 'text-[#0066CC] font-semibold'
-                                    : 'text-hs-navy group-hover:text-[#0066CC]'
-                                }`}
-                              >
-                                {size}
-                              </span>
-                            </label>
-                          );
-                        })}
-                      </div>
-                      {errors.groupSize && (
-                        <span className="text-[0.65rem] text-red-500 mt-1 block">
-                          {errors.groupSize.message}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Submit Button */}
+                  {/* Get Details Button */}
+                  <div className="p-3.5 sm:p-4 pt-0">
                     <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-[100%] py-3.5 sm:py-4 px-6 bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold text-sm sm:text-base rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2.5 mt-5 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                      onClick={() => setActivePackage(pkg)}
+                      className="w-full py-2 sm:py-2.5 rounded-full bg-[#00A896] hover:bg-[#008f80] text-white font-bold text-xs transition-all shadow-sm hover:shadow-md hover:scale-[1.02]"
                     >
-                      {isSubmitting ? (
-                        <span>Sending...</span>
-                      ) : (
-                        <>
-                          <span>Get My Free Malaysia Itinerary</span>
-                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
-                        </>
-                      )}
+                      Get Package Details
                     </button>
-                  </form>
-                )}
-              </div>
-
-              <div className="flex items-center justify-center gap-2 text-[0.7rem] text-hs-text-muted mt-5 pt-3 border-t border-blue-100">
-                <Lock className="w-3.5 h-3.5 text-[#0066CC]" />
-                <span>We'll respond within 24 hours. No spam. No obligation.</span>
-              </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 6: WHY TRAVEL WITH HOLIDAY STAR? */}
-      <section className="py-20 bg-white border-b border-gray-100">
-        <div className="container-hs">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-hs-navy">
-              Why travel with Holiday Star?
+      {/* ── Interactive Package Details Modal (matching reference image) ── */}
+      <AnimatePresence>
+        {activePackage && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.92 }}
+              className="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative border border-gray-100"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setActivePackage(null)}
+                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-gray-700 flex items-center justify-center shadow-md transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                {/* Left: Package Image */}
+                <div className="relative h-64 md:h-auto min-h-[260px]">
+                  <img
+                    src={activePackage.image}
+                    alt={activePackage.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-5">
+                    <div>
+                      <span className="bg-[#00A896] text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
+                        {activePackage.duration}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Package Details & CTA */}
+                <div className="p-6 sm:p-7 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-heading font-black text-xl text-[#0A2540] tracking-tight leading-snug mb-1">
+                      {activePackage.title}
+                    </h3>
+                    <p className="text-xs font-semibold text-[#00A896] uppercase tracking-wider mb-4">
+                      {activePackage.tagline}
+                    </p>
+
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2.5">
+                      Highlights:
+                    </h4>
+                    <ul className="space-y-1.5 mb-6">
+                      {activePackage.highlights.map((hl, i) => (
+                        <li key={i} className="flex items-start gap-2 text-xs text-[#475569]">
+                          <Check className="w-3.5 h-3.5 text-[#00A896] shrink-0 mt-0.5" />
+                          <span>{hl}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    <button
+                      onClick={() => {
+                        setValue(
+                          'preferredPackage',
+                          `${activePackage.title} (${activePackage.duration})`
+                        );
+                        setActivePackage(null);
+                        scrollToForm();
+                      }}
+                      className="w-full py-3 rounded-full text-white font-bold text-xs uppercase tracking-wider shadow-md hover:scale-102 transition-transform"
+                      style={{
+                        background: 'linear-gradient(90deg, #00A896 0%, #0284C7 100%)',
+                      }}
+                    >
+                      GET PACKAGE PRICE
+                    </button>
+
+                    <a
+                      href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
+                        `Hi Holiday Star, I'm interested in the ${activePackage.title} (${activePackage.duration}) package.`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-2.5 rounded-full bg-white border border-gray-200 text-[#0A2540] hover:bg-gray-50 font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
+                    >
+                      <svg className="w-4 h-4 fill-[#25D366]" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                      </svg>
+                      <span>WhatsApp Us</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ── SECTION 5: More Than a Destination. It's an Experience ── */}
+      <section className="relative py-14 sm:py-16 md:py-20 overflow-hidden bg-white">
+        {/* Scenic Tropical Backdrop from About Us page (Our Story) */}
+        <div className="absolute inset-0 pointer-events-none select-none">
+          <img
+            src="/images/our_story_bg.jpg"
+            alt="Malaysia Experience backdrop"
+            className="w-full h-full object-cover object-left-bottom lg:object-center opacity-85"
+          />
+          {/* Atmospheric White Gradient for text and icon legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/55 to-transparent pointer-events-none" />
+        </div>
+
+        <div className="container-hs relative z-10">
+          {/* Left-Aligned Heading matching reference image */}
+          <div className="text-left mb-8 sm:mb-10 max-w-2xl">
+            <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-[2.2rem] text-[#0A2540] tracking-tight leading-[1.2]">
+              MORE THAN A DESTINATION.
+              <br />
+              IT&apos;S AN{' '}
+              <span className="text-[#0284C7]">
+                EXPERIENCE.
+              </span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: Plane,
-                title: 'Curated Itineraries',
-                desc: 'Thoughtfully planned Malaysia holidays.',
-              },
-              {
-                icon: Users,
-                title: 'Chennai-Based Team',
-                desc: 'A team that understands Tamil Nadu travellers.',
-              },
-              {
-                icon: Shield,
-                title: 'Trusted Partnership',
-                desc: 'Official campaign partner for Visit Malaysia 2026–2027.',
-              },
-              {
-                icon: Headphones,
-                title: 'End-to-End Support',
-                desc: 'From planning to your return journey.',
-              },
-            ].map((item, i) => (
+          {/* 5 Pillars Row evenly spaced */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-4 lg:gap-0">
+            {experiencePillars.map((item, i) => (
               <AnimatedSection key={i} delay={i * 0.08}>
-                <div className="p-6 rounded-2xl bg-hs-cream border border-gray-100 text-center h-full flex flex-col items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-hs-blue-50 border border-hs-blue-100 flex items-center justify-center text-hs-blue-600 mb-4">
-                    <item.icon className="w-6 h-6" />
+                <div className="flex flex-col items-center text-center px-3 lg:px-4 lg:border-r lg:border-sky-100/80 last:lg:border-r-0 group">
+                  <div className="h-11 flex items-center justify-center mb-2 transition-transform duration-300 group-hover:scale-110">
+                    <item.icon className="w-8 h-8 sm:w-9 sm:h-9 stroke-[2]" style={{ color: item.iconColor }} />
                   </div>
-                  <h3 className="font-heading font-bold text-base text-hs-navy mb-1">
+                  <h3
+                    className="font-heading font-black text-xs sm:text-[13px] tracking-wider uppercase mb-1"
+                    style={{ color: item.titleColor }}
+                  >
                     {item.title}
                   </h3>
-                  <p className="text-xs text-hs-text-muted font-light">
+                  <p className="text-[#475569] text-[11px] sm:text-xs leading-relaxed max-w-[170px]">
                     {item.desc}
                   </p>
                 </div>
@@ -617,54 +752,345 @@ ${utm.utm_source ? `UTM Source: ${utm.utm_source}` : ''}`;
         </div>
       </section>
 
-      {/* SECTION 7: FINAL CTA BANNER */}
-      <section className="relative overflow-hidden py-24 md:py-32 w-full">
-        <div className="absolute inset-0">
+      {/* ── SECTION 6: Lead Capture Form ("Ready to Experience Malaysia?") ── */}
+      <section
+        id="enquiry-form"
+        className="relative py-16 sm:py-20 md:py-24 overflow-hidden bg-[#0A2540]"
+      >
+        {/* Scenic Tropical Backdrop with Island, Traveler, and Flower */}
+        <div className="absolute inset-0 pointer-events-none select-none">
           <img
-            src="/images/hero_bg.png"
-            alt="Malaysia longtail boat beach"
-            className="w-full h-full object-cover"
+            src="/images/malaysia-formbg.jpg"
+            alt="Malaysia Form backdrop"
+            className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-hs-navy/95 via-hs-blue-600/90 to-hs-navy/95" />
+          {/* Protective Left Gradient Overlay ensuring text is sharply visible and distinct from the bright sky */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#07162c]/92 via-[#07162c]/75 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-[#07162c]/20 pointer-events-none" />
         </div>
 
-        <div className="absolute top-10 left-8 font-script text-3xl md:text-4xl text-white rotate-[-4deg] hidden sm:block">
-          Closer Journeys.<br />Brighter Stories.
-        </div>
+        {/* Floating Animated Parachute in the Sky */}
+        <motion.div
+          className="absolute top-14 sm:top-18 md:top-20 left-6 sm:left-12 lg:left-16 z-20 pointer-events-none"
+          animate={{
+            y: [0, -18, 0],
+            x: [0, 8, 0],
+            rotate: [-4, 5, -4],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        >
+          <svg className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 drop-shadow-xl" viewBox="0 0 64 64" fill="none">
+            {/* Parachute Canopy */}
+            <path
+              d="M 6 28 C 6 8, 58 8, 58 28 Z"
+              fill="url(#paraGradient)"
+              stroke="#ffffff"
+              strokeWidth="1.8"
+            />
+            <path d="M 18 28 C 18 14, 26 10, 32 8" stroke="#ffffff" strokeWidth="1.2" strokeOpacity="0.8" />
+            <path d="M 46 28 C 46 14, 38 10, 32 8" stroke="#ffffff" strokeWidth="1.2" strokeOpacity="0.8" />
+            <path d="M 32 28 L 32 8" stroke="#ffffff" strokeWidth="1.2" strokeOpacity="0.8" />
+            {/* Suspension Lines */}
+            <line x1="8" y1="28" x2="32" y2="48" stroke="#ffffff" strokeWidth="1.2" strokeOpacity="0.9" />
+            <line x1="20" y1="28" x2="32" y2="48" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.85" />
+            <line x1="32" y1="28" x2="32" y2="48" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.85" />
+            <line x1="44" y1="28" x2="32" y2="48" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.85" />
+            <line x1="56" y1="28" x2="32" y2="48" stroke="#ffffff" strokeWidth="1.2" strokeOpacity="0.9" />
+            {/* Paraglider / Adventurer Figure */}
+            <circle cx="32" cy="49" r="2.5" fill="#ffffff" />
+            <path d="M 30 52 L 34 52 L 33 58 L 31 58 Z" fill="#0284C7" />
+            <defs>
+              <linearGradient id="paraGradient" x1="6" y1="18" x2="58" y2="18" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#00E5FF" />
+                <stop offset="33%" stopColor="#F59E0B" />
+                <stop offset="66%" stopColor="#EC4899" />
+                <stop offset="100%" stopColor="#00A896" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </motion.div>
 
-        <div className="relative z-10 container-hs text-center text-white">
-          <AnimatedSection className="max-w-2xl mx-auto">
-            <h2 className="font-heading font-bold text-3xl sm:text-4xl md:text-5xl mb-4">
-              Your next holiday could be<br />just a few hours away.
-            </h2>
-            <p className="text-white/90 text-base sm:text-lg mb-8 font-light">
-              Malaysia is waiting. Let's plan it together.
-            </p>
+        <div className="container-hs relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+            {/* Left Prompt Column */}
+            <div className="lg:col-span-4 text-white z-10">
+              <div className="inline-block px-3 py-1 rounded-full bg-[#00E5FF]/20 border border-[#00E5FF]/40 backdrop-blur-sm mb-3.5 shadow-sm">
+                <span className="text-xs sm:text-sm font-extrabold uppercase tracking-[0.25em] text-[#00E5FF]">
+                  READY TO EXPERIENCE
+                </span>
+              </div>
+              <h2 className="font-heading font-black text-4xl sm:text-5xl tracking-tight leading-tight mb-3 text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
+                MALAYSIA?
+              </h2>
+              <p className="font-heading font-bold text-lg sm:text-xl text-[#7DD3FC] mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+                Let Holiday Star plan your holiday.
+              </p>
+              <p className="text-slate-100 text-xs sm:text-sm leading-relaxed max-w-sm font-medium drop-shadow-[0_1px_6px_rgba(0,0,0,0.7)]">
+                Tell us a little about your travel plans and our Holiday Star team will help you
+                choose the right Malaysia package.
+              </p>
+            </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            {/* Center Form Column */}
+            <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-7 shadow-2xl text-[#0A2540]">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
+                {/* 3-Column Top Row: Name, Phone, Month */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">
+                      Full Name*
+                    </label>
+                    <input
+                      type="text"
+                      {...register('name')}
+                      placeholder="Your name"
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-[#00A896]"
+                    />
+                    {errors.name && (
+                      <p className="text-red-500 text-[10px] mt-0.5">{errors.name.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">
+                      WhatsApp Number*
+                    </label>
+                    <input
+                      type="tel"
+                      {...register('phone')}
+                      placeholder="+91 98765 43210"
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-[#00A896]"
+                    />
+                    {errors.phone && (
+                      <p className="text-red-500 text-[10px] mt-0.5">{errors.phone.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">
+                      Travel Month*
+                    </label>
+                    <select
+                      {...register('travelMonth')}
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-[#00A896] bg-white"
+                    >
+                      <option value="">Select month</option>
+                      <option value="Next 30 Days">Next 30 Days</option>
+                      <option value="November 2024">November 2024</option>
+                      <option value="December 2024">December 2024</option>
+                      <option value="January 2025">January 2025</option>
+                      <option value="February 2025">February 2025</option>
+                      <option value="March 2025">March 2025</option>
+                      <option value="Summer 2025">Summer 2025</option>
+                    </select>
+                    {errors.travelMonth && (
+                      <p className="text-red-500 text-[10px] mt-0.5">{errors.travelMonth.message}</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* 2-Column Row: Passport Guidance & Number of Travellers */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">
+                      Passport/Visa Help?
+                    </label>
+                    <select
+                      {...register('passportHelp')}
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-[#00A896] bg-white"
+                    >
+                      <option value="Valid Passport Ready">Valid Passport Ready</option>
+                      <option value="Applying for Passport">Applying for Passport</option>
+                      <option value="Need Guidance">Need Guidance</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">
+                      Number of Travellers*
+                    </label>
+                    <select
+                      {...register('groupSize')}
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-[#00A896] bg-white"
+                    >
+                      <option value="1 Traveller">1 Traveller</option>
+                      <option value="2 Travellers">2 Travellers (Couple)</option>
+                      <option value="3-4 Travellers">3–4 Travellers</option>
+                      <option value="5-8 Travellers">5–8 Travellers</option>
+                      <option value="9+ Group">9+ Travellers (Group)</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Who are you travelling with? */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1.5">
+                    Who are you travelling with?
+                  </label>
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
+                    {['Couple', 'Family', 'Friends / Group', 'Solo', 'Corporate'].map((comp) => (
+                      <label
+                        key={comp}
+                        className="flex items-center gap-1.5 cursor-pointer text-xs text-gray-700 select-none hover:text-[#00A896] transition-colors"
+                      >
+                        <input
+                          type="radio"
+                          name="travelCompanionRadio"
+                          value={comp}
+                          checked={selectedCompanion === comp}
+                          onChange={() => setValue('travelCompanion', comp)}
+                          className="w-3.5 h-3.5 text-[#00A896] focus:ring-[#00A896] accent-[#00A896]"
+                        />
+                        <span>{comp}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Preferred Package */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">
+                    Preferred Package*
+                  </label>
+                  <select
+                    {...register('preferredPackage')}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-[#00A896] bg-white"
+                  >
+                    <option value="Kuala Lumpur + Genting (3N/4D)">
+                      Kuala Lumpur + Genting (3N/4D)
+                    </option>
+                    <option value="Kuala Lumpur + Malacca (3N/4D)">
+                      Kuala Lumpur + Malacca (3N/4D)
+                    </option>
+                    <option value="Kuala Lumpur + Langkawi (4N/5D)">
+                      Kuala Lumpur + Langkawi (4N/5D)
+                    </option>
+                    <option value="Kuala Lumpur + Penang (4N/5D)">
+                      Kuala Lumpur + Penang (4N/5D)
+                    </option>
+                    <option value="Kuala Lumpur + Genting + Langkawi (5N/6D)">
+                      Kuala Lumpur + Genting + Langkawi (5N/6D)
+                    </option>
+                    <option value="Custom Malaysia Holiday">Custom Malaysia Holiday Plan</option>
+                  </select>
+                </div>
+
+                {/* Additional Message */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">
+                    Additional Message / Travel Requirements (Optional)
+                  </label>
+                  <textarea
+                    {...register('message')}
+                    rows={2}
+                    placeholder="Tell us more about your travel plans..."
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-[#00A896] resize-none"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3 rounded-full text-white font-bold text-xs tracking-wider uppercase shadow-lg hover:shadow-xl hover:scale-102 active:scale-95 transition-all duration-300"
+                  style={{
+                    background: 'linear-gradient(90deg, #00A896 0%, #0284C7 50%, #8B5CF6 100%)',
+                  }}
+                >
+                  GET MY MALAYSIA HOLIDAY PLAN 🚀
+                </button>
+
+                <p className="text-center text-[11px] text-gray-500 mt-1">
+                  Our travel expert will contact you with package details.
+                </p>
+              </form>
+            </div>
+
+            {/* Right Column: WhatsApp Direct Card */}
+            <div className="lg:col-span-3 rounded-3xl p-6 sm:p-7 text-white shadow-2xl relative overflow-hidden bg-gradient-to-br from-[#00A896]/90 via-[#008f80]/85 to-[#0284C7]/80 backdrop-blur-md border border-white/25">
+              <div className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center mb-3.5">
+                <svg className="w-6 h-6 fill-white" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                </svg>
+              </div>
+              <h3 className="font-heading font-black text-lg tracking-wide uppercase mb-1">
+                PREFER TO CHAT?
+              </h3>
+              <p className="font-semibold text-xs sm:text-sm text-white mb-3">
+                Talk to a Holiday Star Travel Expert on WhatsApp.
+              </p>
+              <p className="text-white/85 text-xs leading-relaxed mb-6 font-normal">
+                Get help choosing destinations, packages and travel options for your Malaysia
+                holiday.
+              </p>
+
               <a
-                href="#enquiry-form"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-hs-blue-600 text-white font-semibold rounded-full hover:bg-white hover:text-hs-navy transition-all duration-300 shadow-xl text-sm sm:text-base"
-              >
-                Get My Free Itinerary
-                <ArrowRight className="w-4 h-4" />
-              </a>
-
-              <a
-                href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent('Hi Holiday Star! I want to book a Malaysia Holiday package.')}`}
+                href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
+                  siteConfig.contact.whatsappMessage
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-8 py-4 bg-white text-hs-navy font-semibold rounded-full border border-white hover:bg-hs-green-accent hover:text-hs-green transition-all duration-300 shadow-md text-sm sm:text-base"
+                className="w-full py-3 rounded-full bg-[#00A896] hover:bg-[#008f80] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md hover:scale-103 transition-transform"
               >
-                <svg className="w-5 h-5 fill-current text-hs-green" viewBox="0 0 24 24">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                <svg className="w-4 h-4 fill-white" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
                 </svg>
-                WhatsApp Us
+                <span>Chat on WhatsApp</span>
+                <ArrowRight className="w-4 h-4" />
               </a>
             </div>
-          </AnimatedSection>
+          </div>
         </div>
       </section>
-    </>
+
+      {/* ── SECTION 7: Footer Banner ("Your Malaysia Story Starts Here.") ── */}
+      <section className="relative py-20 sm:py-24 bg-[#0A2540] overflow-hidden">
+        {/* Malaysia Sunset & KL Skyline Backdrop */}
+        <img
+          src="/images/malaysia-cta.jpg"
+          alt="Malaysia sunset skyline CTA backdrop"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-85 select-none pointer-events-none"
+        />
+        {/* Soft Radial & Ambient Overlay for text readability while preserving vibrant skyline & sunset */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(10, 37, 64, 0.78) 0%, rgba(10, 37, 64, 0.65) 45%, rgba(7, 22, 44, 0.85) 100%)',
+          }}
+        />
+
+        <div className="container-hs relative z-10 text-center text-white">
+          <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-[#00E5FF] block mb-2">
+            YOUR MALAYSIA STORY
+          </span>
+          <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight mb-3">
+            STARTS HERE.
+          </h2>
+          <p className="font-heading font-semibold text-base sm:text-lg text-[#E0F2FE] mb-2">
+            Discover. Experience. Plan.
+          </p>
+          <p className="text-white/80 text-xs sm:text-sm max-w-xl mx-auto font-normal mb-8">
+            From city skylines to mountain escapes and tropical islands, your Malaysian holiday is
+            waiting.
+          </p>
+
+          <button
+            onClick={scrollToForm}
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300"
+            style={{
+              background: 'linear-gradient(90deg, #00A896 0%, #0284C7 100%)',
+            }}
+          >
+            Enquire Now
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </section>
+    </div>
   );
 }

@@ -48,7 +48,7 @@ export const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'Destinations', href: '/destinations' },
   { label: 'Holiday Packages', href: '/packages' },
-  { label: 'Travel Guide', href: '/travel-guide' },
+  { label: 'Sports Tourism', href: '/sports-tourism' },
   { label: 'About Us', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ] as const;

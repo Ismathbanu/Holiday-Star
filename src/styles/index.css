@@ -85,8 +85,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
-p {
-  color: var(--color-hs-text-secondary);
+@layer base {
+  p {
+    color: var(--color-hs-text-secondary);
+  }
 }
 
 /* ── Container utility ── */
@@ -128,3 +130,130 @@ p {
 @utility w-full {
   width: 100%;
 }
+
+/* ── Hero Section Styles ── */
+
+.hero-starts-here {
+  color: transparent;
+  background: linear-gradient(135deg, #10B981, #059669);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-style: italic;
+}
+
+.hero-cta-primary {
+  background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-cta-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1D4ED8 0%, #6D28D9 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-cta-primary:hover::before {
+  opacity: 1;
+}
+
+.hero-cta-primary > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Tropical Banana Leaf Breeze Animations ── */
+@keyframes leafBreeze {
+  0% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  50% {
+    transform: rotate(2.8deg) skewX(-1.2deg) translateY(-3px);
+  }
+  100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+}
+
+@keyframes leafSwayMain {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(3.5deg) scale(1.015) translateY(-2px);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes leafSwaySlow {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-2.5deg) translateY(-4px);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-leaf-breeze {
+  animation: leafBreeze 8s ease-in-out infinite;
+}
+
+.animate-leaf-sway-main {
+  animation: leafSwayMain 6s ease-in-out infinite;
+}
+
+.animate-leaf-sway-slow {
+  animation: leafSwaySlow 9s ease-in-out infinite;
+}
+
+/* ── Road Trip Animated Car & Wheels ── */
+@keyframes carDriveAcross {
+  0% {
+    transform: translateX(-240px);
+  }
+  100% {
+    transform: translateX(calc(100vw + 240px));
+  }
+}
+
+@keyframes carSuspensionBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes wheelSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-car-drive {
+  animation: carDriveAcross 14s linear infinite;
+  will-change: transform;
+}
+
+.animate-car-bounce {
+  animation: carSuspensionBounce 0.35s ease-in-out infinite;
+}
+
+.animate-spin-wheel {
+  animation: wheelSpin 0.7s linear infinite;
+  transform-origin: center center;
+}
+
+

@@ -1,13 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import HeroSection from './sections/HeroSection';
-import TrustStrip from './sections/TrustStrip';
 import IntroSection from './sections/IntroSection';
 import DestinationDiscovery from './sections/DestinationDiscovery';
 import WhyHolidayStar from './sections/WhyHolidayStar';
 import MalaysiaFeature from './sections/MalaysiaFeature';
 import MalaysiaPackages from './sections/MalaysiaPackages';
 import TravellerStories from './sections/TravellerStories';
-import TravelGuidePreview from './sections/TravelGuidePreview';
+import InstagramTourFeed from './sections/InstagramTourFeed';
 import FinalCTA from './sections/FinalCTA';
 
 export default function Home() {
@@ -27,14 +26,13 @@ export default function Home() {
       </Helmet>
 
       <HeroSection />
-      <TrustStrip />
       <IntroSection />
       <DestinationDiscovery />
       <WhyHolidayStar />
       <MalaysiaFeature />
       <MalaysiaPackages />
       <TravellerStories />
-      <TravelGuidePreview />
+      <InstagramTourFeed />
       <FinalCTA />
     </>
   );

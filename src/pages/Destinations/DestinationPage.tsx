@@ -27,6 +27,7 @@ import AnimatedSection from '../../components/common/AnimatedSection';
 import { getDestinationBySlug } from '../../data/destinations';
 import { getPackagesByDestination } from '../../data/packages';
 import { siteConfig } from '../../data/siteConfig';
+import MalaysiaDestination from './MalaysiaDestination';
 
 // ── FAQ Accordion Item Component ──
 function FAQItem({ question, answer }: { question: string; answer: string }) {
@@ -213,6 +214,11 @@ export default function DestinationPage() {
 
   if (!destination) {
     return <Navigate to="/destinations" replace />;
+  }
+
+  // If viewing Malaysia destination, render the dedicated recreated Malaysia destination page
+  if (destination.slug === 'malaysia') {
+    return <MalaysiaDestination />;
   }
 
   const packages = getPackagesByDestination(destination.id);
