@@ -120,7 +120,7 @@ export default function InstagramTourFeed() {
         {/* 9-Photo Natural Tours Grid Strip */}
         <AnimatedSection>
           <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-9 gap-2.5 sm:gap-3.5">
-            {tourPhotos.map((photo, i) => (
+            {tourPhotos.map((photo) => (
               <a
                 key={photo.id}
                 href="https://instagram.com"

@@ -9,16 +9,9 @@ import {
   Plane,
   Camera,
   Users,
-  Compass,
   Mountain,
-  Palmtree,
-  Utensils,
-  Footprints,
   Check,
   X,
-  Phone,
-  Sparkles,
-  Heart,
   Building2,
   Landmark,
   Soup,
@@ -27,17 +20,6 @@ import {
 import AnimatedSection from '../../components/common/AnimatedSection';
 import { siteConfig } from '../../data/siteConfig';
 import { captureUTM, getPersistedUTM } from '../../utils/utm';
-
-// ── Tourism Malaysia Logo Component ──
-function TourismMalaysiaLogo({ className = 'h-9 w-auto' }: { className?: string }) {
-  return (
-    <img
-      src="/images/tourism_malaysia_clean.svg"
-      alt="Tourism Malaysia"
-      className={`${className} object-contain`}
-    />
-  );
-}
 
 // ── Form Validation Schema ──
 const formSchema = z.object({
@@ -244,7 +226,7 @@ export default function MalaysiaCampaign() {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting },
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -272,7 +254,7 @@ I would like to inquire about the Malaysia Campaign Packages:
 ${data.passportHelp ? `*Passport/Visa Assistance Needed:* ${data.passportHelp}` : ''}
 ${data.message ? `*Notes:* ${data.message}` : ''}
 
-*Source:* ${utm?.source || 'Direct Website'}
+*Source:* ${utm?.utm_source || 'Direct Website'}
 *Campaign:* Malaysia Special Campaign`;
 
     const encoded = encodeURIComponent(message);

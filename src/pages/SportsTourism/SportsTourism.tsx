@@ -13,40 +13,17 @@ import {
   Flame,
   Sparkles,
   X,
-  Share2,
-  Check,
-  Send,
-  Clock,
-  ShieldCheck,
-  ChevronRight,
 } from 'lucide-react';
 import AnimatedSection from '../../components/common/AnimatedSection';
 import { siteConfig } from '../../data/siteConfig';
 import {
   pastSportsExperiences,
-  sportsTrustBenefits,
   type SportsExperience,
 } from '../../data/sportsExperiences';
 
 export default function SportsTourism() {
   const [selectedExp, setSelectedExp] = useState<SportsExperience | null>(null);
   const [showUpcomingModal, setShowUpcomingModal] = useState(false);
-
-  const getBenefitIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Trophy':
-        return <Trophy className="w-5 h-5 text-[#00A3FF] stroke-[2.2]" />;
-      case 'Headphones':
-        return <Headphones className="w-5 h-5 text-[#00A896] stroke-[2.2]" />;
-      case 'Plane':
-        return <Plane className="w-5 h-5 text-[#0066FF] stroke-[2.2]" />;
-      case 'Flame':
-        return <Flame className="w-5 h-5 text-[#00BFA5] stroke-[2.2]" />;
-      case 'Sparkles':
-      default:
-        return <Sparkles className="w-5 h-5 text-[#7928CA] stroke-[2.2]" />;
-    }
-  };
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);

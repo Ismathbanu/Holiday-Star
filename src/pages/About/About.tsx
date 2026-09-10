@@ -11,13 +11,8 @@ import {
   Building2,
   Headphones,
   CheckCircle2,
-  ShieldCheck,
   Briefcase,
-  Sparkles,
-  Check,
   MapPin,
-  Calendar,
-  Star
 } from 'lucide-react';
 import AnimatedSection from '../../components/common/AnimatedSection';
 import { siteConfig } from '../../data/siteConfig';
