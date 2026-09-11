@@ -166,40 +166,51 @@ export default function MalaysiaDestination() {
           - Emerald green + Purple CTA buttons
           - Bottom-left smooth curving emerald wave
       ───────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[580px] lg:min-h-[640px] flex items-center overflow-hidden bg-slate-900 pt-20 pb-16 lg:pb-24">
+      <section className="relative min-h-[580px] lg:min-h-[660px] flex items-center overflow-hidden bg-[#0A121A] pt-28 pb-16 lg:pt-32 lg:pb-24">
         {/* Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/dmalaysia-herobg.jpg"
-            alt="Kuala Lumpur Skyline and Petronas Twin Towers"
-            className="w-full h-full object-cover object-center scale-100"
+            src="/images/hero-bg.jpg"
+            alt="Kuala Lumpur skyline at sunset featuring illuminated Petronas Twin Towers, KL Tower, and a lantern-lit rainforest canopy walkway"
+            className="w-full h-full object-cover object-center scale-100 select-none pointer-events-none"
+            loading="eager"
+            fetchPriority="high"
           />
+          {/* Directional contrast gradient: provides crisp readability for text on the left while leaving the glowing Petronas Towers & sunset illuminated on the right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 lg:via-black/40 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+          {/* Mobile-only backdrop for extra readability on narrow screens */}
+          <div className="lg:hidden absolute inset-0 bg-black/40 backdrop-blur-[1px] pointer-events-none" />
         </div>
 
         <div className="container-hs relative z-10 w-full">
           <div className="max-w-xl lg:max-w-2xl">
-            {/* Cursive Eyebrow */}
-            <div className="font-script text-2xl sm:text-3xl text-[#108560] font-semibold mb-1 flex items-center gap-1.5 drop-shadow-2xs">
-              <span>Welcome to</span>
-            </div>
-            <div className="font-script text-2xl sm:text-3xl text-[#108560] font-semibold mb-3 flex items-center gap-1.5 drop-shadow-2xs">
-              <span>Malaysia</span>
-              <Heart className="w-5 h-5 text-[#108560] stroke-[2.2] fill-none inline-block ml-0.5" />
+            {/* Eyebrow Pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-emerald-300 bg-emerald-950/70 border border-emerald-500/30 backdrop-blur-md mb-3 shadow-sm w-fit">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <span>Welcome to Malaysia</span>
             </div>
 
             {/* Bold Heading */}
-            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.08] mb-4">
-              <span className="text-[#026079] block">Malaysia.</span>
-              <span className="text-[#602f9c] block">Truly Asia.</span>
+            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.06] mb-4">
+              <span className="text-white block drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">Malaysia.</span>
+              <span
+                className="block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                }}
+              >
+                Truly Asia.
+              </span>
             </h1>
 
             {/* Subtext 1 */}
-            <p className="text-sm sm:text-base font-semibold text-slate-900 mb-3 leading-snug">
+            <p className="text-sm sm:text-base md:text-lg font-semibold text-white/95 mb-3 leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
               City skylines. Cool mountain escapes. Heritage streets. Tropical islands. Incredible food.
             </p>
 
             {/* Subtext 2 */}
-            <p className="text-xs sm:text-sm text-slate-600 mb-8 leading-relaxed max-w-lg">
+            <p className="text-xs sm:text-sm md:text-base text-slate-200/90 mb-8 leading-relaxed max-w-lg drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
               Malaysia brings together completely different experiences in one easy international holiday. From Chennai,
               it's closer than you think.
             </p>
@@ -224,7 +235,7 @@ export default function MalaysiaDestination() {
                 href={whatsappInquiryUrl('General Malaysia Inquiry')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-[#7c3aed] hover:bg-[#6b21a8] text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                className="px-6 py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 text-white fill-white/20" />
                 <span>WhatsApp Us</span>
@@ -274,7 +285,7 @@ export default function MalaysiaDestination() {
             {/* Right: Malaysia Truly Asia Script & Hibiscus Flower */}
             <div className="flex items-center gap-3 shrink-0 z-10 self-center md:self-auto">
               <div className="text-right">
-                <div className="font-script text-3xl sm:text-4xl text-white font-bold leading-none tracking-wide drop-shadow-xs">
+                <div className="font-heading text-2xl sm:text-3xl text-white font-black leading-none tracking-wider drop-shadow-xs uppercase">
                   Malaysia
                 </div>
                 <div className="font-sans text-[11px] sm:text-xs tracking-[0.2em] text-white/90 uppercase font-medium">
@@ -316,7 +327,7 @@ export default function MalaysiaDestination() {
         <div className="container-hs">
           {/* Section Heading */}
           <div className="mb-12">
-            <div className="font-script text-2xl sm:text-3xl text-[#108560] font-semibold mb-1">
+            <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#108560] mb-2">
               Why Malaysia?
             </div>
             <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-4xl tracking-tight leading-tight mb-2">
@@ -423,9 +434,9 @@ export default function MalaysiaDestination() {
       ───────────────────────────────────────────────────────────── */}
       <section id="malaysia-packages" className="py-16 bg-[#fafbfd] border-y border-gray-100">
         <div className="container-hs">
-          {/* Section Script Heading */}
+          {/* Section Heading */}
           <div className="mb-10">
-            <h2 className="font-script text-3xl sm:text-4xl text-[#602f9c] font-bold mb-2">
+            <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-hs-navy mb-2 tracking-tight">
               Popular Malaysia Itineraries
             </h2>
             <div className="w-14 h-1 bg-[#0284c7] rounded-full" />
@@ -610,7 +621,7 @@ export default function MalaysiaDestination() {
               </div>
 
               <div className="mb-6">
-                <div className="font-script text-2xl sm:text-3xl text-[#108560] font-semibold mb-1">
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#108560] mb-1">
                   Before You Travel
                 </div>
               </div>

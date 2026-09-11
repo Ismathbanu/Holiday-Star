@@ -59,15 +59,10 @@ export default function TravelGuide() {
           <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-slate-950/95 via-slate-900/80 to-slate-950/40" />
         </div>
 
-        {/* Top Right Cursive Annotation */}
-        <div className="absolute top-12 right-8 lg:right-16 z-10 font-script text-3xl lg:text-4xl text-white rotate-[-3deg] drop-shadow-md hidden sm:block">
-          Know • Plan • Explore<br />Go Further ✨
-        </div>
-
         <div className="relative z-10 container-hs w-full">
           <div className="max-w-2xl text-white">
             <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-white mb-2 leading-[1.1]">
-              Travel <span className="font-script text-sky-400 font-normal rotate-[-2deg] inline-block">Guide</span>
+              Travel <span className="text-sky-400">Guide</span>
             </h1>
             <h2 className="font-heading font-semibold text-lg sm:text-xl text-blue-200 mb-4">
               Plan Better. Travel Smarter. Experience More.
@@ -341,7 +336,7 @@ export default function TravelGuide() {
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-              <div className="relative z-10 font-script text-3xl sm:text-4xl text-white rotate-[-3deg] drop-shadow-md leading-tight">
+              <div className="relative z-10 font-heading font-extrabold text-2xl sm:text-3xl text-white drop-shadow-md leading-tight">
                 Every Destination<br />Has Its Perfect Time
               </div>
             </div>
@@ -357,8 +352,8 @@ export default function TravelGuide() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <p className="font-script text-[0.65rem] text-center text-hs-navy">
-                  Right Time Brighter Experiences ☀️
+                <p className="text-[10px] font-bold text-center text-hs-navy uppercase tracking-wider">
+                  Right Time • Brighter Experiences ☀️
                 </p>
               </div>
 
@@ -493,8 +488,13 @@ export default function TravelGuide() {
 
         <div className="container-hs relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-5 font-script text-3xl sm:text-4xl text-amber-300 rotate-[-4deg] drop-shadow-md">
-              Better Preparation<br />Brighter Journeys
+            <div className="lg:col-span-5">
+              <span className="inline-block px-3.5 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-300/30 text-xs font-bold uppercase tracking-widest mb-3">
+                Expert Guidance
+              </span>
+              <div className="font-heading font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white drop-shadow-md leading-tight">
+                Better Preparation.<br /><span className="text-amber-300">Brighter Journeys.</span>
+              </div>
             </div>
 
             <div className="lg:col-span-7 text-left lg:text-right">

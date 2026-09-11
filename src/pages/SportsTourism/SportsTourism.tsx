@@ -13,16 +13,13 @@ import {
   Flame,
   Sparkles,
   X,
+  MessageCircle,
 } from 'lucide-react';
 import AnimatedSection from '../../components/common/AnimatedSection';
 import { siteConfig } from '../../data/siteConfig';
-import {
-  pastSportsExperiences,
-  type SportsExperience,
-} from '../../data/sportsExperiences';
+import { pastSportsExperiences } from '../../data/sportsExperiences';
 
 export default function SportsTourism() {
-  const [selectedExp, setSelectedExp] = useState<SportsExperience | null>(null);
   const [showUpcomingModal, setShowUpcomingModal] = useState(false);
 
   const scrollToSection = (id: string) => {
@@ -43,50 +40,55 @@ export default function SportsTourism() {
         <link rel="canonical" href="https://holidaystartours.com/sports-tourism" />
       </Helmet>
 
-      {/* Breadcrumb Bar */}
-      <div className="bg-hs-cream py-3 border-b border-gray-100">
-        <div className="container-hs flex items-center gap-2 text-xs text-hs-text-muted">
-          <Link to="/" className="hover:text-[#0066CC] transition-colors">
-            Home
-          </Link>
-          <span>&gt;</span>
-          <span className="font-semibold text-hs-navy">Sports Tourism</span>
-        </div>
-      </div>
-
       {/* ── SECTION 1: SPORTS TOURISM HERO ── */}
-      <section className="relative overflow-hidden bg-[#051329] text-white min-h-[500px] sm:min-h-[540px] lg:min-h-[580px] xl:min-h-[620px] flex items-center pt-14 pb-20 sm:pb-24 lg:pt-16 lg:pb-24">
+      <section className="relative overflow-hidden bg-[#051329] text-white min-h-[600px] sm:min-h-[640px] lg:min-h-[700px] xl:min-h-[740px] flex items-center pt-32 pb-20 sm:pt-36 sm:pb-24 lg:pt-40 lg:pb-28">
         {/* Full-Width Panoramic Sports Hero Background Image */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none">
           <img
             src="/images/sports-herobg.jpg"
             alt="Sports Tourism Experiences - Road cycling and MotoGP racing with Kuala Lumpur skyline"
             className="w-full h-full object-cover object-[75%_center] sm:object-[70%_center] md:object-center select-none"
+            loading="eager"
+            fetchPriority="high"
           />
-          {/* Rich Left Gradient to guarantee 100% crisp legibility for typography */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#051329] via-[#051329]/85 md:via-[#051329]/65 to-transparent w-full md:w-3/5 lg:w-1/2 pointer-events-none" />
-          {/* Mobile bottom shadow */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#051329]/80 via-transparent to-transparent pointer-events-none md:hidden" />
+          {/* Subtle Left Gradient overlay ensuring seamless blend with typography */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#051329]/90 via-[#051329]/60 md:via-transparent to-transparent w-full md:w-3/5 pointer-events-none" />
+          {/* Subtle top shadow for transparent navbar text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-transparent h-32 pointer-events-none" />
+          {/* Bottom shadow blend */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#051329] via-transparent to-transparent h-28 mt-auto pointer-events-none" />
+          {/* Mobile backdrop for enhanced readability on narrow screens */}
+          <div className="md:hidden absolute inset-0 bg-[#051329]/50 backdrop-blur-[0.5px] pointer-events-none" />
         </div>
 
         <div className="container-hs relative z-10 w-full">
           <div className="max-w-xl lg:max-w-2xl text-center md:text-left">
+            {/* Breadcrumbs inside hero */}
+            <div className="flex items-center justify-center md:justify-start gap-2 text-xs text-white/75 mb-5 font-medium drop-shadow-sm">
+              <Link to="/" className="hover:text-white transition-colors">
+                Home
+              </Link>
+              <span className="text-white/40">&gt;</span>
+              <span className="font-semibold text-[#00E5FF]">Sports Tourism</span>
+            </div>
+
             <AnimatedSection direction="up">
-              {/* Eyebrow */}
-              <span className="inline-block text-xs sm:text-sm font-bold uppercase tracking-[0.28em] text-[#00E5FF] mb-3">
-                SPORTS TOURISM
-              </span>
+              {/* Eyebrow badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-[0.22em] text-[#00E5FF] bg-[#00E5FF]/10 border border-[#00E5FF]/30 backdrop-blur-md mb-3 shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
+                <span>SPORTS TOURISM EXPERIENCES</span>
+              </div>
 
               {/* Main Heading with Script Accent */}
-              <h1 className="font-heading font-black text-4xl sm:text-5xl md:text-6xl lg:text-[4.4rem] leading-[1.05] tracking-tight text-white mb-2">
-                SPORT TOURISM
+              <h1 className="font-heading font-black text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] leading-[1.04] tracking-tight text-white mb-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+                SPORTS TOURISM
               </h1>
-              <div className="font-script text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-[#00D084] rotate-[-2deg] mb-5 select-none inline-block drop-shadow-sm">
+              <div className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#00D084] tracking-tight mb-5 select-none drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)] uppercase">
                 Experiences
               </div>
 
               {/* Supporting Text */}
-              <p className="text-[#E2E8F0] text-sm sm:text-base md:text-lg leading-relaxed font-normal max-w-lg mx-auto md:mx-0 mb-8 sm:mb-9 text-balance drop-shadow-xs">
+              <p className="text-[#F1F5F9] text-sm sm:text-base md:text-lg leading-relaxed font-normal max-w-lg mx-auto md:mx-0 mb-8 sm:mb-9 text-balance drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 From international cycling tours to world-class motorsport experiences, Holiday
                 Star creates thoughtfully planned sports travel experiences around major sporting
                 events.
@@ -96,7 +98,7 @@ export default function SportsTourism() {
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                 <button
                   onClick={() => scrollToSection('past-experiences')}
-                  className="inline-flex items-center gap-2.5 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-cyan-500/25 hover:scale-105 active:scale-95 transition-all duration-300"
+                  className="inline-flex items-center gap-2.5 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-cyan-500/25 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
                   style={{
                     background: 'linear-gradient(90deg, #00A896 0%, #0284C7 100%)',
                   }}
@@ -107,7 +109,7 @@ export default function SportsTourism() {
 
                 <Link
                   to="/plan-holiday"
-                  className="inline-flex items-center gap-2 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full bg-white/10 hover:bg-white text-white hover:text-[#0A2540] border border-white/25 backdrop-blur-md font-semibold text-xs sm:text-sm transition-all duration-300 shadow-md hover:scale-105"
+                  className="inline-flex items-center gap-2 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full bg-white/10 hover:bg-white text-white hover:text-[#0A2540] border border-white/25 backdrop-blur-md font-semibold text-xs sm:text-sm transition-all duration-300 shadow-md hover:scale-105 cursor-pointer"
                 >
                   <span>Enquire Now</span>
                 </Link>
@@ -200,7 +202,7 @@ export default function SportsTourism() {
           {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <AnimatedSection>
-              <span className="font-script text-2xl sm:text-3xl text-[#00A896] block mb-1">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#00A896] block mb-2">
                 Our Sport Tourism Journey
               </span>
               <h2 className="font-heading font-black text-3xl sm:text-4xl lg:text-[2.6rem] text-[#0A2540] tracking-tight leading-tight mb-3">
@@ -303,13 +305,17 @@ export default function SportsTourism() {
                         Holiday Star Experience
                       </span>
 
-                      <button
-                        onClick={() => setSelectedExp(exp)}
-                        className="text-xs font-bold text-[#0052CC] hover:text-[#003E99] inline-flex items-center gap-1 group/btn transition-colors"
+                      <a
+                        href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
+                          `Hi Holiday Star, I would like to enquire about the ${exp.title} sports tourism experience.`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold shadow-xs hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
                       >
-                        <span>View Experience</span>
-                        <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
-                      </button>
+                        <MessageCircle className="w-3.5 h-3.5 fill-white/20" />
+                        <span>WhatsApp Us</span>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -384,8 +390,7 @@ export default function SportsTourism() {
 
         <div className="container-hs relative z-10 text-center max-w-3xl mx-auto px-4">
           <AnimatedSection>
-            {/* Script Eyebrow */}
-            <span className="font-script text-3xl sm:text-4xl text-[#00A896] block mb-2">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#00A896] block mb-2">
               Ready to be part of the action?
             </span>
 
@@ -431,106 +436,6 @@ export default function SportsTourism() {
         </div>
       </section>
 
-      {/* ── DETAIL MODAL FOR SPORTS EXPERIENCE ── */}
-      <AnimatePresence>
-        {selectedExp && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.25 }}
-              className="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-slate-100 max-h-[90vh] flex flex-col"
-            >
-              {/* Modal Image Header */}
-              <div className="relative h-56 sm:h-64 w-full shrink-0">
-                <img
-                  src={selectedExp.image}
-                  alt={selectedExp.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-
-                <button
-                  onClick={() => setSelectedExp(null)}
-                  className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 text-white hover:bg-black flex items-center justify-center transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-
-                <div className="absolute bottom-4 left-5 right-5 text-white">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#00A896] text-[10px] font-bold tracking-wider uppercase mb-2">
-                    <CheckCircle2 className="w-3 h-3" />
-                    {selectedExp.statusBadge}
-                  </div>
-                  <h3 className="font-heading font-black text-xl sm:text-2xl leading-tight">
-                    {selectedExp.title}
-                  </h3>
-                  <div className="flex items-center gap-2 text-xs text-white/80 mt-1">
-                    <MapPin className="w-3.5 h-3.5 text-[#00E5FF]" />
-                    <span>{selectedExp.category}</span>
-                    {selectedExp.date && <span>• {selectedExp.date}</span>}
-                  </div>
-                </div>
-              </div>
-
-              {/* Modal Scrollable Body */}
-              <div className="p-6 overflow-y-auto space-y-5">
-                <div>
-                  <h4 className="font-heading font-bold text-sm text-[#0A2540] uppercase tracking-wider mb-2">
-                    About This Experience
-                  </h4>
-                  <p className="text-sm text-[#475569] leading-relaxed">
-                    {selectedExp.description}
-                  </p>
-                </div>
-
-                {selectedExp.inclusions && (
-                  <div>
-                    <h4 className="font-heading font-bold text-sm text-[#0A2540] uppercase tracking-wider mb-3">
-                      Package Inclusions
-                    </h4>
-                    <ul className="space-y-2">
-                      {selectedExp.inclusions.map((inc, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#334155]">
-                          <CheckCircle2 className="w-4 h-4 text-[#00A896] shrink-0 mt-0.5" />
-                          <span>{inc}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              {/* Modal Footer CTAs */}
-              <div className="p-4 sm:p-5 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
-                <span className="text-xs text-[#64748B] font-medium text-center sm:text-left">
-                  Need a custom sports tour package?
-                </span>
-                <div className="flex items-center gap-3 w-full sm:w-auto">
-                  <a
-                    href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
-                      `Hi Holiday Star, I would like to enquire about the ${selectedExp.title} package.`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 sm:flex-initial px-5 py-2.5 rounded-full bg-[#00A896] hover:bg-[#008f80] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all"
-                  >
-                    <span>Enquire on WhatsApp</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
-                  <button
-                    onClick={() => setSelectedExp(null)}
-                    className="px-4 py-2.5 rounded-full bg-white border border-slate-200 text-[#0A2540] text-xs font-semibold hover:bg-slate-100 transition-colors"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
       {/* ── UPCOMING EXPERIENCES MODAL ── */}
       <AnimatePresence>

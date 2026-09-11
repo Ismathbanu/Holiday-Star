@@ -20,6 +20,10 @@ import {
 import AnimatedSection from '../../components/common/AnimatedSection';
 import { siteConfig } from '../../data/siteConfig';
 import { captureUTM, getPersistedUTM } from '../../utils/utm';
+import { getDynamicTravelMonths } from '../../utils/travelMonths';
+
+// Dynamically generated upcoming travel months based on the current date
+const dynamicTravelMonths = getDynamicTravelMonths({ count: 8 });
 
 // ── Form Validation Schema ──
 const formSchema = z.object({
@@ -220,6 +224,17 @@ export default function MalaysiaCampaign() {
   // Modal State for Package Details
   const [activePackage, setActivePackage] = useState<CampaignPackage | null>(null);
 
+  // Modal State for Booking Popup
+  const [bookingPackage, setBookingPackage] = useState<CampaignPackage | null>(null);
+  const [bookingForm, setBookingForm] = useState({
+    name: '',
+    phone: '',
+    travelMonth: dynamicTravelMonths[0] || 'Immediate / Next 30 Days',
+    travellers: '2 Travellers (Couple / Friends)',
+    startingPoint: 'Chennai',
+    flightPreference: 'Require air tickets from our side',
+  });
+
   // Form State
   const {
     register,
@@ -278,31 +293,22 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
       </Helmet>
 
       {/* ── SECTION 1: Grand Cinematic Hero ── */}
-      <section className="relative w-full min-h-[500px] sm:min-h-[540px] md:min-h-[580px] lg:min-h-[620px] xl:min-h-[650px] flex items-center overflow-hidden pt-20 sm:pt-24 lg:pt-28 pb-12 sm:pb-16 lg:pb-20">
-        {/* Full-width Panoramic Background Image */}
-        <img
-          src="/images/malacam-herobg.jpg"
-          alt="Malaysia - Kuala Lumpur skyline, Genting highlands, Langkawi waters"
-          className="absolute inset-0 w-full h-full object-cover object-[center_top] select-none pointer-events-none"
-        />
-
-        {/* Left Side Rich Contrast Gradient Overlay to make all text crystal-clear and readable */}
-        <div
-          className="absolute inset-0 pointer-events-none hidden md:block"
-          style={{
-            background:
-              'linear-gradient(90deg, rgba(2, 16, 36, 0.94) 0%, rgba(3, 22, 48, 0.92) 20%, rgba(3, 25, 54, 0.88) 38%, rgba(4, 28, 60, 0.55) 54%, rgba(4, 28, 60, 0.15) 66%, transparent 76%)',
-          }}
-        />
-
-        {/* Mobile / Tablet Full-coverage Gradient Overlay */}
-        <div
-          className="absolute inset-0 pointer-events-none md:hidden"
-          style={{
-            background:
-              'linear-gradient(180deg, rgba(2, 16, 36, 0.88) 0%, rgba(3, 24, 52, 0.92) 50%, rgba(2, 16, 36, 0.95) 100%)',
-          }}
-        />
+      <section className="relative w-full min-h-[580px] lg:min-h-[660px] flex items-center overflow-hidden bg-[#0A121A] pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24">
+        {/* Full-width Background Image (Same as Malaysia Destination Page) */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/hero-bg.jpg"
+            alt="Malaysia - Kuala Lumpur skyline at sunset featuring illuminated Petronas Twin Towers, KL Tower, and a lantern-lit rainforest canopy walkway"
+            className="w-full h-full object-cover object-center scale-100 select-none pointer-events-none"
+            loading="eager"
+            fetchPriority="high"
+          />
+          {/* Directional contrast gradient: provides crisp readability for text on the left while leaving glowing Petronas Towers & sunset illuminated on the right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 lg:via-black/40 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+          {/* Mobile-only backdrop for extra readability on narrow screens */}
+          <div className="lg:hidden absolute inset-0 bg-black/40 backdrop-blur-[1px] pointer-events-none" />
+        </div>
 
         {/* Hero Content Container */}
         <div className="container-hs relative z-10 md:pl-8 lg:pl-16 xl:pl-20">
@@ -311,9 +317,9 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
               {/* Co-Branding Logos: Holiday Star & Tourism Malaysia */}
               <div className="inline-flex items-center gap-4 sm:gap-6 px-5 sm:px-7 py-3 sm:py-3.5 rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-md shadow-xl border border-white/80 mb-6 sm:mb-8">
                 <img
-                  src="/images/hslogo.png"
+                  src="/images/hs-logo.png"
                   alt="Holiday Star Tours & Travels"
-                  className="h-9 sm:h-11 lg:h-12 w-auto object-contain"
+                  className="h-8 sm:h-9 lg:h-10 w-auto object-contain"
                 />
                 <span className="w-px h-7 sm:h-9 bg-gray-200" />
                 <img
@@ -323,9 +329,19 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
                 />
               </div>
 
-              {/* Bold Main Title */}
-              <h1 className="font-heading font-black text-4xl sm:text-6xl md:text-7xl lg:text-[4.8rem] tracking-tight leading-none text-white drop-shadow-lg mb-3 sm:mb-4">
-                MALAYSIA
+              {/* Bold Main Title with Malaysia Destination Page Styling */}
+              <h1 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] tracking-tight leading-[1.12] mb-3 sm:mb-4">
+                <span className="text-white block drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+                  Malaysia.
+                </span>
+                <span
+                  className="block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                  style={{
+                    backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                  }}
+                >
+                  Truly Asia.
+                </span>
               </h1>
 
               {/* Subtitle */}
@@ -645,40 +661,236 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
                     </ul>
                   </div>
 
-                  <div className="space-y-2.5">
+                  <div className="pt-2">
                     <button
                       onClick={() => {
-                        setValue(
-                          'preferredPackage',
-                          `${activePackage.title} (${activePackage.duration})`
-                        );
+                        const targetPkg = activePackage;
                         setActivePackage(null);
-                        scrollToForm();
+                        setBookingPackage(targetPkg);
                       }}
-                      className="w-full py-3 rounded-full text-white font-bold text-xs uppercase tracking-wider shadow-md hover:scale-102 transition-transform"
+                      className="w-full py-3.5 rounded-full text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
                       style={{
                         background: 'linear-gradient(90deg, #00A896 0%, #0284C7 100%)',
                       }}
                     >
-                      GET PACKAGE PRICE
+                      <span>BOOK NOW</span>
+                      <ArrowRight className="w-4 h-4" />
                     </button>
-
-                    <a
-                      href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
-                        `Hi Holiday Star, I'm interested in the ${activePackage.title} (${activePackage.duration}) package.`
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-2.5 rounded-full bg-white border border-gray-200 text-[#0A2540] hover:bg-gray-50 font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
-                    >
-                      <svg className="w-4 h-4 fill-[#25D366]" viewBox="0 0 24 24">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                      </svg>
-                      <span>WhatsApp Us</span>
-                    </a>
                   </div>
                 </div>
               </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Booking Details Collection Modal (Compact & Clean) ── */}
+      <AnimatePresence>
+        {bookingPackage && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/65 backdrop-blur-sm overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 10 }}
+              className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl relative border border-gray-100 my-auto"
+            >
+              {/* Integrated Compact Header */}
+              <div className="bg-gradient-to-r from-[#00A896] via-[#0284C7] to-[#1E3A8A] px-5 py-3.5 sm:px-6 sm:py-4 text-white relative flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-200 block">
+                    MALAYSIA PACKAGE BOOKING
+                  </span>
+                  <h3 className="font-heading font-black text-base sm:text-lg tracking-tight leading-snug">
+                    {bookingPackage.code} | {bookingPackage.title}
+                  </h3>
+                  <span className="inline-block mt-0.5 text-[11px] font-semibold text-emerald-200 bg-white/15 px-2 py-0.5 rounded-md">
+                    {bookingPackage.duration}
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setBookingPackage(null)}
+                  className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors shrink-0 ml-4 cursor-pointer"
+                  aria-label="Close booking modal"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Compact Booking Form Body */}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!bookingForm.name.trim() || !bookingForm.phone.trim()) {
+                    alert('Please enter your Name and WhatsApp Number.');
+                    return;
+                  }
+
+                  const text = `Hello Holiday Star Tours!
+I would like to book this Malaysia package:
+
+*Package:* ${bookingPackage.title} (${bookingPackage.duration})
+*Name:* ${bookingForm.name}
+*WhatsApp No:* ${bookingForm.phone}
+*Starting Point:* ${bookingForm.startingPoint}
+*Travel Month:* ${bookingForm.travelMonth}
+*No. of Travellers:* ${bookingForm.travellers}
+*Flight Preference:* ${bookingForm.flightPreference}
+
+Please share booking details and confirmed quote.`;
+
+                  window.open(`https://wa.me/919444370254?text=${encodeURIComponent(text)}`, '_blank');
+                  setBookingPackage(null);
+                }}
+                className="p-4 sm:p-5 space-y-3 text-left"
+              >
+                {/* Row 1: Name & WhatsApp */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1">
+                      Your Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Ramesh Kumar"
+                      value={bookingForm.name}
+                      onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
+                      className="w-full px-3 py-2 text-xs sm:text-sm bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#00A896] transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1">
+                      WhatsApp Number *
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="+91 98765 43210"
+                      value={bookingForm.phone}
+                      onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
+                      className="w-full px-3 py-2 text-xs sm:text-sm bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#00A896] transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Row 2: Starting City & Travel Month */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1">
+                      Starting Point
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Chennai, Bengaluru"
+                      value={bookingForm.startingPoint}
+                      onChange={(e) => setBookingForm({ ...bookingForm, startingPoint: e.target.value })}
+                      className="w-full px-3 py-2 text-xs sm:text-sm bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#00A896] transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1">
+                      Travel Month
+                    </label>
+                    <select
+                      value={bookingForm.travelMonth}
+                      onChange={(e) => setBookingForm({ ...bookingForm, travelMonth: e.target.value })}
+                      className="w-full px-3 py-2 text-xs sm:text-sm bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#00A896] transition-colors cursor-pointer"
+                    >
+                      {dynamicTravelMonths.map((month) => (
+                        <option key={month} value={month}>
+                          {month}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Row 3: Travellers */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1">
+                    No. of Travellers
+                  </label>
+                  <select
+                    value={bookingForm.travellers}
+                    onChange={(e) => setBookingForm({ ...bookingForm, travellers: e.target.value })}
+                    className="w-full px-3 py-2 text-xs sm:text-sm bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#00A896] transition-colors"
+                  >
+                    <option value="1 Traveller (Solo)">1 Traveller (Solo)</option>
+                    <option value="2 Travellers (Couple / Friends)">2 Travellers (Couple / Friends)</option>
+                    <option value="3 Travellers">3 Travellers</option>
+                    <option value="4 Travellers (Family)">4 Travellers (Family)</option>
+                    <option value="5+ Travellers (Group)">5+ Travellers (Group)</option>
+                  </select>
+                </div>
+
+                {/* Row 4: Flight Preference (Compact 2-card grid) */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1">
+                    Flight Preference:
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <label
+                      className={`flex items-center gap-2 p-2 rounded-xl border cursor-pointer transition-all ${
+                        bookingForm.flightPreference === 'Require air tickets from our side'
+                          ? 'border-[#00A896] bg-emerald-50/80 text-emerald-900 font-semibold'
+                          : 'border-gray-200 bg-gray-50/70 hover:bg-gray-100/70 text-gray-700'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="flightPreference"
+                        value="Require air tickets from our side"
+                        checked={bookingForm.flightPreference === 'Require air tickets from our side'}
+                        onChange={(e) => setBookingForm({ ...bookingForm, flightPreference: e.target.value })}
+                        className="w-3.5 h-3.5 text-[#00A896] focus:ring-[#00A896]"
+                      />
+                      <span className="text-xs leading-tight">
+                        Require air tickets from our side
+                      </span>
+                    </label>
+
+                    <label
+                      className={`flex items-center gap-2 p-2 rounded-xl border cursor-pointer transition-all ${
+                        bookingForm.flightPreference === 'Will arrange air tickets on your own'
+                          ? 'border-[#00A896] bg-emerald-50/80 text-emerald-900 font-semibold'
+                          : 'border-gray-200 bg-gray-50/70 hover:bg-gray-100/70 text-gray-700'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="flightPreference"
+                        value="Will arrange air tickets on your own"
+                        checked={bookingForm.flightPreference === 'Will arrange air tickets on your own'}
+                        onChange={(e) => setBookingForm({ ...bookingForm, flightPreference: e.target.value })}
+                        className="w-3.5 h-3.5 text-[#00A896] focus:ring-[#00A896]"
+                      />
+                      <span className="text-xs leading-tight">
+                        Will arrange air tickets on your own
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Submit to WhatsApp */}
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    className="w-full py-3 px-5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <svg className="w-4 h-4 fill-white" viewBox="0 0 24 24">
+                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                    </svg>
+                    <span>Send on WhatsApp</span>
+                  </button>
+                  <p className="text-center text-[10px] text-gray-400 mt-1">
+                    Connects directly to our Malaysia desk on WhatsApp.
+                  </p>
+                </div>
+              </form>
             </motion.div>
           </div>
         )}
@@ -858,16 +1070,14 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
                     </label>
                     <select
                       {...register('travelMonth')}
-                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-[#00A896] bg-white"
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-[#00A896] bg-white cursor-pointer"
                     >
-                      <option value="">Select month</option>
-                      <option value="Next 30 Days">Next 30 Days</option>
-                      <option value="November 2024">November 2024</option>
-                      <option value="December 2024">December 2024</option>
-                      <option value="January 2025">January 2025</option>
-                      <option value="February 2025">February 2025</option>
-                      <option value="March 2025">March 2025</option>
-                      <option value="Summer 2025">Summer 2025</option>
+                      <option value="">Select travel month</option>
+                      {dynamicTravelMonths.map((month) => (
+                        <option key={month} value={month}>
+                          {month}
+                        </option>
+                      ))}
                     </select>
                     {errors.travelMonth && (
                       <p className="text-red-500 text-[10px] mt-0.5">{errors.travelMonth.message}</p>

@@ -6,9 +6,9 @@ export const siteConfig = {
 
   contact: {
     person: 'Najmunnisa Bilal',
-    phone: '+91 6379799948',
+    phone: '+91 94443 70254',
     email: 'hello@holidaystartours.com',
-    whatsapp: '916379799948',
+    whatsapp: '919444370254',
     whatsappMessage: 'Hi Holiday Star! I\'m interested in planning a holiday. Can you help?',
     address: {
       line1: 'No. 8, 1st Floor, K.B. Aluppy Complex',

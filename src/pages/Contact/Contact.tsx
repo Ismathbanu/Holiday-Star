@@ -74,9 +74,9 @@ export default function Contact() {
                   {/* Company Logo Header */}
                   <div className="flex items-center gap-4 pb-6 border-b border-gray-100 mb-6">
                     <img
-                      src="/images/hslogo.png"
+                      src="/images/hs-logo.png"
                       alt="Holiday Star Tours & Travels"
-                      className="h-16 w-auto object-contain"
+                      className="h-11 sm:h-12 w-auto object-contain"
                     />
                     <div>
                       <h2 className="font-heading font-bold text-lg text-hs-navy">

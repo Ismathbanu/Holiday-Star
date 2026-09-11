@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Phone, ChevronDown, Sparkles } from 'lucide-react';
+import { Menu, X, Phone, ChevronDown } from 'lucide-react';
 import { destinationLinks, siteConfig } from '../../data/siteConfig';
 
 export default function Navbar() {
@@ -31,8 +31,14 @@ export default function Navbar() {
   }, [isOpen]);
 
   const isHome = location.pathname === '/';
-  const isCampaign = location.pathname.includes('malaysia');
-  const isDarkNav = !scrolled && !isHome && !isCampaign;
+  const isMalaysiaDestination = location.pathname === '/destinations/malaysia';
+  const isPackages = location.pathname === '/packages';
+  const isAbout = location.pathname === '/about';
+  const isSportsTourism = location.pathname === '/sports-tourism';
+  const isPlanHoliday = location.pathname === '/plan-holiday';
+  const isCampaign = location.pathname.startsWith('/campaigns') || location.pathname.includes('campaign');
+  const isTransparentNav = !scrolled && (isHome || isMalaysiaDestination || isPackages || isAbout || isSportsTourism || isPlanHoliday || isCampaign);
+  const isDarkNav = isTransparentNav || !scrolled;
 
   const isActive = (href: string) =>
     href === '/' ? location.pathname === '/' : location.pathname.startsWith(href);
@@ -41,11 +47,13 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isDarkNav
-            ? 'bg-hs-navy/90 backdrop-blur-md py-4 border-b border-white/10'
-            : scrolled
-              ? 'bg-white/95 backdrop-blur-md shadow-card py-2.5 border-b border-gray-100'
-              : 'bg-white/95 backdrop-blur-md shadow-xs py-3 border-b border-gray-100/70'
+          isTransparentNav
+            ? 'bg-gradient-to-b from-black/70 via-black/30 to-transparent py-4 border-b border-white/10 shadow-none'
+            : isDarkNav
+              ? 'bg-hs-navy/90 backdrop-blur-md py-4 border-b border-white/10'
+              : scrolled
+                ? 'bg-white/95 backdrop-blur-md shadow-card py-2.5 border-b border-gray-100'
+                : 'bg-white/95 backdrop-blur-md shadow-xs py-3 border-b border-gray-100/70'
         }`}
         role="navigation"
         aria-label="Main navigation"
@@ -59,9 +67,9 @@ export default function Navbar() {
               aria-label="Holiday Star — Home"
             >
               <img
-                src="/images/hslogo.png"
+                src={isDarkNav ? '/images/hsw-logo.png' : '/images/hs-logo.png'}
                 alt="Holiday Star Tours & Travels"
-                className={`h-12 sm:h-14 lg:h-16 w-auto object-contain transition-all duration-300 ${isDarkNav ? 'brightness-0 invert' : ''}`}
+                className="h-10 sm:h-11 lg:h-12 w-auto object-contain transition-all duration-300"
               />
             </Link>
           </div>
@@ -181,15 +189,6 @@ export default function Navbar() {
             >
               Contact
             </Link>
-
-            {/* Malaysia Campaign Badge Link */}
-            <Link
-              to="/campaigns/malaysia"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-hs-gold/20 text-hs-gold border border-hs-gold/30 rounded-full text-xs font-semibold hover:bg-hs-gold hover:text-hs-navy transition-colors ml-1"
-            >
-              <Sparkles className="w-3.5 h-3.5 shrink-0" />
-              Malaysia Campaign
-            </Link>
           </div>
 
           {/* Desktop CTA */}
@@ -235,7 +234,7 @@ export default function Navbar() {
             >
               <div>
                 <div className="flex items-center justify-between pb-6 border-b border-gray-100 mb-6">
-                  <img src="/images/hslogo.png" alt="Holiday Star Tours & Travels" className="h-14 w-auto object-contain" />
+                  <img src="/images/hs-logo.png" alt="Holiday Star Tours & Travels" className="h-11 w-auto object-contain" />
                   <button
                     onClick={() => setIsOpen(false)}
                     className="p-2 text-gray-500 hover:text-hs-navy"
@@ -302,14 +301,6 @@ export default function Navbar() {
                     className="block py-2 text-base font-semibold text-hs-navy"
                   >
                     Contact
-                  </Link>
-
-                  <Link
-                    to="/campaigns/malaysia"
-                    className="flex items-center gap-2 p-3 rounded-xl bg-hs-gold/10 text-hs-navy font-semibold text-sm border border-hs-gold/30 mt-4"
-                  >
-                    <Sparkles className="w-4 h-4 text-hs-gold shrink-0" />
-                    Malaysia × Tourism Malaysia Campaign
                   </Link>
                 </div>
               </div>

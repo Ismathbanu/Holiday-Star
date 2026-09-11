@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import {
   Tag,
   Award,
@@ -15,8 +16,6 @@ import {
   Headphones,
   MapPin,
   MessageCircle,
-  X,
-  Check,
   Plane,
 } from 'lucide-react';
 import { siteConfig } from '../../data/siteConfig';
@@ -323,18 +322,12 @@ function DestinationLineIcon({ type, className = 'w-7 h-7' }: { type: string; cl
 
 export default function Packages() {
   const [favorites, setFavorites] = useState<Record<string, boolean>>({});
-  const [selectedPackage, setSelectedPackage] = useState<HolidayPackageCard | null>(null);
 
   const toggleFavorite = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
   };
-
-  const whatsappInquiryUrl = (pkgName: string, price: string) =>
-    `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
-      `Hello Holiday Star! I'm interested in the "${pkgName}" package (${price}). Please share itinerary details and available dates.`
-    )}`;
 
   return (
     <div className="w-full bg-white text-slate-800 font-sans">
@@ -361,41 +354,56 @@ export default function Packages() {
           - Dual Badges: Best Price Guarantee & Trusted by Travellers
           - Bottom-left smooth mint/cyan wave
       ───────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden bg-slate-900 pt-24 pb-16 lg:pb-20">
+      <section className="relative min-h-[580px] lg:min-h-[660px] flex items-center overflow-hidden bg-[#0A121A] pt-28 pb-16 lg:pt-36 lg:pb-24">
         {/* Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/holiday-herobg.jpg"
-            alt="Tropical turquoise bay with longtail boats and limestone cliffs"
-            className="w-full h-full object-cover object-center"
+            src="/images/pack-herobg.jpg"
+            alt="Tropical coastal paradise with illuminated cliffside walkway, lanterns, turquoise bay and limestone islands at sunset"
+            className="w-full h-full object-cover object-center scale-100 select-none pointer-events-none"
+            loading="eager"
+            fetchPriority="high"
           />
+          {/* Directional contrast gradient: provides crisp readability for text on the left while leaving the glowing sunset & turquoise bay illuminated */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 lg:via-black/35 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+          {/* Mobile-only backdrop for extra readability on narrow screens */}
+          <div className="lg:hidden absolute inset-0 bg-black/40 backdrop-blur-[1px] pointer-events-none" />
         </div>
 
         <div className="container-hs relative z-10 w-full">
           <div className="max-w-xl lg:max-w-2xl">
-            {/* Cursive Eyebrow */}
-            <div className="font-script text-2xl sm:text-3xl text-[#0d9488] font-semibold mb-2 drop-shadow-2xs">
-              Curated Journeys, Unforgettable Memories
+            {/* Eyebrow Pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-emerald-300 bg-emerald-950/70 border border-emerald-500/30 backdrop-blur-md mb-3 shadow-sm w-fit">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <span>Curated Journeys, Unforgettable Memories</span>
             </div>
 
             {/* Bold Dual-Color Heading */}
-            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.08] mb-4">
-              <span className="text-[#0369a1]">Holiday </span>
-              <span className="text-[#7c3aed]">Packages</span>
+            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.06] mb-4">
+              <span className="text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">Holiday </span>
+              <span
+                className="text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                }}
+              >
+                Packages
+              </span>
             </h1>
 
             {/* Subtitles */}
-            <p className="text-sm sm:text-base font-semibold text-slate-800 mb-1 leading-snug">
+            <p className="text-sm sm:text-base md:text-lg font-semibold text-white/95 mb-1 leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
               Handpicked holiday packages to Malaysia and beyond.
             </p>
-            <p className="text-xs sm:text-sm text-slate-600 mb-7 leading-relaxed font-light">
+            <p className="text-xs sm:text-sm md:text-base text-slate-200/90 mb-8 leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
               Great experiences. Comfortable stays. Hassle-free travel.
             </p>
 
             {/* Dual Guarantee Feature Badges */}
             <div className="flex flex-wrap items-center gap-3.5 sm:gap-4">
               {/* Badge 1: Best Price Guarantee */}
-              <div className="bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 border border-emerald-100 shadow-sm flex items-center gap-3">
+              <div className="bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 border border-white/40 shadow-lg flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-[#10b981] shrink-0 shadow-2xs">
                   <Tag className="w-5 h-5 rotate-[-45deg]" />
                 </div>
@@ -410,7 +418,7 @@ export default function Packages() {
               </div>
 
               {/* Badge 2: Trusted by Travellers */}
-              <div className="bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 border border-purple-100 shadow-sm flex items-center gap-3">
+              <div className="bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 border border-white/40 shadow-lg flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-200 flex items-center justify-center text-[#7c3aed] shrink-0 shadow-2xs">
                   <Award className="w-5 h-5" />
                 </div>
@@ -474,13 +482,15 @@ export default function Packages() {
                   <div>
                     {/* Card Top Image & Badges */}
                     <div className="aspect-[16/10] overflow-hidden relative">
-                      <img
-                        src={pkg.image}
-                        alt={pkg.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
+                      <Link to={`/destinations/${pkg.destinationId}`} className="block w-full h-full">
+                        <img
+                          src={pkg.image}
+                          alt={pkg.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      </Link>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10 pointer-events-none" />
 
                       {/* Top-Left Category Badge */}
                       <div
@@ -493,7 +503,7 @@ export default function Packages() {
                       <button
                         type="button"
                         onClick={(e) => toggleFavorite(pkg.id, e)}
-                        className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/30 backdrop-blur-md border border-white/50 flex items-center justify-center text-white hover:text-red-500 transition-colors shadow-sm cursor-pointer"
+                        className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/30 backdrop-blur-md border border-white/50 flex items-center justify-center text-white hover:text-red-500 transition-colors shadow-sm cursor-pointer z-10"
                         aria-label="Add to favorites"
                       >
                         <Heart
@@ -507,7 +517,9 @@ export default function Packages() {
                     {/* Card Body */}
                     <div className="p-5">
                       <h3 className="font-heading font-extrabold text-base text-[#0b3b64] mb-1 leading-snug group-hover:text-[#0066CC] transition-colors">
-                        {pkg.title}
+                        <Link to={`/destinations/${pkg.destinationId}`}>
+                          {pkg.title}
+                        </Link>
                       </h3>
                       <p className="text-[11px] text-slate-500 leading-tight mb-4 font-normal line-clamp-1">
                         {pkg.route}
@@ -561,9 +573,8 @@ export default function Packages() {
                       </span>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => setSelectedPackage(pkg)}
+                    <Link
+                      to={`/destinations/${pkg.destinationId}`}
                       className="px-3.5 py-2 rounded-full text-white text-[11px] font-semibold shadow-xs hover:shadow-md hover:scale-[1.02] transition-all duration-300 flex items-center gap-1.5 cursor-pointer shrink-0"
                       style={{
                         background: pkg.buttonGradient,
@@ -572,7 +583,7 @@ export default function Packages() {
                     >
                       <span>View Details</span>
                       <ArrowRight className="w-3 h-3" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               );
@@ -745,7 +756,7 @@ export default function Packages() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="text-[9px] font-script text-slate-700 text-center font-bold">
+                    <div className="text-[10px] font-bold text-slate-700 text-center uppercase tracking-wider">
                       Malaysia ✨
                     </div>
                   </div>
@@ -759,7 +770,7 @@ export default function Packages() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="text-[9px] font-script text-slate-700 text-center font-bold">
+                    <div className="text-[10px] font-bold text-slate-700 text-center uppercase tracking-wider">
                       Tropical Bliss 🌴
                     </div>
                   </div>
@@ -770,135 +781,6 @@ export default function Packages() {
         </div>
       </section>
 
-      {/* ─────────────────────────────────────────────────────────────
-          PACKAGE DETAIL / ITINERARY MODAL
-      ───────────────────────────────────────────────────────────── */}
-      {selectedPackage && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fadeIn">
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-100 p-6 sm:p-8 relative">
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={() => setSelectedPackage(null)}
-              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
-            {/* Header */}
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white ${selectedPackage.badgeColor}`}>
-                  {selectedPackage.badge}
-                </span>
-                <span className="text-xs font-bold text-[#0284c7]">
-                  {selectedPackage.duration}
-                </span>
-              </div>
-              <h3 className="font-heading font-extrabold text-2xl text-[#0b3b64] mb-1">
-                {selectedPackage.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium">
-                {selectedPackage.route}
-              </p>
-            </div>
-
-            {/* Image Preview */}
-            <div className="rounded-2xl overflow-hidden mb-6 aspect-[16/9] shadow-sm">
-              <img
-                src={selectedPackage.image}
-                alt={selectedPackage.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Price & Amenities bar */}
-            <div className="bg-blue-50/70 rounded-2xl p-4 border border-blue-100 mb-6 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
-                  Package Starting From
-                </span>
-                <span className="font-heading font-extrabold text-xl text-[#0066CC]">
-                  {selectedPackage.price}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-4 text-xs text-slate-700 font-medium">
-                <span className="flex items-center gap-1.5">
-                  <Utensils className="w-4 h-4 text-[#0284c7]" /> Meals Included
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Car className="w-4 h-4 text-[#0284c7]" /> Transfers
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Camera className="w-4 h-4 text-[#0284c7]" /> Sightseeing
-                </span>
-              </div>
-            </div>
-
-            {/* Highlights */}
-            <div className="mb-6 bg-slate-50 p-4 rounded-xl border border-gray-100">
-              <h4 className="font-heading font-bold text-xs uppercase tracking-wider text-slate-500 mb-2.5">
-                Key Trip Highlights
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700 font-medium">
-                {selectedPackage.highlights.map((hl, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-700 flex items-center justify-center shrink-0">
-                      <Check className="w-2.5 h-2.5 stroke-[3]" />
-                    </div>
-                    <span>{hl}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Day by Day schedule */}
-            <div className="mb-8">
-              <h4 className="font-heading font-bold text-sm text-[#0f2744] mb-3">
-                Day-by-Day Itinerary
-              </h4>
-              <div className="space-y-4">
-                {selectedPackage.itinerary.map((d, i) => (
-                  <div key={i} className="flex items-start gap-3 border-l-2 border-[#0284c7]/40 pl-3">
-                    <div>
-                      <div className="text-xs font-bold text-[#0066CC]">
-                        {d.day}: <span className="text-[#0f2744]">{d.title}</span>
-                      </div>
-                      <p className="text-xs text-slate-500 font-light mt-0.5 leading-relaxed">
-                        {d.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Booking Actions */}
-            <div className="flex flex-wrap items-center justify-end gap-3 pt-4 border-t border-gray-100">
-              <button
-                type="button"
-                onClick={() => setSelectedPackage(null)}
-                className="px-5 py-2.5 rounded-full border border-gray-200 text-xs font-semibold text-slate-600 hover:bg-gray-50 cursor-pointer"
-              >
-                Close
-              </button>
-              <a
-                href={whatsappInquiryUrl(selectedPackage.title, selectedPackage.price)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-2.5 rounded-full text-xs font-bold text-white shadow-md flex items-center gap-2 cursor-pointer transition-transform hover:scale-[1.02]"
-                style={{
-                  background: selectedPackage.buttonGradient,
-                }}
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Inquire on WhatsApp</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

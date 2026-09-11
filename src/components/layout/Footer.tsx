@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Brand & Newsletter Column (2 cols) */}
           <div className="lg:col-span-2 space-y-6">
             <Link to="/" className="inline-block">
-              <img src="/images/hslogo.png" alt="Holiday Star Tours & Travels" className="h-20 w-auto object-contain brightness-0 invert" />
+              <img src="/images/hsw-logo.png" alt="Holiday Star Tours & Travels" className="h-12 sm:h-14 w-auto object-contain" />
             </Link>
 
             <p className="text-white/70 text-sm leading-relaxed max-w-sm font-light">
@@ -38,11 +38,6 @@ export default function Footer() {
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
-            </div>
-
-            {/* Cursive Tagline */}
-            <div className="font-script text-2xl text-hs-gold pt-2">
-              Good Holidays, Brighter People.
             </div>
           </div>
 
@@ -87,6 +82,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/campaigns/malaysia" className="text-sm text-white/75 hover:text-white transition-colors">
+                  Malaysia Campaign
+                </Link>
+              </li>
+              <li>
                 <Link to="/contact" className="text-sm text-white/75 hover:text-white transition-colors">
                   Contact
                 </Link>
@@ -126,11 +126,25 @@ export default function Footer() {
         </div>
 
         {/* Bottom copyright strip */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-3">
-          <p>© {currentYear} Holiday Star Tours & Travels. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link to="/privacy" className="hover:text-white/70 transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-white/70 transition-colors">Terms & Conditions</Link>
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-white/80 gap-3">
+          <p className="flex flex-wrap items-center justify-center sm:justify-start gap-x-2 gap-y-1 text-center sm:text-left text-white/90">
+            <span>© {currentYear} Holiday Star Tours & Travels. All rights reserved.</span>
+            <span className="hidden sm:inline text-white/40">•</span>
+            <span>
+              Powered by{' '}
+              <a
+                href="https://dgbirdmedia.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-hs-gold underline underline-offset-2 font-semibold transition-colors"
+              >
+                DGbird Media
+              </a>
+            </span>
+          </p>
+          <div className="flex items-center gap-6 text-white/70">
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>
           </div>
         </div>
       </div>

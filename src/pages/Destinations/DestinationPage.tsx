@@ -259,17 +259,12 @@ export default function DestinationPage() {
           <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-slate-950/95 via-slate-900/80 to-slate-950/40" />
         </div>
 
-        {/* Top Right Cursive Script Annotation */}
-        <div className="absolute top-12 right-8 lg:right-16 z-10 font-script text-3xl lg:text-4xl text-amber-300 rotate-[-3deg] drop-shadow-md text-right hidden sm:block">
-          {destination.emotionalStatement} ✨
-        </div>
-
         <div className="relative z-10 container-hs w-full">
           <div className="max-w-2xl text-white">
             <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-white mb-2 leading-[1.1]">
               {destination.name}.
             </h1>
-            <div className="font-script text-3xl sm:text-4xl lg:text-5xl text-sky-400 font-normal rotate-[-2deg] mb-4">
+            <div className="font-heading font-semibold text-2xl sm:text-3xl lg:text-4xl text-sky-400 mb-4 tracking-tight">
               {destination.heroTagline}
             </div>
             <p className="text-sm sm:text-base text-gray-200 mb-8 leading-relaxed max-w-xl font-light">
@@ -352,8 +347,10 @@ export default function DestinationPage() {
                 {destination.whyVisit.description}
               </p>
             </div>
-            <div className="font-script text-2xl sm:text-3xl text-[#0066CC] rotate-[-4deg] text-right shrink-0">
-              Unforgettable Places<br />Timeless Memories
+            <div className="text-right shrink-0">
+              <span className="inline-block px-3.5 py-1.5 rounded-full bg-blue-50 text-xs font-bold uppercase tracking-wider text-[#0066CC] border border-blue-100">
+                Unforgettable Places • Timeless Memories
+              </span>
             </div>
           </div>
 
@@ -493,7 +490,7 @@ export default function DestinationPage() {
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-              <div className="relative z-10 font-script text-3xl sm:text-4xl text-white rotate-[-3deg] drop-shadow-md leading-tight">
+              <div className="relative z-10 font-heading font-bold text-2xl sm:text-3xl text-white drop-shadow-md leading-tight">
                 More than just<br />a destination.
               </div>
             </div>
@@ -509,8 +506,8 @@ export default function DestinationPage() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <p className="font-script text-[0.65rem] text-center text-hs-navy">
-                  Explore Discover Experience Enjoy 🌴
+                <p className="text-[10px] font-bold text-center text-hs-navy uppercase tracking-wider">
+                  Explore • Discover • Experience 🌴
                 </p>
               </div>
 
@@ -605,7 +602,7 @@ export default function DestinationPage() {
             <div className="lg:col-span-6 bg-[#F0F6FC] p-8 sm:p-10 rounded-3xl border border-blue-100 shadow-md flex flex-col justify-between relative overflow-hidden">
               {/* Top Right Postal Stamp Badge */}
               <div className="absolute top-6 right-6 w-24 h-24 rounded-full border-2 border-dashed border-blue-200/80 flex flex-col items-center justify-center p-2 rotate-[12deg] text-[#0066CC]/40 pointer-events-none select-none hidden sm:flex">
-                <span className="font-script text-[0.65rem] font-bold text-center leading-tight">
+                <span className="font-sans text-[10px] font-bold tracking-widest text-center leading-tight uppercase">
                   TRAVEL<br />EXPLORE<br />DISCOVER<br />REPEAT
                 </span>
               </div>
@@ -796,8 +793,13 @@ export default function DestinationPage() {
 
         <div className="container-hs relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-5 font-script text-3xl sm:text-4xl text-amber-300 rotate-[-4deg] drop-shadow-md">
-              New Places<br />New Stories<br />A Happier You
+            <div className="lg:col-span-5">
+              <span className="inline-block px-3.5 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-300/30 text-xs font-bold uppercase tracking-widest mb-3">
+                Your Next Journey
+              </span>
+              <div className="font-heading font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white drop-shadow-md leading-tight">
+                New Places.<br />New Stories.<br /><span className="text-amber-300">A Happier You.</span>
+              </div>
             </div>
 
             <div className="lg:col-span-7 text-left lg:text-right">

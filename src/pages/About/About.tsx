@@ -31,135 +31,87 @@ export default function About() {
       </Helmet>
 
       {/* SECTION 1: HERO */}
-      <section className="relative min-h-[540px] sm:min-h-[580px] lg:min-h-[620px] xl:min-h-[660px] flex items-center pt-24 pb-12 sm:pt-28 sm:pb-14 lg:py-0 overflow-hidden bg-sky-50/40">
+      <section className="relative min-h-[580px] lg:min-h-[660px] flex items-center pt-28 pb-16 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20 overflow-hidden bg-[#0A121A]">
         {/* Full-width Background Image */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none">
           <img
-            src="/images/about_hero_banner.jpg"
-            alt="Travel planned with people, not just bookings - Holiday Star Tours"
-            className="w-full h-full object-cover object-[70%_center] sm:object-[65%_center] md:object-[60%_center] lg:object-center"
+            src="/images/aboutus-hero.jpg"
+            alt="Misty lake with waterfall, floating luxury chalets, and illuminated Petronas Towers at sunrise - Holiday Star Tours"
+            className="w-full h-full object-cover object-center"
+            loading="eager"
+            fetchPriority="high"
           />
-          {/* Soft Left Atmospheric Overlay for Perfect Contrast */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent sm:via-white/55 md:via-white/30 lg:via-white/10 lg:to-transparent pointer-events-none" />
-          {/* Subtle Mobile Bottom Fade */}
-          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white/30 to-transparent pointer-events-none sm:hidden" />
+          {/* Directional contrast gradient: ensures crisp readability for text on the left while leaving the chalets, lanterns & sunrise illuminated on the right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 lg:via-black/35 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+          {/* Mobile-only backdrop for extra readability on narrow screens */}
+          <div className="lg:hidden absolute inset-0 bg-black/40 backdrop-blur-[1px] pointer-events-none" />
         </div>
 
         <div className="relative z-10 container-hs w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-            {/* Left Content Area (approx 40-45% on desktop) */}
-            <div className="lg:col-span-6 xl:col-span-5 max-w-lg lg:max-w-xl">
-              {/* Eyebrow */}
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 mb-3"
-              >
-                <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-[#00A896]">
-                  ABOUT HOLIDAY STAR
-                </span>
-              </motion.div>
+          <div className="max-w-xl lg:max-w-2xl">
+            {/* Eyebrow */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-emerald-300 bg-emerald-950/70 border border-emerald-500/30 backdrop-blur-md mb-4 shadow-sm w-fit"
+            >
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              ABOUT HOLIDAY STAR
+            </motion.div>
 
-              {/* Main Headline */}
-              <motion.h1
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] text-[#0A2540] leading-[1.14] mb-4 sm:mb-5 tracking-tight"
+            {/* Main Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] leading-[1.14] mb-4 sm:mb-5 tracking-tight"
+            >
+              <span className="text-white block drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+                Travel planned with
+              </span>
+              <span
+                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                }}
               >
-                Travel planned with<br />
-                <span className="bg-gradient-to-r from-[#00A896] via-[#0284C7] to-[#7C3AED] bg-clip-text text-transparent inline-block">
-                  people,
-                </span>{' '}
+                people,
+              </span>{' '}
+              <span className="text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
                 not just bookings.
-              </motion.h1>
+              </span>
+            </motion.h1>
 
-              {/* Supporting Copy */}
-              <motion.p
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-md lg:max-w-lg font-normal"
+            {/* Supporting Copy */}
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-slate-200/90 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-md lg:max-w-lg font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
+            >
+              Holiday Star Tours & Travels is a Chennai-based travel company helping travellers from Tamil Nadu discover international destinations through thoughtfully planned holidays.
+            </motion.p>
+
+            {/* CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex items-center gap-4"
+            >
+              <Link
+                to="/packages"
+                className="group inline-flex items-center justify-center gap-2 px-7 py-3 sm:px-8 sm:py-3.5 rounded-full text-white font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                style={{
+                  background: 'linear-gradient(90deg, #1E58F4 0%, #4F46E5 50%, #8B5CF6 100%)',
+                }}
               >
-                Holiday Star Tours & Travels is a Chennai-based travel company helping travellers from Tamil Nadu discover international destinations through thoughtfully planned holidays.
-              </motion.p>
-
-              {/* CTA Button */}
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex items-center gap-4"
-              >
-                <Link
-                  to="/packages"
-                  className="group inline-flex items-center justify-center gap-2 px-7 py-3 sm:px-8 sm:py-3.5 rounded-full bg-gradient-to-r from-[#0284C7] to-[#0A2540] hover:from-[#0369A1] hover:to-[#0B1E33] text-white font-semibold text-sm sm:text-base shadow-lg shadow-sky-900/20 hover:shadow-xl hover:shadow-sky-900/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
-                >
-                  <span>Know Packages</span>
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
-              </motion.div>
-            </div>
-
-            {/* Right Scenic Space with Polaroid Cards Stack */}
-            <div className="hidden lg:flex lg:col-span-6 xl:col-span-7 justify-end items-center pr-2 xl:pr-6">
-              <div className="relative w-64 xl:w-72 h-[440px] xl:h-[480px] flex items-center justify-center pointer-events-auto">
-                {/* Top Polaroid - Kuala Lumpur */}
-                <motion.div
-                  initial={{ opacity: 0, y: -25, rotate: -10 }}
-                  animate={{ opacity: 1, y: 0, rotate: -6 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  whileHover={{ scale: 1.06, rotate: -2, zIndex: 40 }}
-                  className="absolute top-2 right-4 w-40 xl:w-46 bg-white p-2.5 pb-6 xl:pb-7 rounded-lg shadow-2xl shadow-slate-900/25 border border-slate-100 z-10 transition-shadow duration-300"
-                >
-                  <div className="w-2.5 h-2.5 rounded-full bg-slate-300/80 mx-auto mb-1.5 shadow-inner" />
-                  <div className="aspect-[4/3] rounded overflow-hidden bg-slate-100 shadow-inner">
-                    <img
-                      src="/images/polaroid_kl.jpg"
-                      alt="Kuala Lumpur Night Skyline"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </motion.div>
-
-                {/* Middle Polaroid - Tropical Beach */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9, rotate: 12 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 7 }}
-                  transition={{ duration: 0.6, delay: 0.35 }}
-                  whileHover={{ scale: 1.06, rotate: 3, zIndex: 40 }}
-                  className="absolute top-36 xl:top-40 right-0 w-42 xl:w-48 bg-white p-2.5 pb-7 xl:pb-8 rounded-lg shadow-2xl shadow-slate-900/30 border border-slate-100 z-20 transition-shadow duration-300"
-                >
-                  <div className="w-2.5 h-2.5 rounded-full bg-slate-300/80 mx-auto mb-1.5 shadow-inner" />
-                  <div className="aspect-[4/3] rounded overflow-hidden bg-slate-100 shadow-inner">
-                    <img
-                      src="/images/polaroid_beach.jpg"
-                      alt="Tropical Island Paradise Beach"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </motion.div>
-
-                {/* Bottom Polaroid - Golden Buddha Temple */}
-                <motion.div
-                  initial={{ opacity: 0, y: 25, rotate: -8 }}
-                  animate={{ opacity: 1, y: 0, rotate: -4 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                  whileHover={{ scale: 1.06, rotate: 0, zIndex: 40 }}
-                  className="absolute bottom-2 right-6 xl:right-8 w-40 xl:w-46 bg-white p-2.5 pb-6 xl:pb-7 rounded-lg shadow-2xl shadow-slate-900/25 border border-slate-100 z-30 transition-shadow duration-300"
-                >
-                  <div className="w-2.5 h-2.5 rounded-full bg-slate-300/80 mx-auto mb-1.5 shadow-inner" />
-                  <div className="aspect-[4/3] rounded overflow-hidden bg-slate-100 shadow-inner">
-                    <img
-                      src="/images/polaroid_temple.jpg"
-                      alt="Golden Buddha Temple Pagoda"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </motion.div>
-              </div>
-            </div>
+                <span>Know Packages</span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -340,16 +292,16 @@ export default function About() {
               <stop offset="100%" stopColor="#06B6D4" />
             </linearGradient>
             <linearGradient id="stats-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#22D3EE" />
-              <stop offset="100%" stopColor="#6366F1" />
+              <stop offset="0%" stopColor="#FBBF24" />
+              <stop offset="100%" stopColor="#F59E0B" />
             </linearGradient>
             <linearGradient id="stats-grad-3" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#38BDF8" />
-              <stop offset="100%" stopColor="#C084FC" />
+              <stop offset="100%" stopColor="#10B981" />
             </linearGradient>
             <linearGradient id="stats-grad-4" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#60A5FA" />
-              <stop offset="100%" stopColor="#A855F7" />
+              <stop offset="0%" stopColor="#FB7185" />
+              <stop offset="100%" stopColor="#E11D48" />
             </linearGradient>
           </defs>
         </svg>
@@ -358,22 +310,19 @@ export default function About() {
           <AnimatedSection>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 items-center text-center">
               {[
-                { icon: Plane, value: '11+', label: 'Years in Service', grad: 'url(#stats-grad-1)' },
-                { icon: Users, value: '10,000+', label: 'Happy Travellers', grad: 'url(#stats-grad-2)' },
-                { icon: Globe, value: '7', label: 'International Destinations', grad: 'url(#stats-grad-3)' },
-                { icon: MapPin, value: '1', label: 'Home City Chennai', grad: 'url(#stats-grad-4)' },
+                { icon: Plane, label: 'PERSONALISED TRAVEL PLANNING', grad: 'url(#stats-grad-1)' },
+                { icon: Handshake, label: 'TRUSTED BY EVERY TRAVELLER', grad: 'url(#stats-grad-2)' },
+                { icon: Globe, label: '7+ INTERNATIONAL DESTINATIONS', grad: 'url(#stats-grad-3)' },
+                { icon: MapPin, label: 'CHENNAI-BASED TRAVEL EXPERTS', grad: 'url(#stats-grad-4)' },
               ].map((item, idx) => (
-                <div key={idx} className="flex flex-col items-center group">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/10 backdrop-blur-xs border border-white/15 flex items-center justify-center mb-3 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                <div key={idx} className="flex flex-col items-center group text-center px-2">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/10 backdrop-blur-xs border border-white/15 flex items-center justify-center mb-3.5 shadow-inner group-hover:scale-110 group-hover:bg-white/15 transition-all duration-300">
                     <item.icon
                       className="w-6 h-6 sm:w-7 sm:h-7"
-                      style={{ stroke: item.grad, strokeWidth: 2 }}
+                      style={{ stroke: item.grad, strokeWidth: 2.2 }}
                     />
                   </div>
-                  <span className="font-heading font-black text-3xl sm:text-4xl text-white tracking-tight">
-                    {item.value}
-                  </span>
-                  <span className="text-xs sm:text-sm font-semibold text-slate-300 uppercase tracking-wider mt-1">
+                  <span className="font-heading font-extrabold text-xs sm:text-sm lg:text-[15px] text-white uppercase tracking-wider leading-snug max-w-[210px] group-hover:text-cyan-200 transition-colors">
                     {item.label}
                   </span>
                 </div>

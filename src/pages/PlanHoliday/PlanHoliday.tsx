@@ -20,7 +20,6 @@ import {
   Heart,
   Mail,
   Headset,
-  Shield,
   ChevronDown
 } from 'lucide-react';
 import AnimatedSection from '../../components/common/AnimatedSection';
@@ -76,67 +75,74 @@ export default function PlanHoliday() {
         <link rel="canonical" href="https://holidaystartours.com/plan-holiday" />
       </Helmet>
 
-      {/* Breadcrumb Navigation */}
-      <div className="bg-hs-cream py-3 border-b border-gray-100">
-        <div className="container-hs flex items-center gap-2 text-xs text-hs-text-muted">
-          <Link to="/" className="hover:text-[#0066CC] transition-colors">Home</Link>
-          <span>&gt;</span>
-          <span className="font-semibold text-hs-navy">Plan My Holiday</span>
-        </div>
-      </div>
-
       {/* ── HERO SECTION ── */}
-      <section className="relative min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden py-16 lg:py-24">
-        {/* Full-width background image */}
-        <div className="absolute inset-0 z-0">
+      <section className="relative min-h-[580px] lg:min-h-[660px] flex items-center pt-28 pb-16 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20 overflow-hidden bg-[#0A121A]">
+        {/* Full-width Background Image */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none">
           <img
-            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80"
-            alt="Tropical island bay"
-            className="w-full h-full object-cover"
+            src="/images/aboutus-hero.jpg"
+            alt="Misty lake with waterfall, floating luxury chalets, and illuminated Petronas Towers at sunrise - Holiday Star Tours"
+            className="w-full h-full object-cover object-center"
+            loading="eager"
+            fetchPriority="high"
           />
-          {/* Dark Full-Width Gradient Overlay */}
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-slate-950/95 via-slate-900/80 to-slate-950/40" />
-        </div>
-
-        {/* Top Right Cursive Annotation */}
-        <div className="absolute top-12 right-8 lg:right-16 z-10 font-script text-3xl lg:text-4xl text-white rotate-[-3deg] drop-shadow-md hidden sm:block">
-          Good Journeys.<br />Brighter People ✨
+          {/* Directional contrast gradient: ensures crisp readability for text on the left */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 lg:via-black/35 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+          {/* Mobile-only backdrop for extra readability on narrow screens */}
+          <div className="lg:hidden absolute inset-0 bg-black/40 backdrop-blur-[1px] pointer-events-none" />
         </div>
 
         <div className="relative z-10 container-hs w-full">
-          <div className="max-w-2xl text-white">
-            <span className="text-xs font-bold tracking-[0.25em] text-blue-300 uppercase mb-3 block">
-              DREAM &nbsp; PLAN &nbsp; EXPLORE &nbsp; REPEAT
-            </span>
-
-            <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-white mb-2 leading-[1.1]">
-              Let's plan your
-            </h1>
-            <div className="relative inline-block mb-4">
-              <span className="font-script text-3xl sm:text-4xl lg:text-5xl text-sky-400 font-normal rotate-[-2deg] block">
-                next holiday.
-              </span>
-              <svg className="absolute -bottom-1 left-0 w-full h-2 text-emerald-400" viewBox="0 0 100 20" preserveAspectRatio="none">
-                <path d="M0 15 Q 50 0 100 15" stroke="currentColor" strokeWidth="4" fill="none" strokeLinecap="round" />
-              </svg>
+          <div className="max-w-xl lg:max-w-2xl">
+            {/* Inline Breadcrumb Navigation */}
+            <div className="flex items-center gap-2 text-xs text-slate-300/80 mb-4">
+              <Link to="/" className="hover:text-amber-300 transition-colors">Home</Link>
+              <span>/</span>
+              <span className="text-white font-medium">Plan My Holiday</span>
             </div>
 
-            <p className="text-sm sm:text-base text-gray-200 mb-8 leading-relaxed max-w-xl font-light">
-              Already know where you want to go? Or simply know that it's time for a break? Tell us a little about your plans and we'll help you take the next step.
+            {/* Eyebrow Pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-emerald-300 bg-emerald-950/70 border border-emerald-500/30 backdrop-blur-md mb-4 shadow-sm w-fit">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              PLAN YOUR HOLIDAY
+            </div>
+
+            {/* Main Headline matching About Us style */}
+            <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] leading-[1.14] mb-4 sm:mb-5 tracking-tight">
+              <span className="text-white block drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+                Travel planned with
+              </span>
+              <span
+                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                }}
+              >
+                people,
+              </span>{' '}
+              <span className="text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+                not just bookings.
+              </span>
+            </h1>
+
+            {/* Supporting Copy */}
+            <p className="text-slate-200/90 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-md lg:max-w-lg font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+              Already know where you want to go? Or simply know that it's time for a break? Tell us a little about your plans and our Chennai travel specialists will craft your perfect tailor-made itinerary.
             </p>
 
             {/* 3 Feature Badges */}
             <div className="flex flex-wrap items-center gap-3">
               <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-xs">
-                <Compass className="w-4 h-4 text-sky-400" />
+                <Compass className="w-4 h-4 text-amber-300" />
                 <span>Tailor-made itineraries</span>
               </div>
               <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-xs">
-                <Users className="w-4 h-4 text-sky-400" />
+                <Users className="w-4 h-4 text-amber-300" />
                 <span>Expert advice from real travellers</span>
               </div>
               <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-xs">
-                <Heart className="w-4 h-4 text-sky-400" />
+                <Heart className="w-4 h-4 text-amber-300" />
                 <span>Hassle-free planning</span>
               </div>
             </div>
@@ -159,7 +165,7 @@ export default function PlanHoliday() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="font-script text-xl text-[#0066CC] font-bold text-center leading-tight">
+                <div className="font-heading font-bold text-xs uppercase tracking-wider text-[#0066CC] text-center leading-snug">
                   Same Passion<br />More Destinations
                 </div>
               </div>
@@ -408,96 +414,120 @@ export default function PlanHoliday() {
         <div className="container-hs overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Content Box */}
-            <div className="lg:col-span-6">
-              <span className="text-xs font-bold tracking-[0.2em] text-[#0066CC] uppercase mb-2 block">
-                GET IN TOUCH
-              </span>
-              <h2 className="font-heading font-bold text-3xl sm:text-4xl text-hs-navy mb-2 leading-tight">
-                Prefer to speak<br />with us?
-              </h2>
+            <div className="lg:col-span-6 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-[0.2em] text-[#0066CC] bg-blue-50 border border-blue-200/80">
+                <Headset className="w-3.5 h-3.5 text-[#0066CC]" />
+                <span>DIRECT CONSULTATION</span>
+              </div>
 
-              {/* Green Underline Accent */}
-              <div className="w-20 h-1 bg-emerald-500 rounded-full mb-4" />
+              <div>
+                <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-hs-navy mb-3 leading-tight">
+                  Prefer to speak<br />with our travel experts?
+                </h2>
+                <div className="w-16 h-1 bg-emerald-500 rounded-full mb-4" />
+                <p className="text-sm text-hs-text-secondary font-light max-w-lg leading-relaxed">
+                  Skip the form and reach out directly. Our Chennai-based holiday specialists are ready to answer your questions, recommend handpicked destinations, and craft a bespoke itinerary tailored to your rhythm.
+                </p>
+              </div>
 
-              <p className="text-xs sm:text-sm text-hs-text-secondary mb-8 font-light max-w-md">
-                We're here to help you plan the perfect holiday.
-              </p>
-
-              {/* 3 Feature Badges */}
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-full bg-white shadow-2xs border border-blue-100 flex items-center justify-center text-[#0066CC]">
-                    <Headset className="w-4 h-4" />
+              {/* 3 Value Points */}
+              <div className="space-y-3 pt-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
+                    <CheckCircle className="w-4 h-4" />
                   </div>
-                  <span className="text-xs font-semibold text-hs-navy">Friendly support</span>
+                  <span className="text-xs sm:text-sm font-medium text-hs-navy">
+                    Personalised advice from real travellers, not chatbots
+                  </span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-full bg-white shadow-2xs border border-blue-100 flex items-center justify-center text-[#0066CC]">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-blue-50 text-[#0066CC] flex items-center justify-center shrink-0 border border-blue-100">
                     <MapPin className="w-4 h-4" />
                   </div>
-                  <span className="text-xs font-semibold text-hs-navy">Chennai-based team</span>
+                  <span className="text-xs sm:text-sm font-medium text-hs-navy">
+                    Chennai office with dedicated local support
+                  </span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-full bg-white shadow-2xs border border-blue-100 flex items-center justify-center text-[#0066CC]">
-                    <Shield className="w-4 h-4" />
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
+                    <Clock className="w-4 h-4" />
                   </div>
-                  <span className="text-xs font-semibold text-hs-navy">Safe & secure enquiries</span>
+                  <span className="text-xs sm:text-sm font-medium text-hs-navy">
+                    Quick response within 2 hours during business hours
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Right Consultant Contact Card */}
-            <div className="lg:col-span-6 relative min-w-0 overflow-hidden">
-              <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-xl relative overflow-hidden">
-                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 min-w-0">
-                  {/* Consultant Photo */}
-                  <img
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&q=80"
-                    alt="Najmunnisa Bilal - Travel Consultant"
-                    className="w-24 h-24 rounded-full object-cover border-4 border-blue-50 shadow-md shrink-0"
-                  />
-
-                  {/* Details */}
-                  <div className="flex-1 min-w-0 text-center sm:text-left">
-                    <h3 className="font-heading font-bold text-xl text-hs-navy mb-0.5">
-                      Najmunnisa Bilal
+            {/* Right Contact Hub Card */}
+            <div className="lg:col-span-6 relative min-w-0">
+              <div className="bg-white p-7 sm:p-9 rounded-3xl border border-gray-100 shadow-xl relative overflow-hidden">
+                <div className="flex items-center justify-between pb-6 mb-6 border-b border-gray-100">
+                  <div>
+                    <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-hs-navy">
+                      Holiday Star Travel Desk
                     </h3>
-                    <p className="text-xs text-hs-text-muted mb-4">
-                      Travel Consultant
+                    <p className="text-xs text-hs-text-muted mt-1">
+                      Mon – Sat: 9:30 AM – 7:30 PM IST
                     </p>
-
-                    <div className="space-y-2 mb-6 text-xs text-hs-text-secondary">
-                      <div className="flex items-center justify-center sm:justify-start gap-2">
-                        <Phone className="w-3.5 h-3.5 text-[#0066CC]" />
-                        <span>+91 6379799943</span>
-                      </div>
-                      <div className="flex items-center justify-center sm:justify-start gap-2">
-                        <Mail className="w-3.5 h-3.5 text-[#0066CC]" />
-                        <span>hello@holidaystartours.com</span>
-                      </div>
-                      <div className="flex items-center justify-center sm:justify-start gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-[#0066CC]" />
-                        <span>Chennai, Tamil Nadu</span>
-                      </div>
-                    </div>
-
-                    <a
-                      href={`https://wa.me/${siteConfig.contact.whatsapp}?text=Hello%20Najmunnisa!%20I'd%20like%20to%20speak%20about%20planning%20a%20holiday.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-[100%] py-3.5 px-6 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs sm:text-sm rounded-full transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer box-border"
-                    >
-                      <MessageCircle className="w-4 h-4 fill-white" />
-                      <span>WhatsApp Us</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </a>
+                  </div>
+                  <div className="w-12 h-12 rounded-2xl bg-[#0066CC]/10 text-[#0066CC] flex items-center justify-center shrink-0">
+                    <Headset className="w-6 h-6" />
                   </div>
                 </div>
-              </div>
 
-              {/* Bottom Right Cursive Overlay */}
-              <div className="font-script text-2xl sm:text-3xl text-[#0066CC] rotate-[-4deg] absolute -bottom-8 right-2 hidden sm:block pointer-events-none">
-                Let's Make<br />Travel Happen
+                <div className="space-y-4 mb-8">
+                  {/* Phone */}
+                  <a
+                    href={`tel:${siteConfig.contact.phone}`}
+                    className="flex items-center gap-4 p-3.5 rounded-2xl bg-gray-50/80 hover:bg-blue-50/60 border border-gray-100 hover:border-blue-200 transition-all duration-300 group"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-xs border border-gray-200/60 flex items-center justify-center text-[#0066CC] group-hover:scale-110 transition-transform">
+                      <Phone className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-hs-text-muted block">Direct Phone</span>
+                      <span className="text-sm font-bold text-hs-navy group-hover:text-[#0066CC] transition-colors">{siteConfig.contact.phone}</span>
+                    </div>
+                  </a>
+
+                  {/* Email */}
+                  <a
+                    href={`mailto:${siteConfig.contact.email}`}
+                    className="flex items-center gap-4 p-3.5 rounded-2xl bg-gray-50/80 hover:bg-blue-50/60 border border-gray-100 hover:border-blue-200 transition-all duration-300 group"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-xs border border-gray-200/60 flex items-center justify-center text-[#0066CC] group-hover:scale-110 transition-transform">
+                      <Mail className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-hs-text-muted block">Email Enquiry</span>
+                      <span className="text-sm font-bold text-hs-navy group-hover:text-[#0066CC] transition-colors">{siteConfig.contact.email}</span>
+                    </div>
+                  </a>
+
+                  {/* Location */}
+                  <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-gray-50/80 border border-gray-100">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-xs border border-gray-200/60 flex items-center justify-center text-[#0066CC]">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-hs-text-muted block">Chennai Office</span>
+                      <span className="text-sm font-medium text-hs-navy">{siteConfig.contact.address.city}, {siteConfig.contact.address.state}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* WhatsApp Action */}
+                <a
+                  href={`https://wa.me/${siteConfig.contact.whatsapp}?text=Hello!%20I'd%20like%20to%20speak%20with%20your%20team%20about%20planning%20a%20holiday.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 px-6 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm sm:text-base rounded-full transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2.5 cursor-pointer"
+                >
+                  <MessageCircle className="w-5 h-5 fill-white" />
+                  <span>Connect on WhatsApp</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
               </div>
             </div>
           </div>
