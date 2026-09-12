@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -46,13 +46,37 @@ const months = [
 export default function PlanHoliday() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedTravellers, setSelectedTravellers] = useState('Solo');
+  const location = useLocation();
+  const locationState = location.state as { destination?: string; packageTitle?: string } | null;
 
   const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
       travellers: 'Solo',
+      destination: locationState?.destination || '',
+      notes: locationState?.packageTitle ? `Interested in: ${locationState.packageTitle}` : '',
     }
   });
+
+  useEffect(() => {
+    if (locationState?.destination) {
+      setValue('destination', locationState.destination, { shouldValidate: true });
+    }
+    if (locationState?.packageTitle) {
+      setValue('notes', `Interested in: ${locationState.packageTitle}`);
+    }
+  }, [locationState, setValue]);
+
+  useEffect(() => {
+    if (location.hash === '#plan-holiday-form' || location.hash === '#form') {
+      const el = document.getElementById('plan-holiday-form');
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      }
+    }
+  }, [location.hash]);
 
   const onSubmit = async (data: FormData) => {
     console.log('Enquiry submitted:', data);
@@ -151,7 +175,7 @@ export default function PlanHoliday() {
       </section>
 
       {/* ── FORM SECTION ("YOUR DETAILS") ── */}
-      <section className="py-20 bg-hs-cream border-b border-gray-100 relative overflow-hidden">
+      <section id="plan-holiday-form" className="py-20 bg-hs-cream border-b border-gray-100 relative overflow-hidden scroll-mt-20">
         <div className="container-hs overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start min-w-0">
             {/* Left Column: Decorative Graphics (Polaroid + Stamp) */}

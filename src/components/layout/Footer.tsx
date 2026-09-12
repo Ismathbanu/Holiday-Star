@@ -100,7 +100,6 @@ export default function Footer() {
               Contact Us
             </h3>
             <div className="space-y-3 text-sm text-white/75">
-              <p className="font-medium text-white">{siteConfig.contact.person}</p>
               <a
                 href={`tel:${siteConfig.contact.phone}`}
                 className="flex items-center gap-2 hover:text-white transition-colors"

@@ -5,12 +5,14 @@ import Footer from './Footer';
 import WhatsAppButton from '../common/WhatsAppButton';
 
 export default function Layout() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
-  // Scroll to top on route change
+  // Scroll to top on route change unless navigating to an anchor hash
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (!hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
 
   return (
     <div className="min-h-screen flex flex-col">

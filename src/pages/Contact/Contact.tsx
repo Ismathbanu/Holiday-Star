@@ -34,30 +34,97 @@ export default function Contact() {
         <link rel="canonical" href="https://holidaystartours.com/contact" />
       </Helmet>
 
-      {/* Hero Header */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-hs-deep-blue text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(66,165,245,0.3),transparent_50%)]" />
+      {/* Hero Header — matching site-wide cinematic hero pattern */}
+      <section className="relative min-h-[520px] lg:min-h-[600px] flex items-center pt-28 pb-16 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20 overflow-hidden bg-[#0A121A]">
+        {/* Full-width Background Image */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none">
+          <img
+            src="/images/contact_hero_bg.jpg"
+            alt="Holiday Star Tours travel consultants helping a family plan their international holiday in a warm office with destination posters"
+            className="w-full h-full object-cover object-center"
+            loading="eager"
+            fetchPriority="high"
+          />
+          {/* Directional contrast gradient */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 lg:via-black/40 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+          {/* Mobile-only backdrop for extra readability */}
+          <div className="lg:hidden absolute inset-0 bg-black/40 backdrop-blur-[1px] pointer-events-none" />
         </div>
-        <div className="container-hs relative z-10 text-center">
-          <span className="text-xs font-semibold text-hs-sky-blue uppercase tracking-widest block mb-3">
-            HOLIDAY STAR TOURS & TRAVELS
-          </span>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-heading font-bold text-3xl sm:text-4xl md:text-5xl mb-4"
-          >
-            Get In Touch
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="text-white/80 text-base sm:text-lg max-w-xl mx-auto font-light"
-          >
-            Visit our office in Royapettah, Chennai, or reach out to our team of travel experts for personalised guidance.
-          </motion.p>
+
+        <div className="relative z-10 container-hs w-full">
+          <div className="max-w-xl lg:max-w-2xl">
+            {/* Eyebrow Pill */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-emerald-300 bg-emerald-950/70 border border-emerald-500/30 backdrop-blur-md mb-4 shadow-sm w-fit"
+            >
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              HOLIDAY STAR TOURS & TRAVELS
+            </motion.div>
+
+            {/* Bold Heading */}
+            <motion.h1
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] leading-[1.14] mb-4 sm:mb-5 tracking-tight"
+            >
+              <span className="text-white block drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+                Get In Touch.
+              </span>
+              <span
+                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                }}
+              >
+                We're here to help.
+              </span>
+            </motion.h1>
+
+            {/* Supporting Copy */}
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-slate-200/90 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-md lg:max-w-lg font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
+            >
+              Visit our office in Royapettah, Chennai, or reach out to our team of travel experts for personalised guidance on your next holiday.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-wrap items-center gap-3.5"
+            >
+              <a
+                href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent("Hello Holiday Star! I'd like to get in touch regarding a holiday inquiry.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
+              >
+                <MessageCircle className="w-4 h-4 text-white fill-white/20" />
+                <span>WhatsApp Us</span>
+              </a>
+
+              <a
+                href={`tel:${siteConfig.contact.phone}`}
+                className="px-6 py-3 text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
+                style={{
+                  background: 'linear-gradient(90deg, #82E58E 0%, #38BDF8 50%, #B872F2 100%)',
+                  boxShadow: '0 3px 12px rgba(56, 189, 248, 0.35)',
+                }}
+              >
+                <Phone className="w-4 h-4 text-white" />
+                <span>Call Us Now</span>
+              </a>
+            </motion.div>
+          </div>
         </div>
       </section>
 

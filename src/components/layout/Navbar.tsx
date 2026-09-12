@@ -31,13 +31,14 @@ export default function Navbar() {
   }, [isOpen]);
 
   const isHome = location.pathname === '/';
-  const isMalaysiaDestination = location.pathname === '/destinations/malaysia';
+  const isDestination = location.pathname.startsWith('/destinations');
   const isPackages = location.pathname === '/packages';
   const isAbout = location.pathname === '/about';
   const isSportsTourism = location.pathname === '/sports-tourism';
   const isPlanHoliday = location.pathname === '/plan-holiday';
   const isCampaign = location.pathname.startsWith('/campaigns') || location.pathname.includes('campaign');
-  const isTransparentNav = !scrolled && (isHome || isMalaysiaDestination || isPackages || isAbout || isSportsTourism || isPlanHoliday || isCampaign);
+  const isContact = location.pathname === '/contact';
+  const isTransparentNav = !scrolled && (isHome || isDestination || isPackages || isAbout || isSportsTourism || isPlanHoliday || isCampaign || isContact);
   const isDarkNav = isTransparentNav || !scrolled;
 
   const isActive = (href: string) =>

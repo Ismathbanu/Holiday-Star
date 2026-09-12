@@ -13,16 +13,16 @@ export default function FinalCTA() {
         {/* Panoramic Tropical Beach & Island Artwork */}
         <img
           src="/images/home-cta.jpg"
-          alt="Tropical ocean and island - New Places, New Stories"
+          alt="Luxury overwater villas in the Maldives at golden hour sunset with turquoise ocean and palm trees"
           className="absolute inset-0 w-full h-full object-cover object-[center_right] sm:object-center select-none pointer-events-none"
         />
 
-        {/* Subtle, Translucent Ocean Gradient on Left for Crisp Text Legibility */}
+        {/* Subtle, Translucent Gradient on Left for Crisp Text Legibility */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'linear-gradient(90deg, rgba(2, 85, 140, 0.65) 0%, rgba(3, 110, 168, 0.45) 30%, rgba(2, 132, 199, 0.15) 55%, transparent 75%)',
+              'linear-gradient(90deg, rgba(5, 45, 80, 0.75) 0%, rgba(3, 70, 120, 0.50) 30%, rgba(2, 100, 160, 0.20) 55%, transparent 75%)',
           }}
         />
 
