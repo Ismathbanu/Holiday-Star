@@ -97,7 +97,7 @@ export default function InstagramTourFeed() {
         {/* Section Header (matching reference image) */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/holidaystartours"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-[#008080] hover:text-[#005F73] transition-colors group mb-2"
@@ -123,7 +123,7 @@ export default function InstagramTourFeed() {
             {tourPhotos.map((photo) => (
               <a
                 key={photo.id}
-                href="https://instagram.com"
+                href="https://www.instagram.com/holidaystartours"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative aspect-square rounded-2xl overflow-hidden bg-white shadow-xs hover:shadow-xl transition-all duration-300 hover:scale-106 hover:-translate-y-1 block border border-amber-100/60"

@@ -528,13 +528,14 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
         className="relative py-14 sm:py-18 md:py-20 overflow-hidden bg-white"
         id="packages-collection"
       >
-        {/* Scenic Tropical Backdrop with Petronas & Lagoon Illustration */}
-        <div className="absolute inset-0 pointer-events-none select-none">
+        {/* Background matching About Us Our Story section */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none">
           <img
-            src="/images/malaysia-collection.jpg"
-            alt="Malaysia Holiday Collection backdrop"
-            className="w-full h-full object-fill"
+            src="/images/our_story_bg.jpg"
+            alt="Our Story Background"
+            className="w-full h-full object-cover object-left-bottom lg:object-center opacity-85"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/60 to-transparent pointer-events-none" />
         </div>
 
         <div className="container-hs relative z-10">

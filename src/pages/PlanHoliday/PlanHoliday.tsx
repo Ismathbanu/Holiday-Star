@@ -45,6 +45,7 @@ const months = [
 
 export default function PlanHoliday() {
   const [submitted, setSubmitted] = useState(false);
+  const [submittedData, setSubmittedData] = useState<FormData | null>(null);
   const [selectedTravellers, setSelectedTravellers] = useState('Solo');
   const location = useLocation();
   const locationState = location.state as { destination?: string; packageTitle?: string } | null;
@@ -78,8 +79,25 @@ export default function PlanHoliday() {
     }
   }, [location.hash]);
 
+  const buildWhatsAppMessage = (data: FormData) => {
+    return `Hello Holiday Star Tours!
+I would like to plan a custom holiday with the following details:
+
+*Name:* ${data.name}
+*WhatsApp Number:* ${data.whatsapp}
+*Departure City:* ${data.city}
+*Preferred Destination:* ${data.destination}
+*Travel Month:* ${data.travelMonth}
+*Number of Travellers:* ${data.travellers}${data.notes ? `\n*Notes / Requests:* ${data.notes}` : ''}
+
+Please share a customized itinerary and package quote.`;
+  };
+
   const onSubmit = async (data: FormData) => {
-    console.log('Enquiry submitted:', data);
+    setSubmittedData(data);
+    const message = buildWhatsAppMessage(data);
+    const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
     setSubmitted(true);
   };
 
@@ -210,20 +228,33 @@ export default function PlanHoliday() {
                   <div className="text-center py-12">
                     <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4 animate-bounce" />
                     <h2 className="font-heading font-bold text-3xl text-hs-navy mb-2">
-                      Thank You!
+                      Enquiry Ready on WhatsApp!
                     </h2>
                     <p className="text-sm text-hs-text-secondary mb-6 font-light max-w-md mx-auto">
-                      We have received your enquiry. Our travel consultant will get back to you within 24 hours with a customized itinerary.
+                      Your holiday enquiry details have been prepared. If WhatsApp did not open automatically, click the button below to connect directly with our travel consultant.
                     </p>
-                    <a
-                      href={`https://wa.me/${siteConfig.contact.whatsapp}?text=Hello!%20I%20just%20submitted%20a%20holiday%20enquiry.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm rounded-full transition-all shadow-md"
-                    >
-                      <MessageCircle className="w-4 h-4 fill-white" />
-                      <span>Chat on WhatsApp Now</span>
-                    </a>
+                    <div className="flex flex-col items-center gap-3">
+                      <a
+                        href={
+                          submittedData
+                            ? `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(buildWhatsAppMessage(submittedData))}`
+                            : `https://wa.me/${siteConfig.contact.whatsapp}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm rounded-full transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
+                      >
+                        <MessageCircle className="w-4 h-4 fill-white" />
+                        <span>Open WhatsApp Chat</span>
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => setSubmitted(false)}
+                        className="text-xs text-hs-blue-600 hover:underline pt-2 font-medium cursor-pointer"
+                      >
+                        ← Edit or submit another enquiry
+                      </button>
+                    </div>
                   </div>
                 </AnimatedSection>
               ) : (
@@ -400,25 +431,17 @@ export default function PlanHoliday() {
                     </div>
                   </div>
 
-                  {/* Row 6: Submit Buttons */}
-                  <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                  {/* Row 6: Submit Button */}
+                  <div className="pt-2">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-[100%] sm:flex-1 h-[48px] px-6 bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold text-xs sm:text-sm rounded-full transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                      className="w-full h-[50px] px-6 bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold text-sm rounded-full transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                     >
-                      <span>Start Planning</span>
+                      <MessageCircle className="w-4 h-4 fill-white" />
+                      <span>Plan via WhatsApp</span>
                       <ArrowRight className="w-4 h-4 shrink-0" />
                     </button>
-                    <a
-                      href={`https://wa.me/${siteConfig.contact.whatsapp}?text=Hello!%20I'm%20looking%20to%20plan%20a%20holiday.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-[100%] sm:flex-1 h-[48px] px-6 bg-white hover:bg-emerald-50 text-slate-800 font-semibold text-xs sm:text-sm rounded-full border border-emerald-500/80 transition-all duration-300 shadow-2xs hover:shadow-md flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <MessageCircle className="w-4 h-4 text-emerald-600 fill-emerald-600 shrink-0" />
-                      <span>Chat on WhatsApp</span>
-                    </a>
                   </div>
 
                   {/* Guarantee Note */}
