@@ -166,7 +166,7 @@ const campaignPackages: CampaignPackage[] = [
     title: 'KUALA LUMPUR + MALACCA + PENANG',
     duration: '6 Nights / 7 Days',
     tagline: 'A journey through city, culture and heritage',
-    image: '/images/golden_bridge.png',
+    image: '/images/malaysia_dest/itin_melaka_fortress.jpg',
     highlights: [
       'Comprehensive cultural & historical expedition',
       'Modern capital highlights in Kuala Lumpur',
@@ -314,18 +314,31 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
         <div className="container-hs relative z-10 md:pl-8 lg:pl-16 xl:pl-20">
           <AnimatedSection>
             <div className="max-w-xl lg:max-w-2xl text-white">
-              {/* Co-Branding Logos: Holiday Star & Tourism Malaysia */}
-              <div className="inline-flex items-center gap-4 sm:gap-6 px-5 sm:px-7 py-3 sm:py-3.5 rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-md shadow-xl border border-white/80 mb-6 sm:mb-8">
+              {/* Co-Branding Logos: Holiday Star, Tourism Malaysia & Visit Malaysia */}
+              <div className="inline-flex items-center gap-3 sm:gap-4.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/95 backdrop-blur-md shadow-xl border border-white/90 mb-6 sm:mb-8 max-w-full">
+                {/* 1. Holiday Star */}
                 <img
                   src="/images/hs-logo.png"
                   alt="Holiday Star Tours & Travels"
-                  className="h-8 sm:h-9 lg:h-10 w-auto object-contain"
+                  className="h-7 sm:h-8 w-auto object-contain shrink-0"
                 />
-                <span className="w-px h-7 sm:h-9 bg-gray-200" />
+
+                <span className="w-px h-6 sm:h-7 bg-gray-200 shrink-0" />
+
+                {/* 2. Tourism Malaysia */}
                 <img
                   src="/images/tourism_malaysia_clean.svg"
                   alt="Tourism Malaysia"
-                  className="h-8 sm:h-9 lg:h-10 w-auto object-contain"
+                  className="h-6.5 sm:h-7.5 w-auto object-contain shrink-0"
+                />
+
+                <span className="w-px h-6 sm:h-7 bg-gray-200 shrink-0" />
+
+                {/* 3. Visit Malaysia 2026-2027 Truly Asia */}
+                <img
+                  src="/images/Visit Malaysia Logo.png"
+                  alt="Visit Malaysia 2026-2027 Truly Asia"
+                  className="h-11 sm:h-12 lg:h-14 w-auto object-contain shrink-0"
                 />
               </div>
 
@@ -335,9 +348,9 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
                   Malaysia.
                 </span>
                 <span
-                  className="block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                  className="block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.4)]"
                   style={{
-                    backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                    backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
                   }}
                 >
                   Truly Asia.
@@ -671,7 +684,8 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
                       }}
                       className="w-full py-3.5 rounded-full text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
                       style={{
-                        background: 'linear-gradient(90deg, #00A896 0%, #0284C7 100%)',
+                        background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                        boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
                       }}
                     >
                       <span>BOOK NOW</span>
@@ -1168,6 +1182,9 @@ Please share booking details and confirmed quote.`;
                     <option value="Kuala Lumpur + Genting + Langkawi (5N/6D)">
                       Kuala Lumpur + Genting + Langkawi (5N/6D)
                     </option>
+                    <option value="Kuala Lumpur + Malacca + Penang (6N/7D)">
+                      Kuala Lumpur + Malacca + Penang (6N/7D)
+                    </option>
                     <option value="Custom Malaysia Holiday">Custom Malaysia Holiday Plan</option>
                   </select>
                 </div>
@@ -1191,7 +1208,8 @@ Please share booking details and confirmed quote.`;
                   disabled={isSubmitting}
                   className="w-full py-3 rounded-full text-white font-bold text-xs tracking-wider uppercase shadow-lg hover:shadow-xl hover:scale-102 active:scale-95 transition-all duration-300"
                   style={{
-                    background: 'linear-gradient(90deg, #00A896 0%, #0284C7 50%, #8B5CF6 100%)',
+                    background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
                   }}
                 >
                   GET MY MALAYSIA HOLIDAY PLAN 🚀
@@ -1276,7 +1294,8 @@ Please share booking details and confirmed quote.`;
             onClick={scrollToForm}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300"
             style={{
-              background: 'linear-gradient(90deg, #00A896 0%, #0284C7 100%)',
+              background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+              boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
             }}
           >
             Enquire Now

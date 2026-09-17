@@ -82,12 +82,12 @@ function DestinationCard({ dest }: { dest: DestinationItem }) {
         }}
       />
 
-      {/* Blurred Vibrant Gradient Background Layer (covers lower ~52% of card with frosted glass & vibrant ocean cyan/teal gradient) */}
+      {/* Blurred Vibrant Frosted Glass Background Layer in White */}
       <div
         className="absolute inset-x-0 bottom-0 top-[45%] pointer-events-none transition-all duration-300"
         style={{
           background:
-            'radial-gradient(ellipse 90% 65% at 50% 0%, rgba(14, 165, 233, 0.5) 0%, transparent 75%), linear-gradient(180deg, rgba(8, 88, 134, 0.75) 0%, rgba(5, 64, 100, 0.92) 28%, rgba(3, 40, 66, 0.98) 100%)',
+            'radial-gradient(ellipse 90% 65% at 50% 0%, rgba(255, 255, 255, 0.7) 0%, transparent 75%), linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.92) 28%, rgba(255, 255, 255, 0.98) 100%)',
           backdropFilter: 'blur(16px) saturate(150%)',
           WebkitBackdropFilter: 'blur(16px) saturate(150%)',
           maskImage:
@@ -100,12 +100,12 @@ function DestinationCard({ dest }: { dest: DestinationItem }) {
       {/* Unmasked Content Layer (Guarantees 100% crisp visibility of heading, tagline, and button) */}
       <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-5 sm:p-6 z-10 pointer-events-none">
         {/* Destination Name */}
-        <h3 className="font-heading font-bold text-[1.4rem] sm:text-[1.6rem] text-white tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] pointer-events-auto">
+        <h3 className="font-heading font-bold text-[1.4rem] sm:text-[1.6rem] text-[#0066CC] group-hover:text-[#0052A3] tracking-tight leading-tight pointer-events-auto transition-colors duration-200">
           {dest.name}
         </h3>
 
         {/* Tagline */}
-        <p className="text-sky-50/95 text-xs sm:text-[0.82rem] font-normal leading-relaxed mt-1 mb-3.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] pointer-events-auto">
+        <p className="text-[#1E40AF]/90 text-xs sm:text-[0.82rem] font-medium leading-relaxed mt-1 mb-3.5 pointer-events-auto">
           {dest.tagline}
         </p>
 
@@ -115,8 +115,8 @@ function DestinationCard({ dest }: { dest: DestinationItem }) {
             className="inline-flex items-center gap-1.5 px-4 sm:px-4.5 py-1.5 sm:py-2 rounded-full font-medium text-white text-xs sm:text-[0.8rem] tracking-wide shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.03]"
             style={{
               background:
-                'linear-gradient(90deg, #82E58E 0%, #38BDF8 50%, #B872F2 100%)',
-              boxShadow: '0 2px 10px rgba(56, 189, 248, 0.35)',
+                'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+              boxShadow: '0 2px 10px rgba(0, 180, 216, 0.35)',
             }}
           >
             Explore {dest.name}

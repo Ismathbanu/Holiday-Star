@@ -156,9 +156,9 @@ Please share a customized itinerary and package quote.`;
                 Travel planned with
               </span>
               <span
-                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.4)]"
                 style={{
-                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                  backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
                 }}
               >
                 people,

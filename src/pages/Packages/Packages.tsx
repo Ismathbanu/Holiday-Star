@@ -57,7 +57,7 @@ const packageList: HolidayPackageCard[] = [
     destinationId: 'malaysia',
     badge: 'MOST POPULAR',
     badgeColor: 'bg-[#10b981]',
-    buttonGradient: 'linear-gradient(90deg, #0284c7 0%, #7c3aed 100%)',
+    buttonGradient: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
     route: 'Kuala Lumpur • Genting Highlands • Malacca',
     image: '/images/malaysia_dest/hero_kl_twilight.jpg',
     duration: '4 Nights / 5 Days',
@@ -80,7 +80,7 @@ const packageList: HolidayPackageCard[] = [
     destinationId: 'thailand',
     badge: 'BEACH ESCAPE',
     badgeColor: 'bg-[#8b5cf6]',
-    buttonGradient: 'linear-gradient(90deg, #10b981 0%, #0284c7 100%)',
+    buttonGradient: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
     route: 'Bangkok • Pattaya • Coral Island',
     image: '/images/package_dest/thailand_boat.jpg',
     duration: '4 Nights / 5 Days',
@@ -103,7 +103,7 @@ const packageList: HolidayPackageCard[] = [
     destinationId: 'vietnam',
     badge: 'CULTURE & NATURE',
     badgeColor: 'bg-[#0284c7]',
-    buttonGradient: 'linear-gradient(90deg, #10b981 0%, #0284c7 100%)',
+    buttonGradient: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
     route: 'Hanoi • Ha Long Bay • Da Nang',
     image: '/images/golden_bridge.png',
     duration: '5 Nights / 6 Days',
@@ -127,7 +127,7 @@ const packageList: HolidayPackageCard[] = [
     destinationId: 'singapore',
     badge: 'CITY ESCAPE',
     badgeColor: 'bg-[#a855f7]',
-    buttonGradient: 'linear-gradient(90deg, #0284c7 0%, #7c3aed 100%)',
+    buttonGradient: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
     route: 'Singapore City • Sentosa • Marina Bay',
     image: '/images/singapore_card.jpg',
     duration: '4 Nights / 5 Days',
@@ -150,7 +150,7 @@ const packageList: HolidayPackageCard[] = [
     destinationId: 'indonesia',
     badge: 'ISLAND PARADISE',
     badgeColor: 'bg-[#a855f7]',
-    buttonGradient: 'linear-gradient(90deg, #10b981 0%, #0284c7 100%)',
+    buttonGradient: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
     route: 'Bali • Ubud • Nusa Dua',
     image: '/images/indonesia_card.jpg',
     duration: '4 Nights / 5 Days',
@@ -173,7 +173,7 @@ const packageList: HolidayPackageCard[] = [
     destinationId: 'sri-lanka',
     badge: 'NATURE & HERITAGE',
     badgeColor: 'bg-[#10b981]',
-    buttonGradient: 'linear-gradient(90deg, #10b981 0%, #0284c7 100%)',
+    buttonGradient: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
     route: 'Colombo • Kandy • Nuwara Eliya • Bentota',
     image: '/images/srilanka_card.jpg',
     duration: '5 Nights / 6 Days',
@@ -197,7 +197,7 @@ const packageList: HolidayPackageCard[] = [
     destinationId: 'dubai',
     badge: 'LUXURY',
     badgeColor: 'bg-[#7c3aed]',
-    buttonGradient: 'linear-gradient(90deg, #10b981 0%, #0284c7 100%)',
+    buttonGradient: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
     route: 'Dubai City Tour • Desert Safari • Abu Dhabi',
     image: '/images/dubai_card.jpg',
     duration: '5 Nights / 6 Days',
@@ -221,7 +221,7 @@ const packageList: HolidayPackageCard[] = [
     destinationId: 'malaysia',
     badge: 'ISLAND ESCAPE',
     badgeColor: 'bg-[#0284c7]',
-    buttonGradient: 'linear-gradient(90deg, #0284c7 0%, #7c3aed 100%)',
+    buttonGradient: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
     route: 'Langkawi • Kuala Lumpur',
     image: '/images/malaysia_dest/itin_kl_langkawi.jpg',
     duration: '5 Nights / 6 Days',
@@ -383,9 +383,9 @@ export default function Packages() {
             <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.06] mb-4">
               <span className="text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">Holiday </span>
               <span
-                className="text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                className="text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.4)]"
                 style={{
-                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                  backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
                 }}
               >
                 Packages
@@ -578,7 +578,7 @@ export default function Packages() {
                       className="px-3.5 py-2 rounded-full text-white text-[11px] font-semibold shadow-xs hover:shadow-md hover:scale-[1.02] transition-all duration-300 flex items-center gap-1.5 cursor-pointer shrink-0"
                       style={{
                         background: pkg.buttonGradient,
-                        boxShadow: '0 2px 8px rgba(2, 132, 199, 0.25)',
+                        boxShadow: '0 2px 8px rgba(0, 180, 216, 0.30)',
                       }}
                     >
                       <span>View Details</span>

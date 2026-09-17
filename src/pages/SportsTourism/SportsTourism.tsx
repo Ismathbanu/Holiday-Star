@@ -100,7 +100,8 @@ export default function SportsTourism() {
                   onClick={() => scrollToSection('past-experiences')}
                   className="inline-flex items-center gap-2.5 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-cyan-500/25 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
                   style={{
-                    background: 'linear-gradient(90deg, #00A896 0%, #0284C7 100%)',
+                    background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
                   }}
                 >
                   <span>Explore Sports Experiences</span>

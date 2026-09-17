@@ -193,9 +193,9 @@ export default function MalaysiaDestination() {
             <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.06] mb-4">
               <span className="text-white block drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">Malaysia.</span>
               <span
-                className="block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                className="block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.4)]"
                 style={{
-                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                  backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
                 }}
               >
                 Truly Asia.
@@ -219,8 +219,8 @@ export default function MalaysiaDestination() {
                 href="#malaysia-packages"
                 className="px-6 py-3 text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] flex items-center gap-2.5 group cursor-pointer"
                 style={{
-                  background: 'linear-gradient(90deg, #82E58E 0%, #38BDF8 50%, #B872F2 100%)',
-                  boxShadow: '0 3px 12px rgba(56, 189, 248, 0.35)',
+                  background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                  boxShadow: '0 3px 12px rgba(0, 180, 216, 0.35)',
                 }}
               >
                 <div className="w-5 h-5 rounded-full bg-white/25 flex items-center justify-center">
@@ -485,8 +485,8 @@ export default function MalaysiaDestination() {
                     state={{ destination: 'Malaysia', packageTitle: itin.title }}
                     className="inline-flex px-4.5 py-2 text-white text-xs font-semibold rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:scale-[1.02] items-center gap-1.5 cursor-pointer group/btn"
                     style={{
-                      background: 'linear-gradient(90deg, #82E58E 0%, #38BDF8 50%, #B872F2 100%)',
-                      boxShadow: '0 2px 10px rgba(56, 189, 248, 0.30)',
+                      background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                      boxShadow: '0 2px 10px rgba(0, 180, 216, 0.30)',
                     }}
                   >
                     <span>View Full Itinerary</span>
@@ -897,8 +897,8 @@ export default function MalaysiaDestination() {
                   rel="noopener noreferrer"
                   className="px-6 py-3 text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
                   style={{
-                    background: 'linear-gradient(90deg, #82E58E 0%, #38BDF8 50%, #B872F2 100%)',
-                    boxShadow: '0 3px 12px rgba(56, 189, 248, 0.35)',
+                    background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    boxShadow: '0 3px 12px rgba(0, 180, 216, 0.35)',
                   }}
                 >
                   <Luggage className="w-4 h-4 text-white" />

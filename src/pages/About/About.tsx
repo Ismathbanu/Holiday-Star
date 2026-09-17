@@ -72,9 +72,9 @@ export default function About() {
                 Travel planned with
               </span>
               <span
-                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.4)]"
                 style={{
-                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                  backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
                 }}
               >
                 people,
@@ -105,7 +105,8 @@ export default function About() {
                 to="/packages"
                 className="group inline-flex items-center justify-center gap-2 px-7 py-3 sm:px-8 sm:py-3.5 rounded-full text-white font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                 style={{
-                  background: 'linear-gradient(90deg, #1E58F4 0%, #4F46E5 50%, #8B5CF6 100%)',
+                  background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                  boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
                 }}
               >
                 <span>Know Packages</span>
@@ -544,7 +545,11 @@ export default function About() {
                 {/* CTA Button */}
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2.5 px-8 py-3.5 sm:px-9 sm:py-4 rounded-full bg-gradient-to-r from-[#00A896] via-[#0284C7] to-[#0284C7] hover:from-[#00897B] hover:to-[#0369A1] text-white font-semibold text-sm sm:text-base shadow-lg shadow-teal-900/15 hover:shadow-xl hover:shadow-teal-900/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                  className="inline-flex items-center gap-2.5 px-8 py-3.5 sm:px-9 sm:py-4 rounded-full text-white font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                  style={{
+                    background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
+                  }}
                 >
                   <span>Get in Touch</span>
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -779,7 +784,8 @@ export default function About() {
                   to="/plan-holiday"
                   className="inline-flex items-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
                   style={{
-                    background: 'linear-gradient(90deg, #00A3FF 0%, #7928CA 100%)',
+                    background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
                   }}
                 >
                   <span>Enquire Now</span>

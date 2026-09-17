@@ -196,7 +196,11 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center">
             <Link
               to="/plan-holiday"
-              className="px-6 py-2.5 text-sm font-bold text-hs-navy bg-hs-gold hover:bg-amber-400 rounded-xl transition-all shadow-md hover:shadow-lg whitespace-nowrap"
+              className="px-6 py-2.5 text-sm font-bold text-white rounded-full transition-all shadow-md hover:shadow-lg whitespace-nowrap hover:scale-[1.02] cursor-pointer"
+              style={{
+                background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                boxShadow: '0 3px 12px rgba(0, 180, 216, 0.35)',
+              }}
             >
               Plan My Holiday
             </Link>
@@ -309,7 +313,11 @@ export default function Navbar() {
               <div className="pt-6 border-t border-gray-100 space-y-3 mt-6 w-[100%]">
                 <Link
                   to="/plan-holiday"
-                  className="block w-[100%] py-3.5 px-4 text-center font-bold text-hs-navy bg-hs-gold rounded-xl shadow-md hover:bg-amber-400 transition-colors"
+                  className="block w-[100%] py-3.5 px-4 text-center font-bold text-white rounded-full shadow-md transition-all hover:scale-[1.01]"
+                  style={{
+                    background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    boxShadow: '0 3px 12px rgba(0, 180, 216, 0.35)',
+                  }}
                 >
                   Plan My Holiday
                 </Link>

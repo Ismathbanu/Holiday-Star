@@ -76,9 +76,9 @@ export default function Contact() {
                 Get In Touch.
               </span>
               <span
-                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.4)]"
                 style={{
-                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                  backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
                 }}
               >
                 We're here to help.
@@ -116,8 +116,8 @@ export default function Contact() {
                 href={`tel:${siteConfig.contact.phone}`}
                 className="px-6 py-3 text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
                 style={{
-                  background: 'linear-gradient(90deg, #82E58E 0%, #38BDF8 50%, #B872F2 100%)',
-                  boxShadow: '0 3px 12px rgba(56, 189, 248, 0.35)',
+                  background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                  boxShadow: '0 3px 12px rgba(0, 180, 216, 0.35)',
                 }}
               >
                 <Phone className="w-4 h-4 text-white" />

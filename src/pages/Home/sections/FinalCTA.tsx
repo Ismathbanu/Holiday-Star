@@ -48,7 +48,8 @@ export default function FinalCTA() {
                   className="inline-flex items-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full text-white font-semibold text-xs sm:text-sm shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
                   style={{
                     background:
-                      'linear-gradient(90deg, #1E60F2 0%, #8B5CF6 100%)',
+                      'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
                   }}
                 >
                   Plan My Holiday

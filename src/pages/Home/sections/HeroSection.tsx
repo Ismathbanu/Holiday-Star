@@ -58,9 +58,9 @@ export default function HeroSection() {
               Your next holiday{' '}
               <br className="hidden sm:block" />
               <span
-                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(251,191,36,0.35)]"
+                className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.4)]"
                 style={{
-                  backgroundImage: 'linear-gradient(90deg, #FCD34D 0%, #F59E0B 50%, #FB7185 100%)',
+                  backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
                 }}
               >
                 starts here.
@@ -91,7 +91,8 @@ export default function HeroSection() {
                 to="/destinations"
                 className="group inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-full font-semibold text-white text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                 style={{
-                  background: 'linear-gradient(90deg, #1E58F4 0%, #4F46E5 50%, #8B5CF6 100%)',
+                  background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                  boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
                 }}
               >
                 Explore Holidays
