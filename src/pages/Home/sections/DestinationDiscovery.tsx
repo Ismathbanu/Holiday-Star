@@ -82,27 +82,30 @@ function DestinationCard({ dest }: { dest: DestinationItem }) {
         }}
       />
 
-      {/* Blurred Vibrant Gradient Text Section (covers lower ~50% of card with frosted glass & vibrant ocean cyan/teal gradient) */}
+      {/* Blurred Vibrant Gradient Background Layer (covers lower ~52% of card with frosted glass & vibrant ocean cyan/teal gradient) */}
       <div
-        className="absolute inset-x-0 bottom-0 top-[48%] flex flex-col justify-end p-5 sm:p-6 pointer-events-none transition-all duration-300"
+        className="absolute inset-x-0 bottom-0 top-[45%] pointer-events-none transition-all duration-300"
         style={{
           background:
-            'radial-gradient(ellipse 90% 65% at 50% 0%, rgba(14, 165, 233, 0.42) 0%, transparent 75%), linear-gradient(180deg, rgba(8, 88, 134, 0.68) 0%, rgba(5, 64, 100, 0.90) 28%, rgba(3, 40, 66, 0.98) 100%)',
+            'radial-gradient(ellipse 90% 65% at 50% 0%, rgba(14, 165, 233, 0.5) 0%, transparent 75%), linear-gradient(180deg, rgba(8, 88, 134, 0.75) 0%, rgba(5, 64, 100, 0.92) 28%, rgba(3, 40, 66, 0.98) 100%)',
           backdropFilter: 'blur(16px) saturate(150%)',
           WebkitBackdropFilter: 'blur(16px) saturate(150%)',
           maskImage:
-            'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 16%, black 100%)',
+            'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 18%, black 100%)',
           WebkitMaskImage:
-            'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 16%, black 100%)',
+            'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 18%, black 100%)',
         }}
-      >
+      />
+
+      {/* Unmasked Content Layer (Guarantees 100% crisp visibility of heading, tagline, and button) */}
+      <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-5 sm:p-6 z-10 pointer-events-none">
         {/* Destination Name */}
-        <h3 className="font-heading font-bold text-[1.4rem] sm:text-[1.6rem] text-white tracking-tight leading-tight drop-shadow-sm pointer-events-auto">
+        <h3 className="font-heading font-bold text-[1.4rem] sm:text-[1.6rem] text-white tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] pointer-events-auto">
           {dest.name}
         </h3>
 
         {/* Tagline */}
-        <p className="text-sky-50/95 text-xs sm:text-[0.82rem] font-normal leading-relaxed mt-1 mb-3.5 drop-shadow-sm pointer-events-auto">
+        <p className="text-sky-50/95 text-xs sm:text-[0.82rem] font-normal leading-relaxed mt-1 mb-3.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] pointer-events-auto">
           {dest.tagline}
         </p>
 
