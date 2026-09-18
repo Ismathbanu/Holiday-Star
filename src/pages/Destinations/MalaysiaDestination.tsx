@@ -325,14 +325,26 @@ export default function MalaysiaDestination() {
         <div className="container-hs">
           {/* Section Heading */}
           <div className="mb-12">
-            <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#108560] mb-2">
+            <div className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-[#00A896] mb-2">
               Why Malaysia?
             </div>
             <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-4xl tracking-tight leading-tight mb-2">
-              <span className="text-[#026079]">One country. So many </span>
-              <span className="text-[#602f9c]">ways to holiday.</span>
+              <span className="text-[#0A2540]">One country. So many </span>
+              <span
+                className="inline-block text-transparent bg-clip-text"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                }}
+              >
+                ways to holiday.
+              </span>
             </h2>
-            <div className="w-16 h-1 bg-[#0284c7] rounded-full" />
+            <div
+              className="w-16 h-1 rounded-full"
+              style={{
+                background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+              }}
+            />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
@@ -415,7 +427,7 @@ export default function MalaysiaDestination() {
                 </div>
 
                 {/* Floating pill badge */}
-                <div className="absolute top-3 right-3 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full shadow-sm text-[10px] font-bold text-[#026079]">
+                <div className="absolute top-3 right-3 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full shadow-sm text-[10px] font-bold text-[#0066CC]">
                   Explore Malaysia
                 </div>
               </div>
@@ -682,10 +694,22 @@ export default function MalaysiaDestination() {
             <div className="lg:col-span-6 lg:border-r lg:border-gray-100 lg:pr-10">
               <div className="mb-8">
                 <h2 className="font-heading font-extrabold text-2xl sm:text-3xl tracking-tight leading-tight mb-2">
-                  <span className="text-[#026079] block">What Your Package</span>
-                  <span className="text-[#602f9c] block">Can Include</span>
+                  <span className="text-[#0A2540] block">What Your Package</span>
+                  <span
+                    className="inline-block text-transparent bg-clip-text"
+                    style={{
+                      backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    }}
+                  >
+                    Can Include
+                  </span>
                 </h2>
-                <div className="w-12 h-1 bg-[#0284c7] rounded-full" />
+                <div
+                  className="w-12 h-1 rounded-full"
+                  style={{
+                    background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                  }}
+                />
               </div>
 
               {/* 2-Column Grid of 7 Inclusions */}
@@ -777,7 +801,7 @@ export default function MalaysiaDestination() {
               </div>
 
               <div className="mb-6">
-                <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#108560] mb-1">
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#00A896] mb-1">
                   Before You Travel
                 </div>
               </div>
@@ -909,7 +933,7 @@ export default function MalaysiaDestination() {
                   href={whatsappInquiryUrl('Malaysia Package Inquiry')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-[#7c3aed] hover:bg-[#6b21a8] text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                  className="px-6 py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4 text-white fill-white/20" />
                   <span>WhatsApp Us</span>

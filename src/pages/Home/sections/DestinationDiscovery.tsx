@@ -82,18 +82,18 @@ function DestinationCard({ dest }: { dest: DestinationItem }) {
         }}
       />
 
-      {/* Blurred Vibrant Frosted Glass Background Layer in White */}
+      {/* Blurred Vibrant Frosted Glass Background Layer in White (reduced overlay) */}
       <div
-        className="absolute inset-x-0 bottom-0 top-[45%] pointer-events-none transition-all duration-300"
+        className="absolute inset-x-0 bottom-0 top-[50%] pointer-events-none transition-all duration-300"
         style={{
           background:
-            'radial-gradient(ellipse 90% 65% at 50% 0%, rgba(255, 255, 255, 0.7) 0%, transparent 75%), linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.92) 28%, rgba(255, 255, 255, 0.98) 100%)',
-          backdropFilter: 'blur(16px) saturate(150%)',
-          WebkitBackdropFilter: 'blur(16px) saturate(150%)',
+            'radial-gradient(ellipse 90% 65% at 50% 0%, rgba(255, 255, 255, 0.5) 0%, transparent 75%), linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.8) 32%, rgba(255, 255, 255, 0.9) 100%)',
+          backdropFilter: 'blur(14px) saturate(140%)',
+          WebkitBackdropFilter: 'blur(14px) saturate(140%)',
           maskImage:
-            'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 18%, black 100%)',
+            'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.85) 20%, black 100%)',
           WebkitMaskImage:
-            'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 18%, black 100%)',
+            'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.85) 20%, black 100%)',
         }}
       />
 
@@ -105,7 +105,7 @@ function DestinationCard({ dest }: { dest: DestinationItem }) {
         </h3>
 
         {/* Tagline */}
-        <p className="text-[#1E40AF]/90 text-xs sm:text-[0.82rem] font-medium leading-relaxed mt-1 mb-3.5 pointer-events-auto">
+        <p className="text-[#1E3A8A] text-xs sm:text-[0.82rem] font-medium leading-relaxed mt-1 mb-3.5 pointer-events-auto">
           {dest.tagline}
         </p>
 

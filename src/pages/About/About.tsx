@@ -198,7 +198,12 @@ export default function About() {
                 {/* Main Heading */}
                 <h2 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[50px] text-[#0A2540] leading-[1.15] mb-6 tracking-tight">
                   A simple idea.<br />
-                  <span className="bg-gradient-to-r from-[#0284C7] via-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent inline-block">
+                  <span
+                    className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.35)]"
+                    style={{
+                      backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    }}
+                  >
                     Happier travellers.
                   </span>
                 </h2>
@@ -354,7 +359,12 @@ export default function About() {
               </span>
               <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-[44px] xl:text-[48px] text-[#0A2540] leading-[1.18] mb-4 tracking-tight">
                 More than travel.{' '}
-                <span className="bg-gradient-to-r from-[#0284C7] via-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent inline-block">
+                <span
+                  className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.35)]"
+                  style={{
+                    backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                  }}
+                >
                   A better way to explore.
                 </span>
               </h2>
@@ -469,7 +479,12 @@ export default function About() {
                 {/* Main Heading */}
                 <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-[44px] xl:text-[48px] text-[#0A2540] leading-[1.15] mb-4 tracking-tight">
                   A travel partner<br />
-                  <span className="bg-gradient-to-r from-[#0284C7] via-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent inline-block">
+                  <span
+                    className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.35)]"
+                    style={{
+                      backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    }}
+                  >
                     you can count on.
                   </span>
                 </h2>
@@ -532,7 +547,12 @@ export default function About() {
                 {/* Main Heading */}
                 <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] text-[#0A2540] leading-[1.15] mb-4 tracking-tight">
                   Based in Chennai.<br />
-                  <span className="bg-gradient-to-r from-[#0284C7] via-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent inline-block">
+                  <span
+                    className="inline-block text-transparent bg-clip-text drop-shadow-[0_2px_16px_rgba(0,180,216,0.35)]"
+                    style={{
+                      backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                    }}
+                  >
                     Here for your journey.
                   </span>
                 </h2>

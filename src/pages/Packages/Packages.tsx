@@ -736,7 +736,7 @@ export default function Packages() {
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-3 bg-[#7c3aed] hover:bg-[#6b21a8] text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                    className="px-6 py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
                   >
                     <MessageCircle className="w-4 h-4 text-white fill-white/20" />
                     <span>WhatsApp Us</span>

@@ -488,12 +488,22 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
             </span>
             <h2 className="font-heading font-extrabold text-2xl sm:text-3xl md:text-[2.35rem] text-[#0A2540] tracking-tight leading-[1.2]">
               Vibrant cities.{' '}
-              <span className="bg-gradient-to-r from-[#0284C7] to-[#4F46E5] bg-clip-text text-transparent">
+              <span
+                className="inline-block text-transparent bg-clip-text"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                }}
+              >
                 Serene highlands.
               </span>
               <br />
               Tropical islands.{' '}
-              <span className="bg-gradient-to-r from-[#7C3AED] to-[#9333EA] bg-clip-text text-transparent">
+              <span
+                className="inline-block text-transparent bg-clip-text"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                }}
+              >
                 Rich heritage.
               </span>
             </h2>
