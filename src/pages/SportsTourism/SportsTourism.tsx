@@ -413,13 +413,17 @@ export default function SportsTourism() {
 
             {/* Dual CTA Buttons matching reference exactly */}
             <div className="flex flex-wrap items-center justify-center gap-3.5 sm:gap-4">
-              {/* Enquire Now Button (Green/Teal Pill) */}
+              {/* Enquire Now Button (Blue Gradient Pill matching About Us CTA) */}
               <Link
                 to="/plan-holiday"
-                className="inline-flex items-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#00A896] hover:bg-[#008f80] text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-emerald-500/25 hover:scale-105 active:scale-95 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group"
+                style={{
+                  background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                  boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
+                }}
               >
                 <span>Enquire Now</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
 
               {/* WhatsApp Button */}

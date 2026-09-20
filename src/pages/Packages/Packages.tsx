@@ -718,17 +718,17 @@ export default function Packages() {
 
                 {/* Dual Action Buttons */}
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-3.5">
-                  <a
-                    href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
-                      'Hello Holiday Star! I would like to plan my next international holiday.'
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-3 bg-[#10b981] hover:bg-[#059669] text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                  <Link
+                    to="/plan-holiday"
+                    className="inline-flex items-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group"
+                    style={{
+                      background: 'linear-gradient(90deg, #0066CC 0%, #00B4D8 100%)',
+                      boxShadow: '0 4px 15px rgba(0, 180, 216, 0.35)',
+                    }}
                   >
                     <span>Enquire Now</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
+                    <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  </Link>
 
                   <a
                     href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
@@ -736,7 +736,7 @@ export default function Packages() {
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs sm:text-sm font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
+                    className="inline-flex items-center gap-2.5 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
                   >
                     <MessageCircle className="w-4 h-4 text-white fill-white/20" />
                     <span>WhatsApp Us</span>
