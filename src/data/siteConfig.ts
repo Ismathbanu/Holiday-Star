@@ -25,6 +25,7 @@ export const siteConfig = {
     facebook: 'https://www.facebook.com/holidaystartours/',
     linkedin: 'https://www.linkedin.com/company/holiday-star-tours-travels/',
     instagram: 'https://www.instagram.com/holidaystartours',
+    beholdFeedId: import.meta.env.VITE_BEHOLD_FEED_ID || '',
   },
 
   trust: {

@@ -1,4 +1,4 @@
-import { Heart, ExternalLink } from 'lucide-react';
+import { useEffect } from 'react';
 import AnimatedSection from '../../../components/common/AnimatedSection';
 
 function InstagramIcon({ className = 'w-5 h-5' }: { className?: string }) {
@@ -19,145 +19,87 @@ function InstagramIcon({ className = 'w-5 h-5' }: { className?: string }) {
   );
 }
 
-interface TourPhoto {
-  id: string;
-  image: string;
-  alt: string;
-  caption: string;
-}
-
-const tourPhotos: TourPhoto[] = [
-  {
-    id: 'photo-1',
-    image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=500&q=80',
-    alt: 'Hikers with backpacks consulting trail map on scenic summit',
-    caption: 'Mountain trekking trail',
-  },
-  {
-    id: 'photo-2',
-    image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=500&q=80',
-    alt: 'Phang Nga Bay limestone karsts and emerald ocean',
-    caption: 'Island hopping bliss',
-  },
-  {
-    id: 'photo-3',
-    image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=500&q=80',
-    alt: 'Scenic coastal suspension bridge and harbor waters',
-    caption: 'Coastal city views',
-  },
-  {
-    id: 'photo-4',
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=500&q=80',
-    alt: 'Couple trekking along green alpine mountain valley',
-    caption: 'Alpine trail adventures',
-  },
-  {
-    id: 'photo-5',
-    image: 'https://images.unsplash.com/photo-1491555103944-7c647fd857e6?w=500&q=80',
-    alt: 'Snow covered high altitude resort and mountain travelers',
-    caption: 'Snow mountain escape',
-  },
-  {
-    id: 'photo-6',
-    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=500&q=80',
-    alt: 'Tropical limestone sea cliff and turquoise sea',
-    caption: 'Turquoise ocean cliffs',
-  },
-  {
-    id: 'photo-7',
-    image: 'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=500&q=80',
-    alt: 'Travel photographer taking photos across lush green valley',
-    caption: 'Scenic valley moments',
-  },
-  {
-    id: 'photo-8',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80',
-    alt: 'Backpacker walking towards sunny white sand tropical beach',
-    caption: 'Tropical beach walk',
-  },
-  {
-    id: 'photo-9',
-    image: 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=500&q=80',
-    alt: 'Couple with travel backpacks gazing at sunset ocean horizon',
-    caption: 'Sunset coastline',
-  },
-];
-
 export default function InstagramTourFeed() {
+  useEffect(() => {
+    const scriptSrc = 'https://elfsightcdn.com/platform.js';
+    let script = document.querySelector(`script[src="${scriptSrc}"]`) as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement('script');
+      script.src = scriptSrc;
+      script.async = true;
+      document.body.appendChild(script);
+    } else if (
+      typeof window !== 'undefined' &&
+      (window as unknown as { eapps?: { platform?: { collectWidgets?: (el: HTMLElement) => void; revise?: () => void } } }).eapps?.platform?.collectWidgets
+    ) {
+      (window as unknown as { eapps?: { platform?: { collectWidgets?: (el: HTMLElement) => void; revise?: () => void } } }).eapps?.platform?.collectWidgets?.(document.body);
+      (window as unknown as { eapps?: { platform?: { collectWidgets?: (el: HTMLElement) => void; revise?: () => void } } }).eapps?.platform?.revise?.();
+    }
+  }, []);
+
   return (
     <section
-      className="relative py-14 sm:py-18 overflow-hidden"
+      className="relative pt-12 sm:pt-16 pb-0 overflow-hidden"
       style={{
-        background:
-          'linear-gradient(180deg, #FAF8F2 0%, #FFFDF8 50%, #FAF6EE 100%)',
+        background: 'linear-gradient(180deg, #FAF8F2 0%, #FFFDF8 50%, #FAF6EE 100%)',
       }}
-      aria-label="Natural Tours Instagram Feed"
+      aria-label="Holiday Star Instagram Feed"
     >
-      <div className="container-hs relative z-10">
-        {/* Section Header (matching reference image) */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <a
-            href="https://www.instagram.com/holidaystartours"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-[#008080] hover:text-[#005F73] transition-colors group mb-2"
-          >
-            <InstagramIcon className="w-5 h-5 text-[#008080] group-hover:scale-110 transition-transform" />
-            <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.25em]">
-              Follow Instagram
-            </span>
-          </a>
+      <div className="relative z-10 w-full">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 px-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 border border-rose-200/60 text-xs font-semibold text-rose-700 mb-3 shadow-xs">
+            <InstagramIcon className="w-3.5 h-3.5 text-rose-600" />
+            <span>@holidaystartours • Instagram Feed</span>
+          </div>
 
           <h2 className="font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0A2540] tracking-tight leading-tight">
-            To know about offers, follow our Instagram
+            Follow Us on Instagram
           </h2>
 
-          <p className="text-[#64748B] text-xs sm:text-sm leading-relaxed mt-2.5 max-w-lg mx-auto font-normal">
-            Real clients, authentic nature tours, and exclusive limited-time travel packages. Tag @holidaystartours on your next journey!
+          <p className="text-[#64748B] text-xs sm:text-sm md:text-base leading-relaxed mt-2 font-normal max-w-xl mx-auto">
+            Travel inspiration, real tour highlights &amp; unforgettable holiday packages curated from Chennai. Click any post to explore!
           </p>
+
+          {/* Profile follow card */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="https://www.instagram.com/holidaystartours"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCB045] text-white text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
+              aria-label="Follow @holidaystartours on Instagram"
+            >
+              <InstagramIcon className="w-4 h-4 text-white" />
+              <span>Follow @holidaystartours</span>
+            </a>
+
+            <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200/80 text-xs font-medium text-[#0A2540]">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Direct Tour Updates &amp; Stories</span>
+            </div>
+          </div>
         </div>
 
-        {/* 9-Photo Natural Tours Grid Strip */}
+        {/* Elfsight Instagram Feed */}
         <AnimatedSection>
-          <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-9 gap-2.5 sm:gap-3.5">
-            {tourPhotos.map((photo) => (
-              <a
-                key={photo.id}
-                href="https://www.instagram.com/holidaystartours"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative aspect-square rounded-2xl overflow-hidden bg-white shadow-xs hover:shadow-xl transition-all duration-300 hover:scale-106 hover:-translate-y-1 block border border-amber-100/60"
-                title={photo.caption}
-              >
-                {/* Photo Image */}
-                <img
-                  src={photo.image}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
-                  loading="lazy"
-                />
-
-                {/* Subtle Instagram Hover Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 sm:p-2.5 text-white">
-                  <div className="flex items-center justify-between text-[11px] font-medium">
-                    <span className="flex items-center gap-1 drop-shadow-xs">
-                      <Heart className="w-3 h-3 fill-rose-500 text-rose-500" />
-                    </span>
-                    <ExternalLink className="w-3 h-3 text-white/90" />
-                  </div>
-                </div>
-              </a>
-            ))}
+          <div className="relative w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-10 min-h-[400px]">
+            {/* Elfsight Instagram Feed | Untitled Instagram Feed */}
+            <script src="https://elfsightcdn.com/platform.js" async></script>
+            <div
+              className="elfsight-app-352c15c0-d7b1-4a9c-8010-9080c466e90b"
+              data-elfsight-app-lazy
+            ></div>
           </div>
         </AnimatedSection>
       </div>
 
       {/* ── Road & Animated Travel Car Journey Towards Tropical Island ── */}
-      <div className="relative w-full h-32 sm:h-40 mt-6 sm:mt-8 overflow-hidden select-none pointer-events-none">
+      <div className="relative w-full h-32 sm:h-40 mt-4 sm:mt-6 overflow-hidden select-none pointer-events-none">
         {/* Scenic Road Dotted Track */}
         <div className="absolute bottom-5 left-0 right-0 border-b-2 border-dashed border-amber-300/40" />
 
-        {/* Tropical Island Illustration on the Right (matching reference image) */}
+        {/* Tropical Island Illustration on the Right */}
         <div className="absolute right-0 sm:right-6 md:right-12 bottom-0 z-10 w-44 sm:w-56 md:w-64">
           <svg
             viewBox="0 0 260 160"
@@ -390,8 +332,8 @@ export default function InstagramTourFeed() {
 
               {/* Car Side Details & Door Line */}
               <line x1="104" y1="56" x2="104" y2="84" stroke="#CBD5E1" strokeWidth="1.2" />
-              <line x1="68" y1="56" x2="68" y2="76" stroke="#CBD5E1" strokeWidth="1" />
-              <line x1="145" y1="56" x2="145" y2="76" stroke="#CBD5E1" strokeWidth="1" />
+              <line x1="68" y1="56" x2="68" y2="76" stroke="#CBD5E1" strokeWidth="1.2" />
+              <line x1="145" y1="56" x2="145" y2="76" stroke="#CBD5E1" strokeWidth="1.2" />
               <rect x="110" y="62" width="6" height="2" rx="1" fill="#64748B" />
               <rect x="74" y="62" width="6" height="2" rx="1" fill="#64748B" />
 
