@@ -39,7 +39,7 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-// ── 5 Highlights / Destinations Data ──
+// ── 8 Highlights / Destinations Data ──
 const malaysiaDestinations = [
   {
     id: 'kuala-lumpur',
@@ -70,6 +70,24 @@ const malaysiaDestinations = [
     name: 'PENANG',
     tagline: 'Culture, Colour & Character',
     image: '/images/penang_street.png',
+  },
+  {
+    id: 'johor',
+    name: 'JOHOR',
+    tagline: 'Theme Parks & Coastal Escapes',
+    image: '/images/johor_destination.jpg',
+  },
+  {
+    id: 'sabah',
+    name: 'SABAH',
+    tagline: "Wild Borneo & Mount Kinabalu",
+    image: '/images/sabah_destination.jpg',
+  },
+  {
+    id: 'sarawak',
+    name: 'SARAWAK',
+    tagline: 'Ancient Rainforests & River Culture',
+    image: '/images/sarawak_destination.jpg',
   },
 ];
 
@@ -226,6 +244,8 @@ export default function MalaysiaCampaign() {
 
   // Modal State for Booking Popup
   const [bookingPackage, setBookingPackage] = useState<CampaignPackage | null>(null);
+  const [isBookingSubmitting, setIsBookingSubmitting] = useState(false);
+  const [bookingResult, setBookingResult] = useState('');
   const [bookingForm, setBookingForm] = useState({
     name: '',
     phone: '',
@@ -466,7 +486,7 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
         </div>
       </section>
 
-      {/* ── SECTION 3: Discover Malaysia (5 Destination Cards) ── */}
+      {/* ── SECTION 3: Discover Malaysia (8 Destination Cards) ── */}
       <section className="relative py-14 sm:py-18 md:py-20 overflow-hidden bg-white">
         {/* Scenic Tropical Backdrop with corner leaves and hibiscus flower */}
         <div className="absolute inset-0 pointer-events-none select-none">
@@ -509,8 +529,8 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
             </h2>
           </div>
 
-          {/* 5 Destination Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
+          {/* 8 Destination Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
             {malaysiaDestinations.map((dest, i) => (
               <AnimatedSection key={dest.id} delay={i * 0.08}>
                 <div
@@ -735,7 +755,10 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
 
                 <button
                   type="button"
-                  onClick={() => setBookingPackage(null)}
+                  onClick={() => {
+                    setBookingPackage(null);
+                    setBookingResult('');
+                  }}
                   className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors shrink-0 ml-4 cursor-pointer"
                   aria-label="Close booking modal"
                 >
@@ -745,28 +768,109 @@ ${data.message ? `*Notes:* ${data.message}` : ''}
 
               {/* Compact Booking Form Body */}
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
                   if (!bookingForm.name.trim() || !bookingForm.phone.trim()) {
-                    alert('Please enter your Name and WhatsApp Number.');
+                    setBookingResult('Please enter your Name and WhatsApp Number.');
                     return;
                   }
 
-                  const text = `Hello Holiday Star Tours!
-I would like to book this Malaysia package:
+                  setIsBookingSubmitting(true);
+                  setBookingResult('');
 
-*Package:* ${bookingPackage.title} (${bookingPackage.duration})
+                  const formData = new FormData();
+
+                  // ==========================================
+                  // WEB3FORMS EMAIL INTEGRATION
+                  // ==========================================
+                  formData.append('access_key', '09bdf92a-57d9-4230-94b9-f40bdaa77494');
+                  formData.append('subject', `New Malaysia Enquiry - ${bookingPackage.title}`);
+                  formData.append('package', bookingPackage.title);
+                  formData.append('duration', bookingPackage.duration);
+                  formData.append('name', bookingForm.name);
+                  formData.append('whatsapp', bookingForm.phone);
+                  formData.append('starting_point', bookingForm.startingPoint);
+                  formData.append('travel_month', bookingForm.travelMonth);
+                  formData.append('travellers', bookingForm.travellers);
+                  formData.append('flight_preference', bookingForm.flightPreference);
+
+                  try {
+                    // ==========================================
+                    // 1. SEND LEAD TO EMAIL
+                    // ==========================================
+                    const response = await fetch('https://api.web3forms.com/submit', {
+                      method: 'POST',
+                      body: formData,
+                    });
+
+                    const data = await response.json();
+
+                    if (!data.success) {
+                      setBookingResult('Unable to send your enquiry. Please try again.');
+                      setIsBookingSubmitting(false);
+                      return;
+                    }
+
+                    // ==========================================
+                    // 2. CREATE WHATSAPP MESSAGE
+                    // ==========================================
+                    const message = `
+*NEW MALAYSIA PACKAGE ENQUIRY*
+
+*Package:* ${bookingPackage.title}
+*Duration:* ${bookingPackage.duration}
+
+*CUSTOMER DETAILS*
+
 *Name:* ${bookingForm.name}
-*WhatsApp No:* ${bookingForm.phone}
+*WhatsApp:* ${bookingForm.phone}
 *Starting Point:* ${bookingForm.startingPoint}
 *Travel Month:* ${bookingForm.travelMonth}
-*No. of Travellers:* ${bookingForm.travellers}
-*Flight Preference:* ${bookingForm.flightPreference}
+*Travellers:* ${bookingForm.travellers}
 
-Please share booking details and confirmed quote.`;
+*Flight Preference:*
+${bookingForm.flightPreference}
 
-                  window.open(`https://wa.me/919444370254?text=${encodeURIComponent(text)}`, '_blank');
-                  setBookingPackage(null);
+*Source:* Holiday Star Malaysia Campaign
+                    `.trim();
+
+                    // ==========================================
+                    // 3. HOLIDAY STAR WHATSAPP NUMBER
+                    // ==========================================
+                    const whatsappNumber = '919444370254';
+
+                    // ==========================================
+                    // 4. OPEN WHATSAPP
+                    // ==========================================
+                    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+
+                    // ==========================================
+                    // 5. SUCCESS
+                    // ==========================================
+                    setBookingResult('Enquiry sent successfully!');
+
+                    // Reset form fields
+                    setBookingForm({
+                      name: '',
+                      phone: '',
+                      travelMonth: dynamicTravelMonths[0] || 'Immediate / Next 30 Days',
+                      travellers: '2 Travellers (Couple / Friends)',
+                      startingPoint: 'Chennai',
+                      flightPreference: 'Require air tickets from our side',
+                    });
+
+                    // Close modal after showing success
+                    setTimeout(() => {
+                      setBookingPackage(null);
+                      setBookingResult('');
+                    }, 2000);
+                  } catch (error) {
+                    console.error('Malaysia enquiry error:', error);
+                    setBookingResult('Something went wrong. Please try again.');
+                  } finally {
+                    setIsBookingSubmitting(false);
+                  }
                 }}
                 className="p-4 sm:p-5 space-y-3 text-left"
               >
@@ -778,6 +882,7 @@ Please share booking details and confirmed quote.`;
                     </label>
                     <input
                       type="text"
+                      name="name"
                       required
                       placeholder="e.g. Ramesh Kumar"
                       value={bookingForm.name}
@@ -792,6 +897,7 @@ Please share booking details and confirmed quote.`;
                     </label>
                     <input
                       type="tel"
+                      name="whatsapp"
                       required
                       placeholder="+91 98765 43210"
                       value={bookingForm.phone}
@@ -809,6 +915,7 @@ Please share booking details and confirmed quote.`;
                     </label>
                     <input
                       type="text"
+                      name="starting_point"
                       placeholder="e.g. Chennai, Bengaluru"
                       value={bookingForm.startingPoint}
                       onChange={(e) => setBookingForm({ ...bookingForm, startingPoint: e.target.value })}
@@ -821,6 +928,7 @@ Please share booking details and confirmed quote.`;
                       Travel Month
                     </label>
                     <select
+                      name="travel_month"
                       value={bookingForm.travelMonth}
                       onChange={(e) => setBookingForm({ ...bookingForm, travelMonth: e.target.value })}
                       className="w-full px-3 py-2 text-xs sm:text-sm bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#00A896] transition-colors cursor-pointer"
@@ -840,6 +948,7 @@ Please share booking details and confirmed quote.`;
                     No. of Travellers
                   </label>
                   <select
+                    name="travellers"
                     value={bookingForm.travellers}
                     onChange={(e) => setBookingForm({ ...bookingForm, travellers: e.target.value })}
                     className="w-full px-3 py-2 text-xs sm:text-sm bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:border-[#00A896] transition-colors"
@@ -867,7 +976,7 @@ Please share booking details and confirmed quote.`;
                     >
                       <input
                         type="radio"
-                        name="flightPreference"
+                        name="flight_preference"
                         value="Require air tickets from our side"
                         checked={bookingForm.flightPreference === 'Require air tickets from our side'}
                         onChange={(e) => setBookingForm({ ...bookingForm, flightPreference: e.target.value })}
@@ -887,7 +996,7 @@ Please share booking details and confirmed quote.`;
                     >
                       <input
                         type="radio"
-                        name="flightPreference"
+                        name="flight_preference"
                         value="Will arrange air tickets on your own"
                         checked={bookingForm.flightPreference === 'Will arrange air tickets on your own'}
                         onChange={(e) => setBookingForm({ ...bookingForm, flightPreference: e.target.value })}
@@ -900,17 +1009,35 @@ Please share booking details and confirmed quote.`;
                   </div>
                 </div>
 
-                {/* Submit to WhatsApp */}
+                {/* Submit to WhatsApp & Email */}
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3 px-5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    disabled={isBookingSubmitting}
+                    className="w-full py-3 px-5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    <svg className="w-4 h-4 fill-white" viewBox="0 0 24 24">
-                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                    </svg>
-                    <span>Send on WhatsApp</span>
+                    {isBookingSubmitting ? (
+                      <span>Sending...</span>
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4 fill-white" viewBox="0 0 24 24">
+                          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                        </svg>
+                        <span>Send on WhatsApp</span>
+                      </>
+                    )}
                   </button>
+
+                  {bookingResult && (
+                    <p
+                      className={`text-center text-xs font-semibold mt-2 ${
+                        bookingResult.includes('successfully') ? 'text-emerald-600' : 'text-red-500'
+                      }`}
+                    >
+                      {bookingResult}
+                    </p>
+                  )}
+
                   <p className="text-center text-[10px] text-gray-400 mt-1">
                     Connects directly to our Malaysia desk on WhatsApp.
                   </p>

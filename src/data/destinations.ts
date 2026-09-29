@@ -84,8 +84,9 @@ export const destinations: Destination[] = [
       { name: 'Melaka', description: 'UNESCO heritage city with colonial streets, river walks, and legendary food.', image: images.malaysia.melaka },
       { name: 'Penang', description: 'Street art, temples, and some of the best food in Southeast Asia.', image: images.malaysia.penang },
       { name: 'Langkawi', description: 'Duty-free island paradise with beaches, mangroves, and the famous sky bridge.', image: images.malaysia.langkawi },
-      { name: 'Sabah', description: 'Borneo\'s adventure frontier — Mount Kinabalu, orangutans, and island hopping.', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80' },
-      { name: 'Sarawak', description: 'Rainforests, longhouses, and the stunning Kuching waterfront.', image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80' },
+      { name: 'Johor', description: 'Theme parks, royal architecture, and luxury coastal retreats.', image: '/images/johor_destination.jpg' },
+      { name: 'Sabah', description: 'Borneo\'s adventure frontier — Mount Kinabalu, orangutans, and island hopping.', image: '/images/sabah_destination.jpg' },
+      { name: 'Sarawak', description: 'Rainforests, longhouses, and the stunning Kuching waterfront.', image: '/images/sarawak_destination.jpg' },
     ],
     experiences: [
       { title: 'Petronas Twin Towers', description: 'Visit KL\'s most famous icon and enjoy stunning views from the Skybridge.', image: images.malaysia.kl },
